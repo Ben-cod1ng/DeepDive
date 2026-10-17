@@ -55,3 +55,9 @@ Live semantic precision/recall and independent final-report accuracy remain
 unmeasured. Fixture results and the verifier's own acceptance rate cannot fill
 those gaps. See [evaluation/results](../evaluation/results) for recorded local
 evidence and [docs/evaluation.md](../docs/evaluation.md) for the live procedure.
+
+Current local host issue: Docker Desktop stopped responding after the completed
+image build. Initial API/UI smoke and Prometheus scraping succeeded, but the final
+local restart and Grafana dashboard check are pending confirmation to restart
+Docker Desktop. The clean Linux deployment passed in the latest remote
+[Quality run](https://github.com/Ben-cod1ng/DeepDive/actions/runs/39043865429).
