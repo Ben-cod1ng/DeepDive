@@ -36,7 +36,7 @@ locally verified behavior, not unperformed live model evaluation.
 
 ## Measured validation
 
-- [x] 34 tests passed locally, including gateway budgets, API boundaries, recovery, and UI review
+- [x] 41 tests passed locally, including gateway budgets, API boundaries, recovery, UI review, and monitoring failure detection
 - [x] Ruff, Pydantic-contract type checks, and compilation passed
 - [x] Dependency audit reported no known vulnerabilities after targeted upgrades
 - [x] Recorded 32-case deterministic fixture evaluation, dataset version 1.1
@@ -56,8 +56,13 @@ unmeasured. Fixture results and the verifier's own acceptance rate cannot fill
 those gaps. See [evaluation/results](../evaluation/results) for recorded local
 evidence and [docs/evaluation.md](../docs/evaluation.md) for the live procedure.
 
-Current local host issue: Docker Desktop stopped responding after the completed
-image build. Initial API/UI smoke and Prometheus scraping succeeded, but the final
-local restart and Grafana dashboard check are pending confirmation to restart
-Docker Desktop. The clean Linux deployment passed in the latest remote
-[Quality run](https://github.com/Ben-cod1ng/DeepDive/actions/runs/39043865429).
+Current local host issue: the user approved restarting Docker Desktop. The normal
+restart timed out; relaunch then reported an already-attached WSL data disk and
+failed filesystem bootstrap. Desktop was stopped and WSL shut down after confirming
+only `docker-desktop` was installed. No disk reset, deletion, or formatting command
+was issued. C: had approximately 326 MB free, so Docker remains stopped while host
+space is recovered. Filesystem integrity and the final local smoke remain unverified.
+The clean Linux API/UI deployment passed in this recorded
+[Quality run](https://github.com/Ben-cod1ng/DeepDive/actions/runs/39044152610).
+CI now also starts monitoring and checks its actual HTTP/data path; its first
+expanded run is pending. See the [host recovery runbook](../docs/operations.md#docker-desktop-or-wsl-does-not-start).

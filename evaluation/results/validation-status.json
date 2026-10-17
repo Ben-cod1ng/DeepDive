@@ -1,13 +1,13 @@
 {
   "observed_on": "2026-10-17",
-  "application_commit": "b90c2112fecd51b9f60240f9c6c3b225b2025fb3",
-  "local_tests": {"passed": 34, "failed": 0},
+  "application_commit": "04b1f307c5bd3d0744705d16bf477c26929c5aa0",
+  "local_tests": {"passed": 41, "failed": 0},
   "lint": "passed",
   "contract_type_checks": "passed",
   "compilation": "passed",
   "local_dependency_audit": {"dependencies": 122, "known_vulnerabilities": 0},
   "remote_quality": {
-    "url": "https://github.com/Ben-cod1ng/DeepDive/actions/runs/39043865429",
+    "url": "https://github.com/Ben-cod1ng/DeepDive/actions/runs/39044152610",
     "conclusion": "success",
     "jobs": {"Quality checks": "success", "Docker smoke": "success"}
   },
@@ -18,8 +18,12 @@
     "prometheus_configuration_and_four_rules": "passed",
     "prometheus_scrape": "observed up before Docker became unresponsive",
     "grafana_dashboard_http_validation": "pending",
-    "current_state": "Docker Desktop and all service endpoints stopped responding; restart confirmation pending"
+    "current_state": "Approved restart failed; Desktop stopped and WSL shut down. Awaiting host disk space before relaunch.",
+    "restart_error": "WSL_E_USER_VHD_ALREADY_ATTACHED followed by failed filesystem bootstrap",
+    "host_free_space_mib_observed": 326,
+    "filesystem_integrity": "not yet verified; no reset or data deletion performed"
   },
+  "monitoring_http_ci": "expanded CI validation implemented; execution pending",
   "live_mesh_verifier": "pending credentials",
   "independent_reference_label_review": "pending",
   "independent_final_claim_accuracy": null,
