@@ -52,11 +52,18 @@ jobs:
       - run: uv run --no-sync python -m deepdive.ops init
       - run: docker compose config --quiet
       - run: docker compose build api
-      - run: docker compose up --no-build --wait --wait-timeout 180
+      - run: docker compose --profile monitoring up --no-build --wait --wait-timeout 180
       - run: uv run --no-sync python -m deepdive.ops health
       - run: uv run --no-sync python -m deepdive.smoke
       - name: Monitoring configuration
         run: docker compose run --rm --no-deps --entrypoint promtool prometheus check config /etc/prometheus/prometheus.yml
+      - name: Monitoring HTTP smoke
+        run: uv run --no-sync python -m deepdive.monitoring_smoke --output evaluation/results/monitoring-smoke.json
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: monitoring-evidence
+          path: evaluation/results/monitoring-smoke.json
+          retention-days: 30
       - name: Shutdown
         if: always()
-        run: docker compose down
+        run: docker compose --profile monitoring down

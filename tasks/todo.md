@@ -31,12 +31,12 @@ locally verified behavior, not unperformed live model evaluation.
 - [x] README architecture/workflow/review diagrams and setup/run instructions
 - [x] Architecture, API, operations, evaluation, decision, contribution, submission guides
 - [x] Official organizer workflow retrieved, inspected, and installed unchanged
-- [ ] Final rebuilt Docker image smoke check and live monitoring dashboard check
+- [x] Rebuilt Docker API/UI smoke check and local/CI monitoring HTTP/data checks
 - [x] Public repository and successful remote Quality workflow: [Ben-cod1ng/DeepDive](https://github.com/Ben-cod1ng/DeepDive)
 
 ## Measured validation
 
-- [x] 34 tests passed locally, including gateway budgets, API boundaries, recovery, and UI review
+- [x] 41 tests passed locally, including gateway budgets, API boundaries, recovery, UI review, and monitoring failure detection
 - [x] Ruff, Pydantic-contract type checks, and compilation passed
 - [x] Dependency audit reported no known vulnerabilities after targeted upgrades
 - [x] Recorded 32-case deterministic fixture evaluation, dataset version 1.1
@@ -56,8 +56,17 @@ unmeasured. Fixture results and the verifier's own acceptance rate cannot fill
 those gaps. See [evaluation/results](../evaluation/results) for recorded local
 evidence and [docs/evaluation.md](../docs/evaluation.md) for the live procedure.
 
-Current local host issue: Docker Desktop stopped responding after the completed
-image build. Initial API/UI smoke and Prometheus scraping succeeded, but the final
-local restart and Grafana dashboard check are pending confirmation to restart
-Docker Desktop. The clean Linux deployment passed in the latest remote
-[Quality run](https://github.com/Ben-cod1ng/DeepDive/actions/runs/39043865429).
+Docker recovery completed after the user approved the restart and freed over 9 GB
+on C:. The first restart reported a stale WSL data-disk attachment; shutting WSL
+down released it. A metadata inspection recognized the existing ext4 filesystem,
+then Docker started successfully with the existing named volumes. No disk reset,
+deletion, or formatting command was issued. This was a successful startup and
+application smoke check, not a full filesystem integrity scan.
+
+The expanded [Quality run](https://github.com/Ben-cod1ng/DeepDive/actions/runs/39046064658)
+passed both jobs. Prometheus scraping, all four alert rules, Grafana's datasource,
+and all eight panel queries passed in CI and on the recovered Windows host. Results
+are in [monitoring-ci.json](../evaluation/results/monitoring-ci.json) and
+[monitoring-local.json](../evaluation/results/monitoring-local.json). The
+[host recovery runbook](../docs/operations.md#docker-desktop-or-wsl-does-not-start)
+records how to diagnose this class of failure while preserving stored data.

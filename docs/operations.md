@@ -41,9 +41,13 @@ Readiness checks SQLite, a temporary write probe, and at least 100 MB of free di
 ```powershell
 docker compose --profile monitoring up -d
 docker compose run --rm --no-deps --entrypoint promtool prometheus check config /etc/prometheus/prometheus.yml
+uv run python -m deepdive.smoke
+uv run python -m deepdive.monitoring_smoke --output evaluation/results/monitoring-smoke.json
 ```
 
 Prometheus scrapes the API using its mounted token. Grafana has a provisioned Prometheus datasource and DeepDive dashboard for request rate, p95 latency, run states, queue age, dependency latency, verification outcomes, model calls, and tokens. Request labels use route templates, not question text or run IDs. Prometheus retains 15 days; Docker logs rotate at 10 MB with three files, and application JSON logs rotate at 5 MB with three backups.
+
+The monitoring smoke command waits for startup and the first scrape/rule evaluation, then checks actual application metrics, all four rules, Grafana's database and datasource, dashboard provisioning, and every panel query through Grafana. It reads the generated admin credential locally without printing it. Empty research series are expected before any research runs; a missing API scrape or request metrics fails the check. GitHub CI starts the monitoring profile and retains this JSON result as `monitoring-evidence`. This checks the HTTP/data path; it does not claim a visual browser review or external alert delivery.
 
 Four alert rules cover service unavailability, elevated API errors, stalled queue age, and repeated research failures. They appear in Prometheus. **External paging/email/Slack delivery is not configured.** Configure an Alertmanager receiver deliberately if operating a remote service.
 
@@ -52,6 +56,14 @@ Application logs contain timestamps, request/run IDs, entry point, event, and al
 ### Service unavailable
 
 Check `docker compose ps` and API logs. Confirm the token file exists, `/data` is writable, disk has space, and no second process owns the data directory. After fixing the cause, restart with `docker compose up -d --wait`. Do not delete a database to clear an ownership error; stop its existing owner.
+
+### Docker Desktop or WSL does not start
+
+If Docker commands and every service endpoint hang together, inspect the host before changing application code. On Windows, `Get-PSDrive C` reports host free space. The container's readiness disk check sees its Linux filesystem, which does not guarantee free space on the Windows drive holding the growing VHD. Leave several GB of host space for startup and additional space for builds, stored research, and monitoring retention.
+
+Stop Desktop before recovering a stale disk attachment. A `WSL_E_USER_VHD_ALREADY_ATTACHED` error can survive terminating only the `docker-desktop` distribution. Microsoft's [WSL disk documentation](https://learn.microsoft.com/windows/wsl/wsl2-mount-disk#detaching-a-disk) describes targeted detachment and `wsl --shutdown` when detachment fails. Shutdown affects all WSL distributions: inspect `wsl --list --verbose` and coordinate other workloads first. After host space and the attachment are resolved, relaunch Desktop and run both smoke commands above.
+
+If bootstrap still reports that it cannot identify the filesystem, stop repeated restart attempts and preserve the data disk. Do not format, unregister, factory-reset, or remove volumes to clear the error. Follow Docker's [stopped-Desktop disk backup procedure](https://docs.docker.com/desktop/settings-and-maintenance/backup-and-restore/) before any repair that could change stored data. A disk error alone does not establish data loss.
 
 ### Request errors
 
@@ -102,7 +114,7 @@ The repository root must be the contents of `DeepDive`, so `.github/workflows` i
 
 | Workflow | Trigger and gate |
 |---|---|
-| `quality.yml` | Main pushes/PRs/reuse: lint, contract types, compile, tests, fixtures, dependency audit, container startup and smoke, Prometheus config |
+| `quality.yml` | Main pushes/PRs/reuse: lint, contract types, compile, tests, fixtures, dependency audit, container startup and smoke, Prometheus config, monitoring HTTP/data path |
 | `live-evaluation.yml` | Manual protected environment: Mesh verifier evaluation and independent-label quality gate |
 | `release.yml` | Published release: quality workflow, fresh live evaluation, then build and push immutable commit-tagged GHCR image |
 | `agent-arena-2026-checks.yml` | Organizer-supplied push checks; see submission guide |
