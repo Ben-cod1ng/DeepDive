@@ -15,7 +15,7 @@ Built for Agent Arena 2026 with Python, LangGraph, FastAPI, and Streamlit. Every
 - Export cited Markdown/HTML reports, HTML/PowerPoint presentations, source-backed PNG charts, and JSON audit records.
 - Run the same service from the browser, API, or CLI. Operate it with Docker, health checks, structured logs, error tracking, Prometheus, and Grafana.
 
-**Validation status:** 41 local tests pass, and GitHub Quality CI passed its Linux tests, dependency audit, and Docker checks. Public retrieval/search also worked in a recorded live check. Workflow tests use explicitly synthetic model responses. Live Mesh research, independent label review, live accuracy measurement, and release/submission acceptance remain pending. Automated source verification can be wrong; coverage and correctness are reported separately. See [the completion checklist](tasks/todo.md) and [evaluation guide](docs/evaluation.md).
+**Validation status:** 41 local tests pass. GitHub Quality CI passed its Linux tests, dependency audit, Docker deployment, and full monitoring HTTP checks; API/UI and monitoring checks also passed on the local Docker host. Public retrieval/search worked in a recorded live check. Workflow tests use explicitly synthetic model responses. Live Mesh research, independent label review, live accuracy measurement, and release/submission acceptance remain pending. Automated source verification can be wrong; coverage and correctness are reported separately. See [the completion checklist](tasks/todo.md) and [evaluation guide](docs/evaluation.md).
 
 ## Architecture
 
