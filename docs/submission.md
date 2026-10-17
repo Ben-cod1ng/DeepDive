@@ -4,7 +4,7 @@ The implementation uses Mesh for every model request through the fixed `https://
 
 ## Repository layout
 
-Publish the contents of **DeepDive as the repository root**, with README, lockfile, source, tests, evaluation data, and `.github/workflows` at the top level. Do not publish the parent workspace or the original project's history/private configuration. Choose the repository owner/name explicitly before creating a remote repository.
+The user-selected public repository is [Ben-cod1ng/DeepDive](https://github.com/Ben-cod1ng/DeepDive), with **DeepDive as its repository root**. README, lockfile, source, tests, evaluation data, and `.github/workflows` are at the top level. The parent workspace and the original project's history/private configuration are excluded.
 
 The organizer workflow is installed at `.github/workflows/agent-arena-2026-checks.yml`. It was retrieved unchanged from the [official workflow URL](https://careerapi-production.krishnaik.in/api/ci/hackathons/agent-arena-2026/workflow.yml). It uses Python 3.11 for its standalone organizer script; the application and its own CI use Python 3.13. These are separate jobs.
 
@@ -12,13 +12,16 @@ The organizer workflow is installed at `.github/workflows/agent-arena-2026-check
 
 - Configure a valid local `MESH_API_KEY` and run the live verifier, ten-question benchmark, and manual review/restart/export acceptance flow.
 - Obtain independent review of at least 30 reference cases and independently assess published claims. Retain counts, failures, limitations, and measured results.
-- Authenticate GitHub and select a public repository owner/name. Push only reviewed project files.
 - Set repository secrets `MESH_API_KEY` and `SUBMISSION_TOKEN` from the organizer dashboard. Keep both out of commits, logs, and chat.
-- Configure protected live/release environments and required Quality status checks if using the delivery pipeline.
+- Supply the environment secrets for the configured protected live/release environments. Required application checks and environment reviewers are already configured.
 - Run the actual organizer workflow on the intended submission commit. Inspect its result and verify the dashboard records that same commit/repository.
 - Supply the demonstration and submission fields requested by the organizer. Confirm acceptance on the dashboard; a successful local test does not submit the project.
 
 The user removed the implementation timeline. Any organizer closing date/time remains an external rule to verify on its dashboard, not an assumed extension.
+
+## Recorded remote checks
+
+The initial [Quality run](https://github.com/Ben-cod1ng/DeepDive/actions/runs/39025686390) passed on commit `35eeae23d91a2593a8c914ea20e60839ccfac7b3`. The separate [organizer run](https://github.com/Ben-cod1ng/DeepDive/actions/runs/39025686385) reached GitHub OIDC successfully, then failed to download its check script with HTTP 400 `token_missing`: `SUBMISSION_TOKEN` was not configured. It did not evaluate or accept the submission. Repository secrets were empty at this check; Mesh validation remains pending as agreed.
 
 ## Demonstration outline
 

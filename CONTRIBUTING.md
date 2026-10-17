@@ -22,7 +22,7 @@ When changing dependencies, update `pyproject.toml` and `uv.lock`, rerun audit a
 
 ## Pull requests and release review
 
-Describe the user-visible problem, resulting behavior, validation evidence, and any migration/rollback requirement. Record architecture changes in the decision guide. Keep README commands consistent with actual modules and workflows. Main-branch protections should require the Quality workflow's checks and container jobs.
+Describe the user-visible problem, resulting behavior, validation evidence, and any migration/rollback requirement. Record architecture changes in the decision guide. Keep README commands consistent with actual modules and workflows. Main-branch protections require the Quality workflow's `Quality checks` and `Docker smoke` jobs.
 
 Do not commit `.env`, `.secrets`, local research databases, private audit exports, caches, or real provider responses containing private material. The Docker context is an explicit allowlist. The organizer workflow is retained as provided; inspect new upstream revisions before replacing it.
 

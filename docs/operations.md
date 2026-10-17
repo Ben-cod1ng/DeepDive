@@ -107,7 +107,9 @@ The repository root must be the contents of `DeepDive`, so `.github/workflows` i
 | `release.yml` | Published release: quality workflow, fresh live evaluation, then build and push immutable commit-tagged GHCR image |
 | `agent-arena-2026-checks.yml` | Organizer-supplied push checks; see submission guide |
 
-Configure required `checks` and `container` status checks on the main branch. Create `live-validation` and `production` environments with appropriate reviewers; environment protection must be configured in GitHub, not just named in YAML. Set `MESH_API_KEY` in those environments and the organizer-required repository secrets. No provider credential is supplied to PR quality jobs.
+The public repository is [Ben-cod1ng/DeepDive](https://github.com/Ben-cod1ng/DeepDive). Main-branch protection requires `Quality checks` and `Docker smoke`, with up-to-date branches, linear history, and no force pushes/deletion. Administrator bypass remains enabled for the repository owner. Distinct check names avoid collision with the organizer's `checks` job.
+
+The `live-validation` and `production` environments are configured with `Ben-cod1ng` as their required reviewer. Self-review is allowed for this single-owner repository. Set `MESH_API_KEY` in those environments and the organizer-required repository secrets before running live validation or release. No provider credential is supplied to PR quality jobs. On a fork/new repository, configure these protections explicitly; YAML environment names alone do not install reviewer policies.
 
 Quality evidence is retained for 30 days; live/release manifests for 90. Release artifacts record the model/dataset/code hashes and published image digest. Dependabot proposes weekly Python, Docker, and Actions updates. Application Actions are pinned to commit SHAs; the organizer workflow is retained as supplied, with its own versioned action tags.
 

@@ -1,5 +1,7 @@
 # DeepDive
 
+[Repository](https://github.com/Ben-cod1ng/DeepDive) · [Quality CI](https://github.com/Ben-cod1ng/DeepDive/actions/workflows/quality.yml)
+
 **Follow the evidence.** DeepDive researches a question, saves the passages behind its claims, checks those claims, and pauses for your review before producing reports and presentations.
 
 Built for Agent Arena 2026 with Python, LangGraph, FastAPI, and Streamlit. Every model request goes through **Mesh**. Public web discovery and direct page retrieval need no additional paid API key. The earlier `Advanced-LangGraph-Implementation` project remains separate.
@@ -13,7 +15,7 @@ Built for Agent Arena 2026 with Python, LangGraph, FastAPI, and Streamlit. Every
 - Export cited Markdown/HTML reports, HTML/PowerPoint presentations, source-backed PNG charts, and JSON audit records.
 - Run the same service from the browser, API, or CLI. Operate it with Docker, health checks, structured logs, error tracking, Prometheus, and Grafana.
 
-**Validation status:** offline tests exercise the workflow with explicitly synthetic model responses. Live Mesh research, independent label review, live accuracy measurement, and remote release/submission checks remain pending. Automated source verification can be wrong; coverage and correctness are reported separately. See [the completion checklist](tasks/todo.md) and [evaluation guide](docs/evaluation.md).
+**Validation status:** 34 local tests pass, and GitHub Quality CI passed its Linux tests, dependency audit, and Docker checks. Public retrieval/search also worked in a recorded live check. Workflow tests use explicitly synthetic model responses. Live Mesh research, independent label review, live accuracy measurement, and release/submission acceptance remain pending. Automated source verification can be wrong; coverage and correctness are reported separately. See [the completion checklist](tasks/todo.md) and [evaluation guide](docs/evaluation.md).
 
 ## Architecture
 

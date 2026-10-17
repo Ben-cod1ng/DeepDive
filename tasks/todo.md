@@ -32,7 +32,7 @@ locally verified behavior, not unperformed live model evaluation.
 - [x] Architecture, API, operations, evaluation, decision, contribution, submission guides
 - [x] Official organizer workflow retrieved, inspected, and installed unchanged
 - [ ] Final rebuilt Docker image smoke check and live monitoring dashboard check
-- [ ] Public repository and successful remote Quality workflow (authorized: Ben-cod1ng/DeepDive)
+- [x] Public repository and successful remote Quality workflow: [Ben-cod1ng/DeepDive](https://github.com/Ben-cod1ng/DeepDive)
 
 ## Measured validation
 
@@ -47,7 +47,8 @@ locally verified behavior, not unperformed live model evaluation.
 - [ ] Ten-question live benchmark and independent final-claim review
 - [ ] Manual live research/revise/restart/export acceptance demonstration
 - [ ] Optional live Sentry delivery and chosen remote-host deployment, if used
-- [ ] GitHub environment protection/required checks and release-image publication verified
+- [x] GitHub environment reviewers and required main-branch application checks configured
+- [ ] Release-image publication verified after live evaluation gates pass
 - [ ] Organizer secrets/check execution and dashboard submission acceptance
 
 Live semantic precision/recall and independent final-report accuracy remain

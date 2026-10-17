@@ -6,8 +6,12 @@ on:
   workflow_call:
 permissions:
   contents: read
+concurrency:
+  group: quality-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 jobs:
   checks:
+    name: Quality checks
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
@@ -33,6 +37,7 @@ jobs:
           path: evaluation/results/
           retention-days: 30
   container:
+    name: Docker smoke
     runs-on: ubuntu-latest
     timeout-minutes: 20
     steps:
