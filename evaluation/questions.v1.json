@@ -1,0 +1,48 @@
+{
+  "version": "1.0",
+  "questions": [
+    {
+      "id": "technical",
+      "question": "How does LangGraph persist and resume interrupted workflows? Compare durability and replay limitations.",
+      "source_urls": [
+        "https://docs.langchain.com/oss/python/langgraph/interrupts"
+      ]
+    },
+    {
+      "id": "scientific",
+      "question": "What evidence distinguishes an association from a causal effect in observational research?"
+    },
+    {
+      "id": "market",
+      "question": "How has $MSFT stock closing price changed over the last three months? Include dates, currency, and data limitations."
+    },
+    {
+      "id": "comparative",
+      "question": "Compare SQLite WAL and rollback journal modes for a local research application."
+    },
+    {
+      "id": "time_sensitive",
+      "question": "What changed in Python's most recent stable release as of October 2026? Use official documentation."
+    },
+    {
+      "id": "contradictory",
+      "question": "Why do published estimates of electric vehicle battery lifetime differ? Compare definitions and evidence."
+    },
+    {
+      "id": "insufficient",
+      "question": "What will the exact closing price of $MSFT be on October 20, 2030? Identify what cannot be established."
+    },
+    {
+      "id": "community",
+      "question": "What do developers report about Streamlit deployment difficulties, and which reports are supported by official documentation?"
+    },
+    {
+      "id": "numerical",
+      "question": "Compare 2024 and 2025 annual revenue for Microsoft from official reports; calculate percentage change."
+    },
+    {
+      "id": "follow_up",
+      "question": "What limits should a local web research agent enforce to reduce prompt injection and unsafe URL access?"
+    }
+  ]
+}

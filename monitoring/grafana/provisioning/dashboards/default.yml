@@ -1,0 +1,7 @@
+apiVersion: 1
+providers:
+  - name: DeepDive
+    folder: DeepDive
+    type: file
+    options:
+      path: /var/lib/grafana/dashboards

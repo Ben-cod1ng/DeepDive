@@ -1,0 +1,205 @@
+{
+  "mode": "offline-deterministic-gates",
+  "dataset_version": "1.1",
+  "date": "2026-10-17T10:28:00.252125+00:00",
+  "policy": "2",
+  "examples": 32,
+  "rejected_by_gate": 6,
+  "semantic_precision": null,
+  "semantic_recall": null,
+  "note": "Passing a deterministic gate is NOT a support verdict. Live model evaluation has not run.",
+  "results": [
+    {
+      "id": "case_01",
+      "reference_supported": true,
+      "deterministic_rejection": null,
+      "requires_semantic_verification": true
+    },
+    {
+      "id": "case_02",
+      "reference_supported": false,
+      "deterministic_rejection": "Numerical value absent from cited evidence; calculate derived values with the tool",
+      "requires_semantic_verification": false
+    },
+    {
+      "id": "case_03",
+      "reference_supported": false,
+      "deterministic_rejection": null,
+      "requires_semantic_verification": true
+    },
+    {
+      "id": "case_04",
+      "reference_supported": false,
+      "deterministic_rejection": "Numerical value absent from cited evidence; calculate derived values with the tool",
+      "requires_semantic_verification": false
+    },
+    {
+      "id": "case_05",
+      "reference_supported": false,
+      "deterministic_rejection": null,
+      "requires_semantic_verification": true
+    },
+    {
+      "id": "case_06",
+      "reference_supported": true,
+      "deterministic_rejection": null,
+      "requires_semantic_verification": true
+    },
+    {
+      "id": "case_07",
+      "reference_supported": false,
+      "deterministic_rejection": null,
+      "requires_semantic_verification": true
+    },
+    {
+      "id": "case_08",
+      "reference_supported": true,
+      "deterministic_rejection": null,
+      "requires_semantic_verification": true
+    },
+    {
+      "id": "case_09",
+      "reference_supported": true,
+      "deterministic_rejection": null,
+      "requires_semantic_verification": true
+    },
+    {
+      "id": "case_10",
+      "reference_supported": false,
+      "deterministic_rejection": null,
+      "requires_semantic_verification": true
+    },
+    {
+      "id": "case_11",
+      "reference_supported": false,
+      "deterministic_rejection": null,
+      "requires_semantic_verification": true
+    },
+    {
+      "id": "case_12",
+      "reference_supported": false,
+      "deterministic_rejection": null,
+      "requires_semantic_verification": true
+    },
+    {
+      "id": "case_13",
+      "reference_supported": false,
+      "deterministic_rejection": null,
+      "requires_semantic_verification": true
+    },
+    {
+      "id": "case_14",
+      "reference_supported": true,
+      "deterministic_rejection": null,
+      "requires_semantic_verification": true
+    },
+    {
+      "id": "case_15",
+      "reference_supported": false,
+      "deterministic_rejection": null,
+      "requires_semantic_verification": true
+    },
+    {
+      "id": "case_16",
+      "reference_supported": true,
+      "deterministic_rejection": null,
+      "requires_semantic_verification": true
+    },
+    {
+      "id": "case_17",
+      "reference_supported": false,
+      "deterministic_rejection": null,
+      "requires_semantic_verification": true
+    },
+    {
+      "id": "case_18",
+      "reference_supported": true,
+      "deterministic_rejection": null,
+      "requires_semantic_verification": true
+    },
+    {
+      "id": "case_19",
+      "reference_supported": false,
+      "deterministic_rejection": null,
+      "requires_semantic_verification": true
+    },
+    {
+      "id": "case_20",
+      "reference_supported": true,
+      "deterministic_rejection": null,
+      "requires_semantic_verification": true
+    },
+    {
+      "id": "case_21",
+      "reference_supported": false,
+      "deterministic_rejection": null,
+      "requires_semantic_verification": true
+    },
+    {
+      "id": "case_22",
+      "reference_supported": true,
+      "deterministic_rejection": null,
+      "requires_semantic_verification": true
+    },
+    {
+      "id": "case_23",
+      "reference_supported": false,
+      "deterministic_rejection": null,
+      "requires_semantic_verification": true
+    },
+    {
+      "id": "case_24",
+      "reference_supported": false,
+      "deterministic_rejection": null,
+      "requires_semantic_verification": true
+    },
+    {
+      "id": "case_25",
+      "reference_supported": true,
+      "deterministic_rejection": null,
+      "requires_semantic_verification": true
+    },
+    {
+      "id": "case_26",
+      "reference_supported": false,
+      "deterministic_rejection": "Numerical value absent from cited evidence; calculate derived values with the tool",
+      "requires_semantic_verification": false
+    },
+    {
+      "id": "case_27",
+      "reference_supported": false,
+      "deterministic_rejection": "Numerical value absent from cited evidence; calculate derived values with the tool",
+      "requires_semantic_verification": false
+    },
+    {
+      "id": "case_28",
+      "reference_supported": false,
+      "deterministic_rejection": "Candidate quotation does not exist in the cited passage",
+      "requires_semantic_verification": false
+    },
+    {
+      "id": "case_29",
+      "reference_supported": false,
+      "deterministic_rejection": "Claim references missing or inaccessible evidence",
+      "requires_semantic_verification": false
+    },
+    {
+      "id": "case_30",
+      "reference_supported": false,
+      "deterministic_rejection": null,
+      "requires_semantic_verification": true
+    },
+    {
+      "id": "case_31",
+      "reference_supported": false,
+      "deterministic_rejection": null,
+      "requires_semantic_verification": true
+    },
+    {
+      "id": "case_32",
+      "reference_supported": true,
+      "deterministic_rejection": null,
+      "requires_semantic_verification": true
+    }
+  ]
+}

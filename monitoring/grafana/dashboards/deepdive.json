@@ -1,0 +1,189 @@
+{
+  "title": "DeepDive operations",
+  "uid": "deepdive",
+  "schemaVersion": 39,
+  "version": 1,
+  "refresh": "15s",
+  "time": {
+    "from": "now-1h",
+    "to": "now"
+  },
+  "panels": [
+    {
+      "id": 1,
+      "title": "API requests / second",
+      "type": "timeseries",
+      "gridPos": {
+        "x": 0,
+        "y": 0,
+        "w": 12,
+        "h": 8
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
+      "targets": [
+        {
+          "expr": "sum by (status_class) (rate(deepdive_http_seconds_count[5m]))",
+          "refId": "A",
+          "legendFormat": "{{status_class}}{{status}}{{name}}{{outcome}}"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "title": "API p95 latency",
+      "type": "timeseries",
+      "gridPos": {
+        "x": 12,
+        "y": 0,
+        "w": 12,
+        "h": 8
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
+      "targets": [
+        {
+          "expr": "histogram_quantile(0.95, sum by (le) (rate(deepdive_http_seconds_bucket[5m])))",
+          "refId": "A",
+          "legendFormat": "{{status_class}}{{status}}{{name}}{{outcome}}"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "title": "Research status",
+      "type": "timeseries",
+      "gridPos": {
+        "x": 0,
+        "y": 8,
+        "w": 12,
+        "h": 8
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
+      "targets": [
+        {
+          "expr": "deepdive_runs",
+          "refId": "A",
+          "legendFormat": "{{status_class}}{{status}}{{name}}{{outcome}}"
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "title": "Oldest queued run (seconds)",
+      "type": "timeseries",
+      "gridPos": {
+        "x": 12,
+        "y": 8,
+        "w": 12,
+        "h": 8
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
+      "targets": [
+        {
+          "expr": "deepdive_oldest_queued_seconds",
+          "refId": "A",
+          "legendFormat": "{{status_class}}{{status}}{{name}}{{outcome}}"
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "title": "Model / tool p95 latency",
+      "type": "timeseries",
+      "gridPos": {
+        "x": 0,
+        "y": 16,
+        "w": 12,
+        "h": 8
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
+      "targets": [
+        {
+          "expr": "histogram_quantile(0.95, sum by (le, kind, name) (rate(deepdive_dependency_seconds_bucket[5m])))",
+          "refId": "A",
+          "legendFormat": "{{status_class}}{{status}}{{name}}{{outcome}}"
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "title": "Claim decisions / minute",
+      "type": "timeseries",
+      "gridPos": {
+        "x": 12,
+        "y": 16,
+        "w": 12,
+        "h": 8
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
+      "targets": [
+        {
+          "expr": "sum by (outcome) (rate(deepdive_events_total{event=\"claim_decision\"}[5m])) * 60",
+          "refId": "A",
+          "legendFormat": "{{status_class}}{{status}}{{name}}{{outcome}}"
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "title": "Model attempts (persisted)",
+      "type": "timeseries",
+      "gridPos": {
+        "x": 0,
+        "y": 24,
+        "w": 12,
+        "h": 8
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
+      "targets": [
+        {
+          "expr": "deepdive_model_calls",
+          "refId": "A",
+          "legendFormat": "{{status_class}}{{status}}{{name}}{{outcome}}"
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "title": "Reported tokens (persisted)",
+      "type": "timeseries",
+      "gridPos": {
+        "x": 12,
+        "y": 24,
+        "w": 12,
+        "h": 8
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
+      "targets": [
+        {
+          "expr": "deepdive_model_tokens",
+          "refId": "A",
+          "legendFormat": "{{status_class}}{{status}}{{name}}{{outcome}}"
+        }
+      ]
+    }
+  ]
+}

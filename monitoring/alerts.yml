@@ -1,0 +1,30 @@
+groups:
+  - name: deepdive
+    rules:
+      - alert: DeepDiveUnavailable
+        expr: up{job="deepdive"} == 0
+        for: 2m
+        labels: {severity: critical}
+        annotations:
+          summary: DeepDive metrics endpoint is unavailable
+          runbook: docs/operations.md#service-unavailable
+      - alert: DeepDiveServerErrors
+        expr: sum(rate(deepdive_http_seconds_count{status_class="5xx"}[5m])) / clamp_min(sum(rate(deepdive_http_seconds_count[5m])), 0.001) > 0.05
+        for: 5m
+        labels: {severity: warning}
+        annotations:
+          summary: More than five percent of API requests failed
+          runbook: docs/operations.md#request-errors
+      - alert: DeepDiveQueueStalled
+        expr: deepdive_oldest_queued_seconds > 900
+        for: 5m
+        labels: {severity: warning}
+        annotations:
+          summary: A research run has waited over fifteen minutes
+          runbook: docs/operations.md#queue-stalled
+      - alert: DeepDiveResearchFailures
+        expr: increase(deepdive_events_total{event="run_failed"}[15m]) >= 3
+        labels: {severity: warning}
+        annotations:
+          summary: Three research runs failed in fifteen minutes
+          runbook: docs/operations.md#research-failures

@@ -1,0 +1,92 @@
+name: deepdive
+x-runtime: &runtime
+  image: ${DEEPDIVE_IMAGE:-deepdive:local}
+  build: .
+  restart: unless-stopped
+  read_only: true
+  tmpfs:
+    - /tmp:size=256m,mode=1777
+  cap_drop: [ALL]
+  security_opt: [no-new-privileges:true]
+  pids_limit: 256
+  mem_limit: 2g
+  cpus: 2
+  logging:
+    driver: json-file
+    options:
+      max-size: 10m
+      max-file: "3"
+
+services:
+  api:
+    <<: *runtime
+    environment:
+      MESH_API_KEY: ${MESH_API_KEY:-}
+      MESH_MODEL: ${MESH_MODEL:-openai/gpt-4o}
+      DEEPDIVE_API_TOKEN_FILE: /run/secrets/api_token
+      DEEPDIVE_RELEASE: ${DEEPDIVE_RELEASE:-local}
+      SENTRY_DSN: ${SENTRY_DSN:-}
+    secrets: [api_token]
+    volumes:
+      - research:/data
+    ports: ["127.0.0.1:8000:8000"]
+    stop_grace_period: 90s
+
+  ui:
+    <<: *runtime
+    command: ["python", "-m", "streamlit", "run", "streamlit_app.py", "--server.address=0.0.0.0", "--server.port=8501"]
+    environment:
+      DEEPDIVE_API_URL: http://api:8000
+      DEEPDIVE_API_TOKEN_FILE: /run/secrets/api_token
+    secrets: [api_token]
+    ports: ["127.0.0.1:8501:8501"]
+    depends_on:
+      api:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8501/_stcore/health', timeout=3)"]
+      interval: 20s
+      timeout: 5s
+      start_period: 30s
+      retries: 3
+
+  prometheus:
+    image: prom/prometheus:v3.5.0
+    profiles: [monitoring]
+    restart: unless-stopped
+    command: ["--config.file=/etc/prometheus/prometheus.yml", "--storage.tsdb.retention.time=15d"]
+    volumes:
+      - ./monitoring/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - ./monitoring/alerts.yml:/etc/prometheus/alerts.yml:ro
+      - prometheus:/prometheus
+    secrets: [api_token]
+    ports: ["127.0.0.1:9090:9090"]
+    depends_on:
+      api:
+        condition: service_healthy
+
+  grafana:
+    image: grafana/grafana:12.2.0
+    profiles: [monitoring]
+    restart: unless-stopped
+    environment:
+      GF_SECURITY_ADMIN_PASSWORD__FILE: /run/secrets/grafana_admin
+      GF_USERS_ALLOW_SIGN_UP: "false"
+      GF_ANALYTICS_REPORTING_ENABLED: "false"
+    secrets: [grafana_admin]
+    volumes:
+      - grafana:/var/lib/grafana
+      - ./monitoring/grafana/provisioning:/etc/grafana/provisioning:ro
+      - ./monitoring/grafana/dashboards:/var/lib/grafana/dashboards:ro
+    ports: ["127.0.0.1:3000:3000"]
+    depends_on: [prometheus]
+
+secrets:
+  api_token:
+    file: .secrets/api_token
+  grafana_admin:
+    file: .secrets/grafana_admin
+volumes:
+  research:
+  prometheus:
+  grafana:

@@ -1,0 +1,10 @@
+*
+!pyproject.toml
+!uv.lock
+!deepdive/
+!deepdive/*.py
+!streamlit_app.py
+!Dockerfile
+!evaluation/
+!evaluation/claims.v1.json
+!evaluation/questions.v1.json

@@ -1,0 +1,25 @@
+{
+  "mode": "live-public-retrieval",
+  "date": "2026-10-17T10:26:04.419473+00:00",
+  "ai_calls": 0,
+  "sources": [
+    {
+      "url": "https://www.sqlite.org/wal.html",
+      "outcome": "retrieved",
+      "final_url": "https://www.sqlite.org/wal.html",
+      "sha256": "f3467b530b883d4a00574fe1a898b3d121ed72764ae28cf66941080ac0badb9e",
+      "text_characters": 31502,
+      "seconds": 2.047
+    }
+  ],
+  "search": {
+    "outcome": "available",
+    "urls": [
+      "https://sqlite.org/wal.html",
+      "https://a1.sqlite.org/docs.html",
+      "https://sqlite.org/search?q=%22write-ahead%22+%22logging%22&i=1",
+      "https://wizardforcel.gitbooks.io/sqlite-doc-en/content/48.html",
+      "https://deepwiki.com/sqlite/sqlite/3.4-write-ahead-logging-(wal)"
+    ]
+  }
+}
