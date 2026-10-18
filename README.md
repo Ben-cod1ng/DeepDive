@@ -16,7 +16,7 @@ Built for Agent Arena 2026 with Python, LangGraph, FastAPI, and Streamlit. Every
 - Export cited Markdown/HTML reports, HTML/PowerPoint presentations, source-backed PNG charts, and JSON audit records.
 - Run the same service from the browser, API, or CLI. Operate it with Docker, health checks, structured logs, error tracking, Prometheus, and Grafana.
 
-**Validation status:** Offline tests cover web and document research, hybrid retrieval, revisions, recovery, exports, and UI review. Recorded GitHub Quality checks cover Linux tests, dependency audit, Docker deployment, and monitoring HTTP checks. Public retrieval/search worked in a recorded live check. Workflow tests use explicitly synthetic model responses and vectors. Live Mesh research and document retrieval, independent label review, live accuracy measurement, and release/submission acceptance remain pending. Automated source verification can be wrong; coverage and correctness are reported separately. See [the completion checklist](tasks/todo.md) and [evaluation guide](docs/evaluation.md).
+**Validation status:** [Quality CI](https://github.com/Ben-cod1ng/DeepDive/actions/runs/39120462295) passed **63 tests**, dependency audit, Docker document ingestion/removal, and monitoring checks. Tests cover web/document research, hybrid retrieval, revisions, recovery, exports, and UI review using explicitly synthetic model responses and vectors. Public retrieval/search also worked in a recorded live check. Live Mesh research and document retrieval, independent label review, live accuracy measurement, and release/submission acceptance remain pending. Automated source verification can be wrong; coverage and correctness are reported separately. See [the completion checklist](tasks/todo.md) and [evaluation guide](docs/evaluation.md).
 
 ## Architecture
 
@@ -29,7 +29,7 @@ flowchart LR
     Graph --> Mesh[Mesh model gateway]
     Graph --> Tools[Role-scoped tools]
     Tools --> Web[Public search and source pages]
-    UI --> Upload[Document upload and bounded parsing]
+    API --> Upload[Document upload and bounded parsing]
     Upload --> DB
     Tools --> RAG[BM25 + vector search / fusion / Mesh reranking]
     RAG --> DB

@@ -40,6 +40,8 @@ locally verified behavior, not unperformed live model evaluation.
 ## Measured validation
 
 - [x] Full local suite passed (62 tests); final document/retrieval regressions passed (21 tests), including calculation evidence and backup restoration
+- [x] Document RAG CI passed all 63 tests, dependency audit, deployed document ingestion/removal, and monitoring checks: [recorded run](https://github.com/Ben-cod1ng/DeepDive/actions/runs/39120462295)
+- [x] Local RAG Docker upgrade passed after a checksummed backup; deployed source fingerprint matched tested code, document HTTP smoke passed, and all monitoring checks passed: [validation record](../evaluation/results/document-rag-validation.json), [monitoring evidence](../evaluation/results/document-rag-monitoring-local.json)
 - [x] Ruff, Pydantic-contract type checks, and compilation passed
 - [x] Dependency audit reported no known vulnerabilities after targeted upgrades
 - [x] Recorded 32-case deterministic fixture evaluation, dataset version 1.1

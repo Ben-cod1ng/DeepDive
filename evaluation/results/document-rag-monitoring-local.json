@@ -1,0 +1,12 @@
+{
+  "status": "passed",
+  "observed_at": "2026-10-18T23:16:29.844294+00:00",
+  "prometheus_scrape": "up",
+  "application_request_metrics": "present",
+  "healthy_alert_rules": 4,
+  "grafana_database": "ok",
+  "grafana_datasource": "ok",
+  "provisioned_dashboard_panels": 8,
+  "panel_queries": "passed through Grafana",
+  "model_requests": 0
+}
