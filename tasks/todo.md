@@ -18,6 +18,9 @@ locally verified behavior, not unperformed live model evaluation.
 - [x] History search/rename/delete/export and memory inspect/edit/forget controls
 - [x] HTML/Markdown reports, HTML/PPTX decks, PNG charts/tables, JSON audit exports
 - [x] Offline end-to-end workflow and UI approval tests
+- [x] Document upload/parsing, page/section chunks, scoped BM25 + Mesh vectors + rank fusion + Mesh reranking
+- [x] Document-only tool restrictions, mixed research, library management, and cited review/export integration
+- [x] Versioned retrieval evaluation command and dataset, with per-stage ranking metrics
 
 ## Operations and documentation
 
@@ -36,13 +39,16 @@ locally verified behavior, not unperformed live model evaluation.
 
 ## Measured validation
 
-- [x] 41 tests passed locally, including gateway budgets, API boundaries, recovery, UI review, and monitoring failure detection
+- [x] Full local suite passed (62 tests); final document/retrieval regressions passed (21 tests), including calculation evidence and backup restoration
+- [x] Document RAG CI passed all 63 tests, dependency audit, deployed document ingestion/removal, and monitoring checks: [recorded run](https://github.com/Ben-cod1ng/DeepDive/actions/runs/39120462295)
+- [x] Local RAG Docker upgrade passed after a checksummed backup; deployed source fingerprint matched tested code, document HTTP smoke passed, and all monitoring checks passed: [validation record](../evaluation/results/document-rag-validation.json), [monitoring evidence](../evaluation/results/document-rag-monitoring-local.json)
 - [x] Ruff, Pydantic-contract type checks, and compilation passed
 - [x] Dependency audit reported no known vulnerabilities after targeted upgrades
 - [x] Recorded 32-case deterministic fixture evaluation, dataset version 1.1
 - [x] Actual public page retrieval and search succeeded; no AI calls used
 - [x] Docker API/UI health and HTTP persistence/memory/export smoke check passed
 - [ ] Live Mesh verifier evaluation; intentionally pending credentials
+- [ ] Live Mesh embeddings/reranking retrieval ablation and document research acceptance; independent retrieval labels
 - [ ] Independent review of the 32 authored reference labels
 - [ ] Ten-question live benchmark and independent final-claim review
 - [ ] Manual live research/revise/restart/export acceptance demonstration

@@ -81,4 +81,10 @@ Calibration reports labeled sample count, mean absolute error, and Pearson corre
 
 Keep reviewable aggregate evaluation results with the tested commit. GitHub uploads detailed CI/live evidence with finite retention. The release job evaluates the candidate again before pushing its image and saves the resulting digest. Changing prompts, code, policy, model selection, or dependencies requires a new evaluation and review of the observed regressions. A hosted model can change behind a model identifier; record dates and repeat the frozen set when behavior changes.
 
-Live Mesh results, independently measured final-claim support, and remote GitHub workflow results are still pending. See [the checklist](../tasks/todo.md) for the current state.
+## Document retrieval evaluation
+
+Run `uv run python -m deepdive.rag_evaluation --output evaluation/results/live-rag.json` to compare BM25, dense, fused, and reranked document retrieval on the versioned ten-document/seven-question dataset. It records Recall@3, MRR@3, nDCG@3, latency, usage, model/profile, and code/data hashes in an isolated evaluation directory. This is a retrieval ablation; it does not measure final-answer accuracy. See [the RAG guide](rag.md#evaluate-retrieval).
+
+The live-evaluation and release workflows retain this retrieval evidence alongside verifier results. Retrieval labels are authored synthetic cases pending independent review; successful command execution is not a retrieval quality threshold. The existing independently reviewed verifier precision/recall gate still controls image publication. Establish reviewed retrieval thresholds on a representative held-out corpus before treating the RAG experiment as a production promotion gate.
+
+Live Mesh results and independently measured final-claim support remain pending. Offline application and remote quality checks have passed previously; see [the checklist](../tasks/todo.md) for current validation.

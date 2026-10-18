@@ -11,6 +11,7 @@ DeepDive uses a modular Python service with one API process and one active run w
 | `workflow.py` | LangGraph nodes, fan-out, barriers, repair, durable review |
 | `gateway.py` | Mesh calls, schema validation, token allocation, retry and request budgets |
 | `tools.py`, `retrieval.py` | Role-scoped tools, public-network retrieval and extraction |
+| `documents.py`, `document_parser.py`, `rag.py` | Bounded uploads, immutable document passages, BM25/vector fusion and Mesh reranking |
 | `guardrails.py`, `verification.py` | Input boundaries, citations, numbers, semantic support decisions |
 | `storage.py`, `memory.py` | SQLite records, FTS search, scoped caches and memory |
 | `artifacts.py` | Cited reports, charts, tables, slide decks, atomic output writes |
@@ -86,12 +87,17 @@ Editing, forgetting, or clearing memory invalidates scoped caches. Clearing memo
 | Extraction | Content hash and extractor version, up to 1 day |
 | Supported verifier decision | Claim, passage hashes, model, prompt and policy; up to 1 day, with source freshness checked again |
 | Exact report | Question/context/preferences/model/code fingerprint; at most 1 hour and no longer than source freshness |
+| Document retrieval | Selected corpus/query/model/profile/retrieval version; up to 1 hour |
+| Query embeddings | Scoped exact query and embedding profile; up to 1 hour |
+| Chunk embeddings | Persistent immutable passage/profile vectors; model/revision changes create a separate profile |
 
 Caches are scoped; concurrent identical work is coalesced. Entries are capped and expire. Refresh bypasses reuse. Report reuse creates a new run with its own review, claim IDs, decisions, and audit trail. This is exact/context-aware caching, not an unvalidated semantic-similarity cache.
 
 ## Guardrails and trust boundaries
 
-Inputs use Pydantic schemas, bounded questions/URLs/settings, a 200 KB HTTP body cap, a queue limit, and the local API token. Public retrieval rejects non-public addresses, credentials in URLs, unsafe schemes/ports, and unsafe redirects. DNS results are validated and connections pin a validated address while retaining TLS hostname verification. Responses have size/type limits and per-host pacing.
+Inputs use Pydantic schemas, bounded questions/URLs/settings, a 200 KB HTTP body cap (5 MB only for document upload), a queue limit, and the local API token. Public retrieval rejects non-public addresses, credentials in URLs, unsafe schemes/ports, and unsafe redirects. DNS results are validated and connections pin a validated address while retaining TLS hostname verification. Responses have size/type limits and per-host pacing.
+
+Document research adds a separate, scoped hybrid retrieval path. It preserves PDF page/Markdown or DOCX section boundaries, combines BM25 and exact dense cosine rankings using reciprocal rank fusion, and reranks candidates through Mesh. Document-only mode blocks all public retrieval tools. Uploaded text remains untrusted evidence and passes the same claim/publication gates. See [document RAG](rag.md) for the diagram, limits, and cache/deletion contract.
 
 Retrieved text is untrusted evidence and may contain prompt injection. Prompts state this boundary; role restrictions and output gates enforce concrete consequences. These controls reduce exposure but do not prove that an LLM cannot be manipulated.
 

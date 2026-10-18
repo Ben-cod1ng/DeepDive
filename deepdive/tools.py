@@ -1,5 +1,6 @@
 """Typed, role-restricted tools. Agents cannot publish, mutate memory, or execute code."""
 import http.client
+from itertools import zip_longest
 import json
 import math
 import re
@@ -75,9 +76,17 @@ class ToolBox:
         self.http = http or PublicHTTP()
         self.locks = {}
         self.lock = threading.RLock()
+        self.document_search = None
+
+    def allow_network(self):
+        if self.run["request"].get("research_mode") == "documents":
+            raise ValueError("Public network tools are disabled in document-only research")
 
     def schemas(self, role="researcher"):
-        return {name: SCHEMAS[name].model_json_schema() for name in sorted(PERMISSIONS[role])}
+        names = PERMISSIONS[role]
+        if self.run["request"].get("research_mode") == "documents":
+            names = names - {"search_web", "fetch_source", "fetch_market_series"}
+        return {name: SCHEMAS[name].model_json_schema() for name in sorted(names)}
 
     def call(self, role, name, arguments):
         self.context.check()
@@ -109,6 +118,7 @@ class ToolBox:
             return value
 
     def search_web(self, args):
+        self.allow_network()
         return self._cached("search", {"query": args.query.strip(), "provider": "ddg-html-lite"}, 3600,
                             lambda: search_public(self.http, args.query.strip()))
 
@@ -125,6 +135,7 @@ class ToolBox:
                 "table_count": len(source.get("tables", []))}
 
     def fetch_source(self, args):
+        self.allow_network()
         ttl = 900 if self.run.get("time_sensitive") else 86400
         key = cache_key("page", url=args.url, scope=self.scope, ttl=ttl)
         with self.lock:
@@ -183,7 +194,11 @@ class ToolBox:
         return source and source["fresh_until"] > time.time() and source["id"] in self.store.get("run", self.run["id"]).get("source_ids", [])
 
     def search_evidence(self, args):
-        return [p for p in self.store.search(self.scope, args.query, limit=100) if self._allowed(p)][:12]
+        documents = self.document_search(args.query) if self.document_search and self.run.get("document_source_ids") else []
+        web = [p for p in self.store.search(self.scope, args.query, limit=100)
+               if self._allowed(p) and p["source_id"] not in self.run.get("document_source_ids", [])
+               and (self.run["request"].get("research_mode") != "documents" or p.get("kind") == "calculation")][:12]
+        return [p for pair in zip_longest(documents, web) for p in pair if p][:12]
 
     def read_passages(self, args):
         passages = [self.store.get("passage", pid, self.scope) for pid in args.passage_ids]
@@ -228,6 +243,7 @@ class ToolBox:
         return self._attach(source)
 
     def fetch_market_series(self, args):
+        self.allow_network()
         question = self.run["request"]["question"]
         if not re.search(r"\b(stock|share|market|ticker|price|equity|invest|trading|finance)\w*\b", question, re.I):
             raise ValueError("Market retrieval requires a market-related question")

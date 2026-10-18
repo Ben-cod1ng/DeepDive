@@ -1,0 +1,44 @@
+{
+  "observed_on": "2026-10-18",
+  "pipeline": "174eeb3e322124d8334be053fbde73217e6a404662718e451bd715acb040f993",
+  "local_full_suite": {
+    "passed": 62,
+    "failed": 0,
+    "note": "Before final calculation regression and citation/index review"
+  },
+  "local_final_document_retrieval_regressions": {
+    "passed": 21,
+    "failed": 0
+  },
+  "lint": "passed",
+  "contract_type_checks": "passed",
+  "dependency_audit": "No known vulnerabilities found",
+  "live_mesh_embeddings_and_reranking": "pending credentials",
+  "independent_retrieval_label_review": "pending",
+  "live_retrieval_accuracy": null,
+  "remote_quality": {
+    "url": "https://github.com/Ben-cod1ng/DeepDive/actions/runs/39120462295",
+    "conclusion": "success",
+    "tests": {
+      "passed": 63,
+      "failed": 0,
+      "errors": 0
+    },
+    "jobs": {
+      "Quality checks": "success",
+      "Docker smoke": "success"
+    }
+  },
+  "docker_document_ingestion": "Passed in GitHub CI and local Docker deployment",
+  "local_deployment": {
+    "status": "passed",
+    "image": "sha256:11c999ce4cdef59bfc88403201189300b33673d57b4e149162c3daac3b080691",
+    "container_pipeline_matches_tested_source": true,
+    "pre_upgrade_backup_checksums": "verified",
+    "api_readiness": "passed",
+    "http_persistence_document_memory_export_ui_smoke": "passed",
+    "monitoring_evidence": "document-rag-monitoring-local.json",
+    "model_requests": 0
+  },
+  "application_commit": "f490c4c1cc359813537a1ed31792a3cc858455a7"
+}

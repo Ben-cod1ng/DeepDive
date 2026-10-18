@@ -22,11 +22,18 @@ jobs:
           MESH_API_KEY: ${{ secrets.MESH_API_KEY }}
           DEEPDIVE_RELEASE: ${{ github.sha }}
         run: uv run --no-sync python -m deepdive.evaluation verifier --output evaluation/results/live-verifier.json
+      - name: Compare document retrieval stages through Mesh
+        env:
+          MESH_API_KEY: ${{ secrets.MESH_API_KEY }}
+          DEEPDIVE_RELEASE: ${{ github.sha }}
+        run: uv run --no-sync python -m deepdive.rag_evaluation --output evaluation/results/live-rag.json
       - name: Assess promotion gate
         run: uv run --no-sync python -m deepdive.evaluation gate evaluation/results/live-verifier.json
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         if: always()
         with:
           name: live-evaluation
-          path: evaluation/results/live-verifier.json
+          path: |
+            evaluation/results/live-verifier.json
+            evaluation/results/live-rag.json
           retention-days: 90

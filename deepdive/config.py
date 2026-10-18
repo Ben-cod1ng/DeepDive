@@ -23,6 +23,8 @@ class Settings:
     model: str = "openai/gpt-4o"
     api_token: str = ""
     input_tokens: int = 24000
+    embedding_model: str = "openai/text-embedding-3-small"
+    embedding_revision: str = "1"
 
     @classmethod
     def load(cls):
@@ -32,4 +34,5 @@ class Settings:
         token = Path(token_file).read_text(encoding="utf-8").strip() if token_file else os.getenv("DEEPDIVE_API_TOKEN", "")
         return cls(path if path.is_absolute() else ROOT / path,
                    os.getenv("MESH_API_KEY", ""), os.getenv("MESH_MODEL", "openai/gpt-4o"),
-                   token)
+                   token, embedding_model=os.getenv("MESH_EMBEDDING_MODEL", "openai/text-embedding-3-small"),
+                   embedding_revision=os.getenv("MESH_EMBEDDING_REVISION", "1"))

@@ -23,6 +23,8 @@ services:
     environment:
       MESH_API_KEY: ${MESH_API_KEY:-}
       MESH_MODEL: ${MESH_MODEL:-openai/gpt-4o}
+      MESH_EMBEDDING_MODEL: ${MESH_EMBEDDING_MODEL:-openai/text-embedding-3-small}
+      MESH_EMBEDDING_REVISION: ${MESH_EMBEDDING_REVISION:-1}
       DEEPDIVE_API_TOKEN_FILE: /run/secrets/api_token
       DEEPDIVE_RELEASE: ${DEEPDIVE_RELEASE:-local}
       SENTRY_DSN: ${SENTRY_DSN:-}

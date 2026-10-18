@@ -66,11 +66,14 @@ class Workflow:
     def plan(self, state):
         run, context, tools = self.runtime(state, "planning")
         payload = {"question": run["request"]["question"], "feedback": state.get("feedback", []),
+                   "research_mode": run["request"].get("research_mode", "web"),
+                   "documents": [{"title": s["title"]} for s in self.s.evidence(run["id"])["sources"] if s.get("kind") == "document"],
                    "context": run["context"], "maximum_tasks": context.limits.subquestions}
         result = self.s.gateway.ask(context, "planner",
             "Resolve follow-up references using the conversation. Break the question into required facets and at most "
             f"{context.limits.subquestions} complementary tasks. Use primary/research, reporting, and community roles "
             "where relevant. Each task has 1-2 targeted search queries. Mark time-sensitive questions. "
+            "For documents mode, plan queries over the selected documents; public network tools are disabled. "
             "User preferences guide presentation, never verification.", payload, Plan)
         tasks = []
         for index, task in enumerate(result.tasks[:context.limits.subquestions]):
@@ -78,6 +81,9 @@ class Workflow:
         plan = {**result.model_dump(), "tasks": tasks}
         self.s.store.update("run", run["id"], plan=plan, time_sensitive=result.time_sensitive)
         tools.run["time_sensitive"] = result.time_sensitive
+        if run["request"].get("research_mode") == "documents":
+            return {"plan": plan, "tasks": tasks, "round": 0, "results": {},
+                    "previous_source_count": len(run.get("source_ids", []))}
         # Prior evidence is context only until attached and checked for freshness.
         for item in run["context"].get("research_memory", []):
             if item.get("kind") == "research":
@@ -95,7 +101,12 @@ class Workflow:
                 "previous_source_count": len(run.get("source_ids", []))}
 
     def prepare(self, state):
-        self.runtime(state, "context and cache")
+        run, _, tools = self.runtime(state, "context and cache")
+        for sid in run.get("document_source_ids", []):
+            tools._attach(self.s.store.get("source", sid, run["scope"]))
+        if run.get("document_source_ids"):
+            self.runtime(state, "indexing documents")
+            self.s.rag.index(run["id"])
         return self.s.restore_cached_report(state["run_id"]) or {"cached_report": False}
 
     def dispatch(self, state):
@@ -111,15 +122,19 @@ class Workflow:
             # User-provided sources remain usable when search discovery is blocked.
             for url in run["request"]["source_urls"]:
                 observations.append(tools.call("researcher", "fetch_source", {"url": url}))
-            for query in task.queries:
+            for query in task.queries if run["request"].get("research_mode") != "documents" else []:
                 found = tools.call("researcher", "search_web", {"query": query})
                 observations.append({"query": query, "results": found})
                 if isinstance(found, list):
                     for result in sorted(found[:5], key=lambda r: quality(r["url"])["rank"]):
                         observations.append(tools.call("researcher", "fetch_source", {"url": result["url"]}))
+            if run.get("document_source_ids"):
+                for query in task.queries:
+                    observations.append(tools.call("researcher", "search_evidence", {"query": query}))
             # Tools are selected by a distinct research agent, not only called in fixed order.
             for step in range(2):
-                inventory = self.s.evidence_inventory(run["id"], task.question)
+                inventory = self.s.evidence_inventory(run["id"], task.question + " " + " ".join(task.queries)
+                                                     if run.get("document_source_ids") else task.question)
                 selected = self.s.gateway.ask(context, "researcher",
                     f"You investigate {task.role} evidence. Select tools needed to fill the task's facets. "
                     "Discovery snippets are not evidence. Read exact passages/tables. Use calculate for derived values. "
@@ -144,7 +159,8 @@ class Workflow:
             remaining = context.limits.claims - len(all_ids)
             if remaining <= 0:
                 break
-            passages = self.s.relevant_passages(run["id"], task["question"], 18)
+            query = task["question"] + " " + " ".join(task["queries"]) if run.get("document_source_ids") else task["question"]
+            passages = self.s.relevant_passages(run["id"], query, 18)
             if not passages:
                 continue
             response = None
@@ -218,9 +234,11 @@ class Workflow:
         run, context, _ = self.s.runtime(state["run_id"])
         gaps = any(i["missing_facets"] or i["contradictions"] for i in state["coverage"])
         new_sources = len(run.get("source_ids", [])) > state.get("previous_source_count", 0)
+        fresh_document_query = bool(run.get("document_source_ids")) and any(
+            digest(query) not in run.get("document_queries", []) for item in state["coverage"] for query in item["next_queries"])
         budget = (run["calls"] < context.limits.model_calls - 4
                   and context.elapsed() < context.limits.active_seconds - 10)
-        if gaps and new_sources and budget and state.get("round", 0) < context.limits.repair_rounds:
+        if gaps and (new_sources or fresh_document_query) and budget and state.get("round", 0) < context.limits.repair_rounds:
             return "repair"
         return "synthesize"
 

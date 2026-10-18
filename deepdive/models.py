@@ -21,9 +21,27 @@ class RunRequest(StrictModel):
     session_id: str | None = None
     project_id: str | None = None
     source_urls: list[str] = Field(default_factory=list, max_length=10)
+    document_ids: list[str] = Field(default_factory=list, max_length=10)
+    research_mode: Literal["web", "documents", "mixed"] = "web"
     review_mode: Literal["manual", "auto"] = "manual"
     refresh: bool = False
     limits: Limits = Field(default_factory=Limits)
+
+    @model_validator(mode="after")
+    def document_selection(self):
+        if self.research_mode == "web" and self.document_ids:
+            raise ValueError("Select documents or mixed research mode to use documents")
+        if self.research_mode != "web" and not self.document_ids:
+            raise ValueError("Select at least one document")
+        if self.document_ids and not (self.session_id or self.project_id):
+            raise ValueError("Document research requires its existing session or project")
+        if self.research_mode == "documents" and self.source_urls:
+            raise ValueError("Document-only research cannot include public source URLs")
+        if len(set(self.document_ids)) != len(self.document_ids):
+            raise ValueError("Document IDs must be unique")
+        if len(self.document_ids) > self.limits.sources:
+            raise ValueError("Selected documents exceed the source limit")
+        return self
 
     @field_validator("question")
     @classmethod
@@ -136,6 +154,10 @@ class ContextSummary(StrictModel):
 
 class SummarySelection(StrictModel):
     claim_ids: list[str] = Field(default_factory=list, max_length=8)
+
+
+class PassageRanking(StrictModel):
+    passage_ids: list[str] = Field(default_factory=list, max_length=16)
 
 
 class SessionRequest(Named):

@@ -85,7 +85,31 @@ Normal progress is `queued` → `running` → `waiting_review` → `running` →
 
 Responses include an `X-Request-ID`. Validation errors use 422, missing records 404, invalid state transitions/ownership conflicts 409, missing tokens 401, rejected browser origins 403, oversized bodies 413, and body timeouts 408. Unexpected failures return a generic 500 with `error_id`; use that ID in `/errors` rather than exposing stack traces to users.
 
-Requests are limited to 200 KB. Questions and revision feedback are bounded to 10,000 characters, and a run accepts at most ten optional source URLs. Per-run limits are documented in [architecture](architecture.md). Source URLs are validated before retrieval, including DNS and redirect checks.
+Requests are limited to 200 KB, except `POST /documents`, which accepts up to 5,000,000 bytes. Questions and revision feedback are bounded to 10,000 characters, and a run accepts at most ten optional source URLs. Per-run limits are documented in [architecture](architecture.md). Source URLs are validated before retrieval, including DNS and redirect checks.
+
+## Document library and research
+
+| Endpoint | Contract |
+|---|---|
+| `POST /documents?filename=report.pdf&session_id=…` | Raw `application/octet-stream` bytes. Returns document ID, source ID, hash, chunk count, and extraction warnings. Exactly one session/project scope is required. Identical content/format/parser/chunker in that scope is deduplicated. |
+| `GET /documents?session_id=…` | List active documents. Use `project_id` instead for a shared library. |
+| `DELETE /documents/{id}?session_id=…` | Remove from future selection and clear its vectors/cache. Historical cited evidence is retained. Returns 409 while an unfinished run uses the document. |
+
+Add `document_ids` and `research_mode` to `POST /runs`:
+
+```json
+{
+  "question": "What evidence supports the conclusion?",
+  "session_id": "SESSION_ID",
+  "document_ids": ["DOCUMENT_ID"],
+  "research_mode": "documents",
+  "review_mode": "manual"
+}
+```
+
+`research_mode` is `web` (default), `documents`, or `mixed`. Documents/mixed require 1–10 selected IDs belonging to the run's session/project, totaling at most 512 chunks. Web mode rejects document IDs. Documents mode rejects source URLs and disables public network tools, including model-selected calls. Mixed mode explicitly permits document-derived public queries. Existing clients that omit these fields retain web research behavior.
+
+The API streams/counts the upload body within its size/time bound before parsing. Parsing completes before a 201 response; embeddings are created when research starts and count toward its model budget. Invalid, encrypted, oversized, or textless documents return 422 with an actionable reason. See [the RAG guide](rag.md) for limits and privacy behavior.
 
 ## Compatibility and exports
 
