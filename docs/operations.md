@@ -110,6 +110,12 @@ Inspect the recovered history using a local backend configured for that path aft
 
 ## CI/CD and release
 
+Document ingestion and retrieval use the existing API process and research volume; there is no additional vector server. `MESH_EMBEDDING_MODEL` defaults to `openai/text-embedding-3-small`. `MESH_EMBEDDING_REVISION` defaults to `1`; increment it and start a new run after a deployment changes under the same model ID. Both values pass through Compose. Restart/recreate the API after changing them.
+
+The first document run embeds missing chunks and records batch progress. All embedding/reranking attempts use the existing model-call budget, latency telemetry, and sanitized error handling. `document_retrieval` events retain candidate IDs and ranking-stage outcomes in the local audit. `document_rerank_fallback` exposes budget/schema fallback. Ordinary operational logs omit passage/query text.
+
+The stopped-service backup includes document records, FTS tables, and vector BLOBs in `deepdive.sqlite3`. Parser subprocesses use temporary process memory; original uploads are not saved. Library removal retains historical citations and does not erase existing backups. See [document lifecycle and limits](rag.md).
+
 The repository root must be the contents of `DeepDive`, so `.github/workflows` is at the GitHub repository root.
 
 | Workflow | Trigger and gate |

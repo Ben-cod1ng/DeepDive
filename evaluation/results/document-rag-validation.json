@@ -1,0 +1,21 @@
+{
+  "observed_on": "2026-10-18",
+  "pipeline": "174eeb3e322124d8334be053fbde73217e6a404662718e451bd715acb040f993",
+  "local_full_suite": {
+    "passed": 62,
+    "failed": 0,
+    "note": "Before final calculation regression and citation/index review"
+  },
+  "local_final_document_retrieval_regressions": {
+    "passed": 21,
+    "failed": 0
+  },
+  "lint": "passed",
+  "contract_type_checks": "passed",
+  "dependency_audit": "No known vulnerabilities found",
+  "live_mesh_embeddings_and_reranking": "pending credentials",
+  "independent_retrieval_label_review": "pending",
+  "live_retrieval_accuracy": null,
+  "remote_quality": "pending",
+  "docker_document_ingestion": "pending"
+}

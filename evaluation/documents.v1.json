@@ -1,0 +1,26 @@
+{
+  "version": "1.0",
+  "label_status": "authored synthetic retrieval cases; independent review pending",
+  "independent_review": {"status": "pending", "reviewer": null, "date": null},
+  "documents": [
+    {"name": "transport.md", "text": "# Transport\nAn automobile is a wheeled road vehicle used to carry passengers. Its engine can run on petrol or an electric battery."},
+    {"name": "moon.md", "text": "# Fictional atlas\nCar is the name of a fictional moon in this invented atlas. It has no connection to terrestrial transportation."},
+    {"name": "leave-current.md", "text": "# Leave policy effective 2026\nEmployees receive 25 days of paid annual leave. Unused days cannot be carried forward. This policy replaces the 2025 policy."},
+    {"name": "leave-old.md", "text": "# Superseded leave policy, 2025\nEmployees received 20 days of paid annual leave. This policy is historical and is superseded by the 2026 policy."},
+    {"name": "support.md", "text": "# Support handbook\nError E-417 indicates an expired session token. Sign in again to obtain a new token. Reinstalling the application does not fix E-417."},
+    {"name": "network.md", "text": "# Network handbook\nError E-471 indicates a failed network connection. Check DNS and firewall rules. This is a different error from E-417."},
+    {"name": "backup.md", "text": "# Recovery procedure\nStop the service before making a backup of the database and artifacts. Restore into an empty directory. Start the service and verify a saved review resumes."},
+    {"name": "study.md", "text": "# Trial report\nThe trial enrolled 20 adults. It measured blood pressure after 12 months. It did not measure survival or demonstrate a mortality benefit."},
+    {"name": "advert.md", "text": "# Unverified advertisement\nAn advertisement claims a mortality benefit for the trial intervention. It provides no survival measurements and conflicts with the trial's stated outcomes."},
+    {"name": "refund.md", "text": "# Refund policy\nCustomers can request a refund within 30 days of purchase. Refunds are issued to the original payment method."}
+  ],
+  "questions": [
+    {"id": "synonym", "question": "Which document explains what a car is and how it transports people?", "relevant": ["transport.md"]},
+    {"id": "exact-code", "question": "How do I fix error E-417?", "relevant": ["support.md"]},
+    {"id": "version", "question": "Compare the 2025 and 2026 annual leave entitlements and identify which policy applies now.", "relevant": ["leave-old.md", "leave-current.md"]},
+    {"id": "procedure", "question": "How should I recover saved research safely from a backup?", "relevant": ["backup.md"]},
+    {"id": "negation", "question": "Did the trial measure survival or establish reduced mortality?", "relevant": ["study.md"]},
+    {"id": "contradiction", "question": "What conflicts exist between the advertisement's mortality claim and the trial report?", "relevant": ["study.md", "advert.md"]},
+    {"id": "refund", "question": "What is the time window for getting my purchase money back?", "relevant": ["refund.md"]}
+  ]
+}

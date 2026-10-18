@@ -7,11 +7,12 @@ import sqlite3
 import time
 import uuid
 from typing import Literal
-from fastapi import FastAPI, Header, Query, Request
+from fastapi import Body, FastAPI, Header, Query, Request
 from fastapi.responses import FileResponse, JSONResponse, Response
 from starlette.middleware.trustedhost import TrustedHostMiddleware
 from pydantic import Field
 from .config import Settings
+from .document_parser import MAX_BYTES
 from .guardrails import scope_for
 from .models import (StrictModel, RunRequest, ReviewRequest, Named, Preference, SessionRequest)
 from .service import ResearchService, Conflict
@@ -53,13 +54,14 @@ def create_app(service=None, settings=None):
             length = int(request.headers.get("content-length", "0"))
         except ValueError:
             return JSONResponse({"detail": "Invalid Content-Length"}, 400)
-        if length < 0 or length > 200000:
-            return JSONResponse({"detail": "Request body exceeds 200 KB"}, 413)
+        maximum = MAX_BYTES if request.method == "POST" and request.url.path == "/documents" else 200000
+        if length < 0 or length > maximum:
+            return JSONResponse({"detail": f"Request body exceeds {maximum} bytes"}, 413)
         async def bounded_body():
             content = bytearray()
             async for chunk in request.stream():
                 content.extend(chunk)
-                if len(content) > 200000:
+                if len(content) > maximum:
                     return None
             return bytes(content)
         try:
@@ -67,7 +69,7 @@ def create_app(service=None, settings=None):
         except asyncio.TimeoutError:
             return JSONResponse({"detail": "Request body timed out"}, 408)
         if body is None:
-            return JSONResponse({"detail": "Request body exceeds 200 KB"}, 413)
+            return JSONResponse({"detail": f"Request body exceeds {maximum} bytes"}, 413)
         request._body = body
         return await call_next(request)
 
@@ -185,6 +187,24 @@ def create_app(service=None, settings=None):
     @app.get("/memory")
     def memory(session_id: str | None = None, project_id: str | None = None):
         return {"items": s().store.list("memory", scope(session_id, project_id))}
+
+    @app.get("/documents")
+    def documents(session_id: str | None = None, project_id: str | None = None):
+        return {"documents": s().documents.list(scope(session_id, project_id))}
+
+    @app.post("/documents", status_code=201)
+    def upload_document(body: bytes = Body(media_type="application/octet-stream"),
+                        filename: str = Query(min_length=1, max_length=180),
+                        session_id: str | None = None, project_id: str | None = None):
+        with s().mutation:
+            selected = scope(session_id, project_id)
+            result = s().documents.ingest(selected, filename, body)
+            s().observability.emit("document_uploaded", outcome="ok")
+            return result
+
+    @app.delete("/documents/{document_id}")
+    def remove_document(document_id: str, session_id: str | None = None, project_id: str | None = None):
+        return s().remove_document(scope(session_id, project_id), document_id)
 
     @app.post("/memory/preferences", status_code=201)
     def remember(body: Preference, session_id: str | None = None, project_id: str | None = None):

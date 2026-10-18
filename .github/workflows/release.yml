@@ -33,6 +33,7 @@ jobs:
           DEEPDIVE_RELEASE: ${{ github.sha }}
         run: |
           uv run --no-sync python -m deepdive.evaluation verifier --output evaluation/results/release-verifier.json
+          uv run --no-sync python -m deepdive.rag_evaluation --output evaluation/results/release-rag.json
           uv run --no-sync python -m deepdive.evaluation gate evaluation/results/release-verifier.json
       - name: Build, authenticate, and publish immutable commit tag
         env:
@@ -55,5 +56,6 @@ jobs:
           name: release-manifest
           path: |
             evaluation/results/release-verifier.json
+            evaluation/results/release-rag.json
             evaluation/results/image-digest.txt
           retention-days: 90

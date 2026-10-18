@@ -77,7 +77,41 @@ with st.sidebar:
     st.caption("Local workspace · all AI through Mesh")
     st.caption(health["model"])
 
+document_scope = {"project_id": project} if project else {"session_id": selected} if selected else None
+library = call("GET", "/documents", params=document_scope)["documents"] if document_scope else []
+with st.expander("Documents · upload and manage"):
+    st.caption("PDF, DOCX, UTF-8 TXT or Markdown · up to 5 MB and 128 chunks per file. Scanned PDFs need OCR first.")
+    st.caption("Extraction is local. Starting research sends document text and questions to Mesh for embeddings and reasoning.")
+    uploaded = st.file_uploader("Add documents", type=["pdf", "docx", "txt", "md"], accept_multiple_files=True,
+                                max_upload_size=5)
+    if st.button("Upload to library", disabled=not uploaded):
+        if not document_scope:
+            created_session = new_action("/sessions", {"name": "Document research"})
+            document_scope = {"session_id": created_session["id"]}
+            st.session_state.active_session = created_session["id"]
+        for file in uploaded:
+            call("POST", "/documents", params={"filename": file.name, **document_scope},
+                 content=file.getvalue(), headers={"Content-Type": "application/octet-stream"}, timeout=60)
+        st.rerun()
+    for doc in library:
+        st.write(f"{doc['name']} · {doc['chunk_count']} chunks")
+        for warning in doc["warnings"]:
+            st.warning(warning)
+        st.caption("Removing a document stops future selection. Existing reports retain their cited passages.")
+        if st.button("Remove from library", key=doc["id"] + "_remove"):
+            call("DELETE", "/documents/" + doc["id"], params=document_scope)
+            st.rerun()
+
 with st.expander("Research settings", expanded=not selected):
+    mode_labels = {"documents": "Documents only", "mixed": "Documents and public web", "web": "Public web"}
+    mode = st.selectbox("Research sources", ["documents", "mixed", "web"] if library else ["web"],
+                        format_func=mode_labels.get)
+    document_names = {d["id"]: d["name"] for d in library}
+    document_ids = st.multiselect("Documents for this question", list(document_names),
+                                 default=list(document_names)[:10] if mode != "web" else [],
+                                 format_func=document_names.get, disabled=mode == "web", max_selections=10)
+    if mode == "mixed":
+        st.info("Public search queries can include information from your documents. Choose Documents only for private research.")
     col1, col2, col3 = st.columns(3)
     tasks = col1.number_input("Subquestions", 1, 6, 4)
     source_limit = col2.number_input("Maximum sources", 1, 30, 30)
@@ -86,14 +120,16 @@ with st.expander("Research settings", expanded=not selected):
     claim_limit = col4.number_input("Maximum candidate claims", 1, 40, 40)
     call_limit = col5.number_input("Maximum model requests", 5, 80, 80)
     seconds = col6.number_input("Active time limit (seconds)", 30, 900, 900)
-    sources_text = st.text_area("Optional source URLs", placeholder="One public URL per line. Useful when public search is blocked.")
+    sources_text = st.text_area("Optional source URLs", placeholder="One public URL per line. Useful when public search is blocked.",
+                                disabled=mode == "documents")
     refresh = st.checkbox("Refresh sources and bypass caches")
     auto = st.checkbox("Automatically approve the checked report", value=False)
 
 question = st.chat_input("What would you like to investigate?")
 if question:
     created = new_action("/runs", {"question": question, "session_id": selected, "project_id": project,
-        "source_urls": [u.strip() for u in sources_text.splitlines() if u.strip()],
+        "source_urls": [u.strip() for u in sources_text.splitlines() if u.strip()] if mode != "documents" else [],
+        "document_ids": document_ids if mode != "web" else [], "research_mode": mode,
         "review_mode": "auto" if auto else "manual", "refresh": refresh,
         "limits": {"subquestions": tasks, "sources": source_limit, "repair_rounds": rounds,
                    "claims": claim_limit, "model_calls": call_limit, "active_seconds": seconds}})
@@ -164,7 +200,7 @@ if selected:
                         st.caption("Retrieved " + datetime.fromtimestamp(source["retrieved_at"], timezone.utc).isoformat())
                         st.code(source["content_hash"], language=None)
                         for passage in [p for p in passages if p["source_id"] == source["id"]]:
-                            st.caption(passage["id"])
+                            st.caption(passage["id"] + " · " + passage.get("location", ""))
                             st.text(passage["text"])
             with verification:
                 records = call("GET", f"/runs/{run_id}/claims")

@@ -59,3 +59,13 @@ No model is trained by this application. Its model operations concern evaluation
 The organizer's workflow was retrieved and inspected on 2026-10-17 and installed unchanged at `.github/workflows/agent-arena-2026-checks.yml`. It requests GitHub OIDC, downloads the organizer's check script using `SUBMISSION_TOKEN`, and supplies Mesh/submission credentials to that script. The script itself is served only to authenticated GitHub Actions; it has not been fetched or executed locally.
 
 Source: [official workflow](https://careerapi-production.krishnaik.in/api/ci/hackathons/agent-arena-2026/workflow.yml). Downloaded SHA-256: `f34c4aba59caa82bd992a3fb77b51c0c94d3d2c3551acb55f72ddaf4e6e91436`.
+
+## Document RAG extension — October 18, 2026
+
+**Authorization:** the user requested uploaded-document RAG with chunking, hybrid BM25/vector search, reranking, and updated documentation. This extends the original plan's explicit document-upload exclusion; the historical approved plan remains unchanged.
+
+**Decision:** parse PDF/DOCX/TXT/Markdown locally; preserve immutable page/section passages; use 384-token windows with up to 64-token overlap; combine FTS5 BM25 and exact normalized-vector search with reciprocal rank fusion; rerank up to 16 candidates through the existing Mesh chat gateway. Mesh embeddings use the documented `/v1/embeddings` endpoint. Generation, embedding, and reranking attempts share the run budget and audit.
+
+**Why:** the existing SQLite owner and backup model can support a bounded local corpus without a separate vector service. Structure-aware windows preserve citation locations; hybrid retrieval supports exact identifiers and semantic matches. No single chunk size is universally best, so the implementation includes a versioned retrieval ablation rather than an unmeasured quality claim. See [RAG design and references](rag.md).
+
+**Boundaries:** document-only mode disables public network tools; mixed mode explicitly allows document-derived public queries. Uploads work without credentials; real hybrid retrieval requires Mesh. No local model bypass, OCR, approximate-neighbor index, or hosted document service is added. Removed library items retain historical citations until their owning research is deleted. Live accuracy and independent label review remain pending.

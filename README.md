@@ -9,13 +9,14 @@ Built for Agent Arena 2026 with Python, LangGraph, FastAPI, and Streamlit. Every
 ## What you can do
 
 - Investigate a question with parallel primary-source, reporting, and community researchers.
+- Upload PDF, DOCX, TXT, or Markdown documents and research them using BM25 + vector search, rank fusion, and Mesh reranking. Choose documents only or combine them with public web sources.
 - Inspect exact source passages, accepted and rejected claims, missing evidence, and the research timeline.
 - Approve, revise, or stop a saved review; resume interrupted work after a restart.
 - Keep isolated sessions or share verified research within an explicit project. Inspect, edit, and forget saved memory.
 - Export cited Markdown/HTML reports, HTML/PowerPoint presentations, source-backed PNG charts, and JSON audit records.
 - Run the same service from the browser, API, or CLI. Operate it with Docker, health checks, structured logs, error tracking, Prometheus, and Grafana.
 
-**Validation status:** 41 local tests pass. GitHub Quality CI passed its Linux tests, dependency audit, Docker deployment, and full monitoring HTTP checks; API/UI and monitoring checks also passed on the local Docker host. Public retrieval/search worked in a recorded live check. Workflow tests use explicitly synthetic model responses. Live Mesh research, independent label review, live accuracy measurement, and release/submission acceptance remain pending. Automated source verification can be wrong; coverage and correctness are reported separately. See [the completion checklist](tasks/todo.md) and [evaluation guide](docs/evaluation.md).
+**Validation status:** Offline tests cover web and document research, hybrid retrieval, revisions, recovery, exports, and UI review. Recorded GitHub Quality checks cover Linux tests, dependency audit, Docker deployment, and monitoring HTTP checks. Public retrieval/search worked in a recorded live check. Workflow tests use explicitly synthetic model responses and vectors. Live Mesh research and document retrieval, independent label review, live accuracy measurement, and release/submission acceptance remain pending. Automated source verification can be wrong; coverage and correctness are reported separately. See [the completion checklist](tasks/todo.md) and [evaluation guide](docs/evaluation.md).
 
 ## Architecture
 
@@ -28,6 +29,11 @@ flowchart LR
     Graph --> Mesh[Mesh model gateway]
     Graph --> Tools[Role-scoped tools]
     Tools --> Web[Public search and source pages]
+    UI --> Upload[Document upload and bounded parsing]
+    Upload --> DB
+    Tools --> RAG[BM25 + vector search / fusion / Mesh reranking]
+    RAG --> DB
+    RAG --> Mesh
     Service --> DB[(SQLite records and checkpoints)]
     Service --> Files[Versioned reports and artifacts]
     API --> Metrics[Authenticated metrics]
@@ -146,6 +152,14 @@ uv run python -m deepdive.cli export RUN_ID --output research-audit.json
 
 Replace `RUN_ID` with the returned ID. `--auto` explicitly skips manual approval. [API reference and examples](docs/api.md) cover custom clients and all session/memory operations.
 
+## Research your documents
+
+Open **Documents · upload and manage** in the UI, upload a PDF, DOCX, TXT, or Markdown file, then select **Documents only** in Research settings and ask your question. Files are parsed locally; the first research run creates embeddings through Mesh. Documents only disables public web tools. **Documents and public web** allows search queries to include document-derived information.
+
+Chunks preserve page/section locations and use bounded overlap. Retrieval combines **BM25 and dense cosine search**, applies **reciprocal rank fusion**, and reranks candidates through Mesh before the existing evidence verification and review loop. Reports retain source passages and locations.
+
+Defaults use `MESH_EMBEDDING_MODEL=openai/text-embedding-3-small` with the existing Mesh key. Uploads are limited to 5 MB and 128 chunks per file. Scanned PDFs need OCR first. See the [document RAG guide](docs/rag.md) for CLI/API examples, limits, caching, deletion, diagrams, and retrieval evaluation.
+
 ## Quality and MLOps
 
 ```powershell
@@ -169,6 +183,7 @@ This project consumes hosted models; its MLOps work covers **versioned prompts/c
 |---|---|
 | [Architecture](docs/architecture.md) | Agent roles, evidence contracts, memory, caches, boundaries |
 | [API](docs/api.md) | Endpoints, authentication, run lifecycle, client examples |
+| [Document RAG](docs/rag.md) | Uploads, chunking, BM25/vector search, reranking, citations, retrieval evaluation |
 | [Operations](docs/operations.md) | Docker, health, monitoring, errors, backup/restore, deployment |
 | [Evaluation](docs/evaluation.md) | Labels, precision/recall, benchmarking, calibration, release gates |
 | [Decisions and scope](docs/decisions.md) | Approved-plan extensions and engineering tradeoffs |
@@ -181,4 +196,4 @@ This project consumes hosted models; its MLOps work covers **versioned prompts/c
 
 DeepDive is a **single-owner local workspace**. Its API token is a service credential, not a multi-user account system. Keep the default loopback bindings. Internet hosting requires an authenticated TLS ingress and an explicit host configuration review; Streamlit, Prometheus, and Grafana should not be exposed directly.
 
-Public pages may block automation, omit content, or change. PDF/uploaded-document research and image interpretation are outside this implementation. Source snapshots and audit exports can contain private questions and retrieved text: share them deliberately, and protect backups.
+Public pages may block automation, omit content, or change. Document extraction supports text-based PDFs and DOCX/TXT/Markdown; OCR and image interpretation are not implemented. Source snapshots and audit exports can contain private questions and retrieved text: share them deliberately, and protect backups.

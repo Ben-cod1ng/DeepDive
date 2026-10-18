@@ -23,6 +23,7 @@ COPY deepdive ./deepdive
 COPY streamlit_app.py ./
 COPY uv.lock ./
 COPY evaluation/claims.v1.json evaluation/questions.v1.json ./evaluation/
+COPY evaluation/documents.v1.json ./evaluation/
 USER 10001:10001
 EXPOSE 8000 8501
 HEALTHCHECK --interval=20s --timeout=5s --start-period=30s --retries=3 \

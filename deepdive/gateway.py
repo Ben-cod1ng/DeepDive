@@ -1,5 +1,6 @@
 """All AI requests, including evaluation, cross this single Mesh gateway."""
 import json
+import math
 import threading
 import time
 from functools import lru_cache
@@ -125,3 +126,39 @@ class MeshGateway:
     def close(self):
         if self._client:
             self._client.close()
+
+    def embed(self, context, texts):
+        """The same Mesh client, concurrency gate, attempt budget, and usage audit."""
+        if not texts or len(texts) > 32 or any(not t.strip() for t in texts):
+            raise ValueError("Embedding batch requires 1–32 nonempty texts")
+        payload = [redact(t) for t in texts]
+        if token_count(payload) > self.settings.input_tokens:
+            raise ContextExceeded("Embedding batch exceeds context allocation")
+        for attempt in range(2):
+            with MODEL_SLOTS:
+                context.reserve()
+                started = time.monotonic()
+                self.store.event(context.run_id, "model_request", role="embedding", transport_attempt=attempt)
+                try:
+                    response = self.client().embeddings.create(model=self.settings.embedding_model,
+                                                               input=payload, encoding_format="float")
+                    break
+                except (APIConnectionError, APIStatusError) as exc:
+                    status = getattr(exc, "status_code", None)
+                    self.store.event(context.run_id, "model_error", role="embedding", status=status, error=type(exc).__name__)
+                    if attempt or status not in {None, 408, 429, 500, 502, 503, 504}:
+                        raise
+            time.sleep(1)
+        usage = response.usage.model_dump() if response.usage else {}
+        self.store.add_tokens(context.run_id, usage.get("total_tokens", 0))
+        self.store.event(context.run_id, "model_response", role="embedding", model=self.settings.embedding_model,
+                         usage=usage, seconds=round(time.monotonic() - started, 3))
+        if len(response.data) != len(texts) or sorted(d.index for d in response.data) != list(range(len(texts))):
+            raise ValueError("Embedding response has missing or duplicate indexes")
+        vectors = [d.embedding for d in sorted(response.data, key=lambda d: d.index)]
+        dimensions = len(vectors[0])
+        if not 1 <= dimensions <= 4096 or any(len(v) != dimensions for v in vectors):
+            raise ValueError("Embedding response has invalid or inconsistent dimensions")
+        if any(not all(math.isfinite(x) for x in v) or not 0 < math.hypot(*v) < 1e30 for v in vectors):
+            raise ValueError("Embedding response contains invalid or zero vectors")
+        return vectors

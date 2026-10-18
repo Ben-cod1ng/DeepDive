@@ -27,3 +27,7 @@ class Client:
             response = client.get(f"/runs/{run_id}/artifacts/{artifact_id}")
             response.raise_for_status()
             return response.content
+
+    def upload(self, filename, content, **scope):
+        return self.request("POST", "/documents", params={"filename": filename, **scope}, content=content,
+                            headers={"Content-Type": "application/octet-stream"}, timeout=60)

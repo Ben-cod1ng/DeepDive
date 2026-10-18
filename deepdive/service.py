@@ -9,11 +9,13 @@ from langgraph.checkpoint.sqlite import SqliteSaver
 from langgraph.types import Command
 from .artifacts import Artifacts
 from .config import POLICY_VERSION, Settings, pipeline_fingerprint
+from .documents import Documents
 from .gateway import MeshGateway, RunContext, BudgetExceeded, Cancelled
 from .guardrails import cache_key, redact, scope_for, validate_claim, validate_verdict
 from .memory import Memory
 from .models import Claim, Limits, ReviewRequest, RunRequest, Verdict
 from .observability import Observability, REQUEST_ID, ENTRY_POINT
+from .rag import HybridRetriever
 from .storage import Store, digest, uid
 from .tools import ToolBox
 from .workflow import Workflow
@@ -47,6 +49,8 @@ class ResearchService:
         self.store.observer = self.observability
         self.memory = Memory(self.store)
         self.gateway = gateway or MeshGateway(self.settings, self.store)
+        self.documents = Documents(self.store)
+        self.rag = HybridRetriever(self)
         self.http = http
         self.contexts, self.toolboxes = {}, {}
         self.mutation = threading.RLock()
@@ -104,6 +108,7 @@ class ResearchService:
             if request.project_id and request.project_id != session.get("project_id"):
                 raise ValueError("Session belongs to a different project")
             scope = scope_for(session)
+            documents = self.documents.selected(scope, raw["document_ids"])
             run = {"id": uid("run"), "session_id": session["id"], "project_id": session.get("project_id"),
                    "scope": scope, "request": raw, "status": "queued", "stage": "queued",
                    "calls": 0, "tokens": 0, "active_seconds": 0, "source_ids": [], "visited_urls": [],
@@ -112,8 +117,12 @@ class ResearchService:
                    "pipeline": pipeline_fingerprint(),
                    "request_id": REQUEST_ID.get(), "entry_point": ENTRY_POINT.get(),
                    "context": self.memory.context(session, raw["question"])}
+            run["document_source_ids"] = [d["source_id"] for d in documents]
+            run["document_queries"] = []
             run["report_cache_key"] = cache_key("report", scope=scope, question=raw["question"],
                 context=run["context"], sources=raw["source_urls"], limits=raw["limits"],
+                documents=[(d["id"], d["content_hash"], d["chunk_version"]) for d in documents],
+                research_mode=raw["research_mode"], embedding_profile=self.rag.profile,
                 preferences=self.memory.fingerprint(scope), model=self.settings.model, pipeline=run["pipeline"])
             self.store.put("run", run, scope)
             if opid:
@@ -132,6 +141,7 @@ class ResearchService:
             if run_id not in self.contexts:
                 self.contexts[run_id] = RunContext(self.store, run_id, Limits.model_validate(run["request"]["limits"]))
                 self.toolboxes[run_id] = ToolBox(self.store, self.memory, self.contexts[run_id], run, self.http)
+                self.toolboxes[run_id].document_search = lambda query: self.rag.search(run_id, query)
             return run, self.contexts[run_id], self.toolboxes[run_id]
 
     def execute(self, run_id):
@@ -223,8 +233,11 @@ class ResearchService:
 
     def relevant_passages(self, run_id, query, limit=18):
         run = self.get_run(run_id)
+        document_hits = self.rag.search(run_id, query, limit) if run.get("document_source_ids") else []
         ids = set(run.get("source_ids", []))
-        fresh = {sid for sid in ids if (s := self.store.get("source", sid, run["scope"])) and s["fresh_until"] > time.time()}
+        fresh = {sid for sid in ids if (s := self.store.get("source", sid, run["scope"]))
+                 and s["fresh_until"] > time.time() and s.get("kind") != "document"
+                 and (run["request"].get("research_mode") != "documents" or s.get("kind") == "calculation")}
         ranked = self.store.search(run["scope"], query, limit=150)
         eligible = [p for p in ranked if p["source_id"] in fresh]
         if not eligible:
@@ -237,7 +250,15 @@ class ResearchService:
                 counts[p["source_id"]] = count + 1
             if len(selected) >= limit:
                 break
-        return selected
+        if not document_hits:
+            return selected
+        combined = []
+        for index in range(max(len(document_hits), len(selected))):
+            if index < len(document_hits):
+                combined.append(document_hits[index])
+            if index < len(selected):
+                combined.append(selected[index])
+        return combined[:limit]
 
     def evidence_inventory(self, run_id, query):
         return [{"id": p["id"], "source_id": p["source_id"], "excerpt_for_discovery": p["text"][:350]}
@@ -360,6 +381,8 @@ class ResearchService:
             run_ids = {r["id"] for r in runs}
             remaining = [r for r in self.store.list("run", scope) if r["id"] not in run_ids]
             retained_sources = {sid for r in remaining for sid in r.get("source_ids", [])}
+            if session.get("project_id"):
+                retained_sources.update(d["source_id"] for d in self.documents.list(scope))
             # Shared project snapshots stay available to other reports. Remove only
             # unreferenced evidence, including evidence whose original owner was deleted.
             owned_sources = {s["id"] for s in self.store.list("source", scope) if s["id"] not in retained_sources}
@@ -380,9 +403,18 @@ class ResearchService:
                 if p["source_id"] in owned_sources:
                     self.store.delete("passage", p["id"], scope)
             for sid in owned_sources:
+                self.documents.purge_source(scope, sid)
                 self.store.delete("source", sid, scope)
             self.store.delete("session", session_id, scope)
             self.store.clear_cache(scope)
+
+    def remove_document(self, scope, document_id):
+        with self.mutation:
+            if any(document_id in r["request"].get("document_ids", [])
+                   and r["status"] in {"queued", "running", "waiting_review", "interrupted", "failed"}
+                   for r in self.store.list("run", scope)):
+                raise Conflict("Stop or cancel unfinished runs using this document before removing it")
+            return self.documents.remove(scope, document_id)
 
     def close(self):
         for run_id, future in list(self.futures.items()):

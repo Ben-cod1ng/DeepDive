@@ -186,7 +186,8 @@ class Artifacts:
             p = passages[pid]; source = sources[p["source_id"]]
             link = safe_link(source.get("final_url", ""))
             body += f'<details id="{escape(pid)}"><summary>{escape(pid)} — {escape(source["title"])}</summary>'
-            body += f'<blockquote>{escape(p["text"])}</blockquote><p><a href="{escape(link)}" rel="noreferrer">Original source</a> · retrieved {utc_date(source["retrieved_at"])}</p></details>'
+            original = f'<a href="{escape(link)}" rel="noreferrer">Original source</a>' if source.get("final_url") else "Uploaded document"
+            body += f'<p>{escape(p.get("location", ""))}</p><blockquote>{escape(p["text"])}</blockquote><p>{original} · saved {utc_date(source["retrieved_at"])}</p></details>'
         body += '</section>'
         markdown = [f"# {md_text(title)}", "", "Automated source-support checks are fallible; see coverage and evidence.", ""]
         for section in sections:
@@ -202,7 +203,9 @@ class Artifacts:
         markdown += ["", "## References", ""]
         for pid in used:
             source = sources[passages[pid]["source_id"]]
-            markdown += [f"<a id=\"ref-{pid}\"></a>", f"- [{pid}] {md_text(source['title'])}: {safe_link(source.get('final_url', ''))}",
+            original = safe_link(source["final_url"]) if source.get("final_url") else "uploaded document"
+            markdown += [f"<a id=\"ref-{pid}\"></a>", f"- [{pid}] {md_text(source['title'])}: {original}",
+                         "  Location: " + md_text(passages[pid].get("location", "")),
                          "  Retrieved: " + utc_date(source["retrieved_at"]), "  Passage: " + md_text(passages[pid]["text"])]
         return body, "\n".join(markdown), claims, evidence
 
@@ -250,7 +253,11 @@ class Artifacts:
                 width, height = captured.size
             scale = min(12 / width, 5.8 / height)
             slide.shapes.add_picture(str(path), Inches(.5), Inches(1.2), width=Inches(width * scale), height=Inches(height * scale))
-        refs = [s["title"] + " — " + s.get("final_url", "") for s in evidence["sources"]]
+        sources_by_id = {s["id"]: s for s in evidence["sources"]}
+        cited = {pid for claim in claims.values() for pid in claim["passage_ids"]}
+        refs = [p["id"] + " — " + sources_by_id[p["source_id"]]["title"] + " — " + p.get("location", "")
+                + " — " + (sources_by_id[p["source_id"]].get("final_url") or "uploaded document")
+                for p in evidence["passages"] if p["id"] in cited]
         for start in range(0, len(refs), 5):
             add_slide("Sources", refs[start:start + 5])
         slides.append('<section class="slide"><h2>Evidence and limitations</h2>' + body[body.find('<section><h2>Coverage'): ] + '</section>')
