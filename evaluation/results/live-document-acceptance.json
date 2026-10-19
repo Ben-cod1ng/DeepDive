@@ -1,0 +1,108 @@
+{
+  "date": "2026-10-19T07:28:26.244709+00:00",
+  "mode": "live-mesh-document-acceptance",
+  "corpus": "authored synthetic policy documents",
+  "pipeline": "174eeb3e322124d8334be053fbde73217e6a404662718e451bd715acb040f993",
+  "checks": {
+    "initial_live_review": true,
+    "live_revision": true,
+    "waiting_review_survived_restart": true,
+    "approved_publication": true,
+    "report_has_document_locations": true,
+    "report_has_policy_values": true,
+    "exports_downloaded": true,
+    "artifact_formats_valid": true,
+    "published_citations_resolve": true,
+    "published_quotations_match": true
+  },
+  "latest_run": {
+    "status": "completed",
+    "stage": "finished",
+    "version": 2,
+    "calls": 47,
+    "tokens": 47178
+  },
+  "artifacts": [
+    {
+      "name": "evidence.png",
+      "bytes": 26366,
+      "sha256": "8b548989f30e1ba8d818ac94e96be9bfda000fa0c15526f6719fd25bbc824637"
+    },
+    {
+      "name": "insights.png",
+      "bytes": 41230,
+      "sha256": "4adfb3b5cca7bb099744d90e87681da86765b4e36568440e1a04d06008085465"
+    },
+    {
+      "name": "insights-2.png",
+      "bytes": 23156,
+      "sha256": "ede7715831364a8a3bda0c0b48850b3fedb7c311c0a7d8c16eaf056e1ba1941f"
+    },
+    {
+      "name": "report.html",
+      "bytes": 4660,
+      "sha256": "469c1f8082cf2efd2253c282240866b78c72fb6bbf4cda0abcb105900884965a"
+    },
+    {
+      "name": "report.md",
+      "bytes": 2473,
+      "sha256": "89af4f101e1342dee2bf0e66fd7a262e0e6b1fa9616f3aea18fb87604fc43b63"
+    },
+    {
+      "name": "slides.html",
+      "bytes": 125437,
+      "sha256": "f4c369cc9aba247fe55516fe54713c73c2ab2ab5c7108d5297f093e86a314381"
+    },
+    {
+      "name": "slides.pptx",
+      "bytes": 112145,
+      "sha256": "52666c4815c54ae1bd0117a815de6fce821310e620c1dccef378d1ee7f7e9d4d"
+    },
+    {
+      "name": "audit.json",
+      "bytes": 98970,
+      "sha256": "934d25e6e60b34090eb780342bc8a79957f404ecf60643e0110adb2bab5f7036"
+    }
+  ],
+  "status": "passed",
+  "validation_method": "Scripted exercise of the deployed HTTP API and manual-review mode; real Mesh inference over authored synthetic documents. Not independent human review.",
+  "request": {
+    "question": "Using only the selected policy documents, compare annual leave in 2025 and 2026, identify the current carry-forward rule, and explain the refund deadline and payment method.",
+    "research_mode": "documents",
+    "review_mode": "manual",
+    "limits": {
+      "subquestions": 2,
+      "sources": 3,
+      "claims": 8,
+      "repair_rounds": 1,
+      "model_calls": 60,
+      "active_seconds": 600
+    }
+  },
+  "observations": {
+    "tasks": 2,
+    "published_claims": 6,
+    "model_requests": 47,
+    "tokens": 47178,
+    "active_seconds": 167.21559909099597,
+    "retrievals": 11,
+    "validated_rerankings": 8,
+    "rerank_fallbacks": 3,
+    "model_schema_errors": 6,
+    "model_transport_errors": 0,
+    "cache_hits": 9,
+    "independent_support_accuracy": null
+  },
+  "limitations": [
+    "Three retrievals used the documented hybrid-order fallback after invalid reranking output; the separate seven-query retrieval evaluation reranked all queries.",
+    "Report repeats the carry-forward rule in two findings; editorial concision is not guaranteed.",
+    "Synthetic corpus and scripted review do not establish independent final-answer accuracy."
+  ],
+  "parsed_artifacts": [
+    "evidence.png",
+    "insights.png",
+    "insights-2.png",
+    "slides.pptx",
+    "audit.json"
+  ]
+}

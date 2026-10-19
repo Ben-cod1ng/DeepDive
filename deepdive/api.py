@@ -39,7 +39,7 @@ def create_app(service=None, settings=None):
 
     app = FastAPI(title="DeepDive", version="0.1.0", lifespan=lifespan,
                   description="Local, source-verifying research. Live model calls use Mesh.")
-    app.add_middleware(TrustedHostMiddleware, allowed_hosts=["127.0.0.1", "localhost", "[::1]", "testserver", "api"])
+    app.add_middleware(TrustedHostMiddleware, allowed_hosts=list(settings.allowed_hosts))
 
     @app.middleware("http")
     async def local_boundary(request: Request, call_next):

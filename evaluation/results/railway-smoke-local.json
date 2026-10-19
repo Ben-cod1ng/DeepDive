@@ -1,0 +1,16 @@
+{
+  "passed": true,
+  "environment": "local Docker emulating Railway",
+  "image_id": "sha256:d6be3201c4216ee872a732177eb135e68d463e7f058fce746dd1bb495fa7743e",
+  "checks": [
+    "fresh root-owned volume",
+    "API drops to UID 10001",
+    "IPv4 and IPv6",
+    "host and token boundaries",
+    "document and session survive restart",
+    "Streamlit health",
+    "frontend private-network API access"
+  ],
+  "mesh_calls": 0,
+  "hosted_url_validated": false
+}

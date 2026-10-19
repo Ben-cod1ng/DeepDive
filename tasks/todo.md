@@ -32,12 +32,19 @@ locally verified behavior, not unperformed live model evaluation.
 - [x] GitHub quality, protected live-evaluation, and release-image workflows
 - [x] Versioned datasets, experiment manifests, live release gate, calibration/drift
 - [x] README architecture/workflow/review diagrams and setup/run instructions
-- [x] Architecture, API, operations, evaluation, decision, contribution, submission guides
+- [x] Architecture, API, operations, evaluation, decision, and contribution guides
 - [x] Official organizer workflow retrieved, inspected, and installed unchanged
 - [x] Rebuilt Docker API/UI smoke check and local/CI monitoring HTTP/data checks
 - [x] Public repository and successful remote Quality workflow: [Ben-cod1ng/DeepDive](https://github.com/Ben-cod1ng/DeepDive)
 
 ## Measured validation
+
+Railway demo work is tracked separately from the independent accuracy release gate:
+
+- [x] Private API hostname support, volume initialization with privilege drop, and shared demo login
+- [x] Two-service setup and acceptance instructions in [the Railway guide](../docs/railway.md)
+- [x] 69 local tests passed; container validation covered Railway volume permissions, IPv4/IPv6, restart persistence, and private frontend/API access: [evidence](../evaluation/results/railway-smoke-local.json)
+- [ ] Hosted frontend/backend deployment and public URL acceptance
 
 - [x] Full local suite passed (62 tests); final document/retrieval regressions passed (21 tests), including calculation evidence and backup restoration
 - [x] Document RAG CI passed all 63 tests, dependency audit, deployed document ingestion/removal, and monitoring checks: [recorded run](https://github.com/Ben-cod1ng/DeepDive/actions/runs/39120462295)
@@ -47,19 +54,22 @@ locally verified behavior, not unperformed live model evaluation.
 - [x] Recorded 32-case deterministic fixture evaluation, dataset version 1.1
 - [x] Actual public page retrieval and search succeeded; no AI calls used
 - [x] Docker API/UI health and HTTP persistence/memory/export smoke check passed
-- [ ] Live Mesh verifier evaluation; intentionally pending credentials
-- [ ] Live Mesh embeddings/reranking retrieval ablation and document research acceptance; independent retrieval labels
+- [x] Live Mesh verifier evaluation on October 19, 2026: 32 cases, 11 TP / 21 TN / 0 FP / 0 FN against authored labels; independent review remains pending
+- [x] Live Mesh embeddings/reranking retrieval ablation: seven queries, all reranked, final Recall@3 / MRR@3 / nDCG@3 = 1.0 on the ten-document synthetic set
+- [ ] Independent review of retrieval labels and representative held-out retrieval evaluation
 - [ ] Independent review of the 32 authored reference labels
 - [ ] Ten-question live benchmark and independent final-claim review
-- [ ] Manual live research/revise/restart/export acceptance demonstration
+- [x] Scripted live document research/revise/restart/export acceptance through the deployed manual-review API; eight artifacts validated, with three recorded rerank fallbacks and a repeated finding
+- [ ] Independent human review of live reports and complete web research acceptance
 - [ ] Optional live Sentry delivery and chosen remote-host deployment, if used
 - [x] GitHub environment reviewers and required main-branch application checks configured
 - [ ] Release-image publication verified after live evaluation gates pass
 - [ ] Organizer secrets/check execution and dashboard submission acceptance
 
-Live semantic precision/recall and independent final-report accuracy remain
-unmeasured. Fixture results and the verifier's own acceptance rate cannot fill
-those gaps. See [evaluation/results](../evaluation/results) for recorded local
+Live verifier precision/recall and retrieval rankings have now been measured on
+the authored synthetic sets. Independent label review and independent final-report
+accuracy remain pending; fixture results and the verifier's own acceptance rate
+cannot fill those gaps. See [evaluation/results](../evaluation/results) for recorded
 evidence and [docs/evaluation.md](../docs/evaluation.md) for the live procedure.
 
 Docker recovery completed after the user approved the restart and freed over 9 GB

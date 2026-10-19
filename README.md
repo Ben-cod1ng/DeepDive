@@ -16,7 +16,11 @@ Built for Agent Arena 2026 with Python, LangGraph, FastAPI, and Streamlit. Every
 - Export cited Markdown/HTML reports, HTML/PowerPoint presentations, source-backed PNG charts, and JSON audit records.
 - Run the same service from the browser, API, or CLI. Operate it with Docker, health checks, structured logs, error tracking, Prometheus, and Grafana.
 
-**Validation status:** [Quality CI](https://github.com/Ben-cod1ng/DeepDive/actions/runs/39120462295) passed **63 tests**, dependency audit, Docker document ingestion/removal, and monitoring checks. Tests cover web/document research, hybrid retrieval, revisions, recovery, exports, and UI review using explicitly synthetic model responses and vectors. Public retrieval/search also worked in a recorded live check. Live Mesh research and document retrieval, independent label review, live accuracy measurement, and release/submission acceptance remain pending. Automated source verification can be wrong; coverage and correctness are reported separately. See [the completion checklist](tasks/todo.md) and [evaluation guide](docs/evaluation.md).
+**Validation status:** [Quality CI](https://github.com/Ben-cod1ng/DeepDive/actions/runs/39120462295) passed **63 tests**, dependency audit, Docker document ingestion/removal, and monitoring checks. Tests cover web/document research, hybrid retrieval, revisions, recovery, exports, and UI review using explicitly synthetic model responses and vectors. Public retrieval/search also worked in a recorded live check.
+
+On October 19, 2026, [live Mesh verification](evaluation/results/live-verifier.json) matched all 32 authored claim labels, and [live document retrieval](evaluation/results/live-rag.json) completed all seven queries with validated reranking and final Recall@3 of 1.0. Both datasets are small synthetic sets pending independent review; these results do not establish production accuracy. The ten-question research benchmark, independent label and final-claim review, and release/submission acceptance remain pending. See [the completion checklist](tasks/todo.md) and [evaluation guide](docs/evaluation.md).
+
+A [scripted live document acceptance run](evaluation/results/live-document-acceptance.json) also passed upload, research, revision, backend restart at review, approval, and eight artifact downloads through the deployed API. Three retrievals used the documented hybrid-order fallback after invalid reranker output; the report also repeated one finding. These limitations are retained in the validation record.
 
 ## Architecture
 
@@ -78,6 +82,15 @@ sequenceDiagram
     Graph-->>API: Published artifacts or another review
     Client->>API: Download cited outputs
 ```
+
+## Share a hosted demo
+
+Follow the [Railway deployment guide](docs/railway.md) to run a public HTTPS
+frontend with a shared demo code, a private API, and persistent document storage.
+Give reviewers the frontend link and demo code; keep API credentials private.
+Visitors share one workspace, so use public or sample documents. The guide includes
+a deployment diagram, exact settings, troubleshooting, and an acceptance checklist.
+Public URL acceptance remains pending.
 
 ## Quick start: local development
 
@@ -186,14 +199,18 @@ This project consumes hosted models; its MLOps work covers **versioned prompts/c
 | [Document RAG](docs/rag.md) | Uploads, chunking, BM25/vector search, reranking, citations, retrieval evaluation |
 | [Operations](docs/operations.md) | Docker, health, monitoring, errors, backup/restore, deployment |
 | [Evaluation](docs/evaluation.md) | Labels, precision/recall, benchmarking, calibration, release gates |
+| [Railway demo](docs/railway.md) | Public frontend, private API, persistent volume, and shared demo access |
 | [Decisions and scope](docs/decisions.md) | Approved-plan extensions and engineering tradeoffs |
 | [Contributing](CONTRIBUTING.md) | Local checks and changing the project safely |
-| [Submission](docs/submission.md) | Organizer requirements and outstanding external steps |
 | [Completion checklist](tasks/todo.md) | Implemented work versus pending validation |
 | [Approved plan](PLAN.md) | Original approved design; later scope is recorded separately |
 
 ## Operating boundary
 
-DeepDive is a **single-owner local workspace**. Its API token is a service credential, not a multi-user account system. Keep the default loopback bindings. Internet hosting requires an authenticated TLS ingress and an explicit host configuration review; Streamlit, Prometheus, and Grafana should not be exposed directly.
+DeepDive uses one shared workspace. Local Docker services bind to loopback. The
+[Railway demo](docs/railway.md) exposes only the HTTPS frontend and requires a
+separate demo code; the API and its token stay private. Admitted visitors share
+research, documents, and the Mesh budget. Separate accounts and tenant isolation
+are not implemented. Keep monitoring services private.
 
 Public pages may block automation, omit content, or change. Document extraction supports text-based PDFs and DOCX/TXT/Markdown; OCR and image interpretation are not implemented. Source snapshots and audit exports can contain private questions and retrieved text: share them deliberately, and protect backups.
