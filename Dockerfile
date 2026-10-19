@@ -1,6 +1,6 @@
 # Locked runtime dependencies; build without credentials.
 FROM ghcr.io/astral-sh/uv:0.9.0 AS uv
-FROM python:3.13-slim AS builder
+FROM python:3.14-slim AS builder
 COPY --from=uv /uv /usr/local/bin/uv
 WORKDIR /app
 ENV UV_COMPILE_BYTECODE=1 UV_LINK_MODE=copy
@@ -9,7 +9,7 @@ RUN uv sync --frozen --no-dev --no-install-project
 ENV TIKTOKEN_CACHE_DIR=/opt/tiktoken
 RUN .venv/bin/python -c "import tiktoken; tiktoken.get_encoding('cl100k_base')"
 
-FROM python:3.13-slim AS runtime
+FROM python:3.14-slim AS runtime
 ENV PATH="/app/.venv/bin:$PATH" PYTHONUNBUFFERED=1 PYTHONDONTWRITEBYTECODE=1 \
     DEEPDIVE_DATA_DIR=/data MPLCONFIGDIR=/tmp/matplotlib \
     TIKTOKEN_CACHE_DIR=/opt/tiktoken HOME=/tmp \
