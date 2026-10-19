@@ -6,8 +6,10 @@ import httpx
 import pandas as pd
 import streamlit as st
 from deepdive.client import Client
+from deepdive.ui_access import require_demo_access
 
 st.set_page_config(page_title="DeepDive · Research Atelier", layout="wide")
+demo_access = require_demo_access()
 st.markdown("""
 <style>
 .stApp{background:radial-gradient(circle at 12% 8%,rgba(240,164,107,.13),transparent 36%),
@@ -74,7 +76,7 @@ with st.sidebar:
                 st.session_state.active_session = None
                 st.rerun()
     st.divider()
-    st.caption("Local workspace · all AI through Mesh")
+    st.caption(("Shared demo" if demo_access else "Local workspace") + " · all AI through Mesh")
     st.caption(health["model"])
 
 document_scope = {"project_id": project} if project else {"session_id": selected} if selected else None

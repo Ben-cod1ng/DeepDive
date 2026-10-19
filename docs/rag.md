@@ -102,6 +102,15 @@ uv run python -m deepdive.rag_evaluation --output evaluation/results/live-rag.js
 
 This command requires Mesh access and uses a separate evaluation data directory. The authored dataset has ten small documents and seven questions covering synonyms, exact error codes, policy versions, negation, procedures, and contradictory sources. It records document-level **Recall@3, MRR@3, and nDCG@3** for BM25, dense, fused, and final rankings, plus latency, usage, model/profile, code/lock hashes, and dataset version. Results are saved after each question. A fallback is recorded rather than presented as successful reranking.
 
-Labels are authored synthetic examples and await independent review. They are useful for regression investigation, not a claim of production accuracy. Add independently reviewed examples from the intended corpus and a held-out set before tuning chunk sizes, candidate counts, or ranking prompts. Live retrieval evaluation remains pending alongside the existing live research acceptance checks.
+The [live Mesh run on October 19, 2026](../evaluation/results/live-rag.json) completed all seven questions with `openai/text-embedding-3-small` and `openai/gpt-4o`. All seven queries used validated reranking, with 15 model requests and 7,699 reported tokens across indexing and retrieval.
+
+| Ranking stage | Mean Recall@3 | Mean MRR@3 | Mean nDCG@3 |
+|---|---|---|---|
+| BM25 | 0.8571 | 0.8571 | 0.8571 |
+| Dense | 1.0000 | 1.0000 | 1.0000 |
+| Hybrid fusion | 1.0000 | 0.9286 | 0.9473 |
+| Final reranked | 1.0000 | 1.0000 | 1.0000 |
+
+Labels are authored synthetic examples and await independent review. These ten small documents are useful for regression investigation, not a claim of production accuracy or a demonstrated advantage over dense retrieval on this dataset. Add independently reviewed examples from the intended corpus and a held-out set before tuning chunk sizes, candidate counts, or ranking prompts.
 
 Design references: [Mesh embeddings](https://developers.meshapi.ai/docs/capabilities/embeddings), [SQLite FTS5/BM25](https://www.sqlite.org/fts5.html#the_bm25_function), [reciprocal rank fusion paper](https://plg.uwaterloo.ca/~gvcormac/cormacksigir09-rrf.pdf), [LLM reranking research](https://arxiv.org/abs/2304.09542), and [pypdf extraction limits](https://pypdf.readthedocs.io/en/stable/user/extract-text.html).

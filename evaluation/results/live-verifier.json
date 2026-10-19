@@ -1,0 +1,461 @@
+{
+  "mode": "live-mesh-verifier",
+  "dataset_version": "1.1",
+  "manifest": {
+    "model": "openai/gpt-4o",
+    "gateway": "https://api.meshapi.ai/v1",
+    "policy": "2",
+    "dataset_sha256": "8f31fe3b721cf727b2caa1b4f191f36d67c31fcdc48e385520f6cd50e5991239",
+    "release": "local",
+    "files": {
+      "deepdive/__init__.py": "6b92c0206f5756e236e1c8f542b2dd341d885ec56b4fda9a299a3c4e5f6fbfbf",
+      "deepdive/api.py": "2503f71a2a8d4d89d04f31beb1143228024b5dc23fd5d0d584af1efeec14da8d",
+      "deepdive/artifacts.py": "986f3f03d49024ee572bdfb19377333c6f6240acb3f7e38dde986c3f61040cdc",
+      "deepdive/cli.py": "009b0b45466af871a2b3831c64ec8e9dbb0978a145acb871000e1437f8a04493",
+      "deepdive/client.py": "18163573fd2f64e506b6ce7414f6db601989d556e0de4bda30c331c36311b89b",
+      "deepdive/config.py": "5209a80be1bf4aaa2a62c00b8cbd2000e47b7132b843fb10904704cf38138523",
+      "deepdive/document_parser.py": "69b86bde5e081dfdf55f1c32d171564be91889a82ccb4fc5f91644c2516bce7c",
+      "deepdive/documents.py": "9d3a8c7ad28c3f27ff47552d4434a3f15f1d039b6f11ebcf55ae3a4f8f877352",
+      "deepdive/evaluation.py": "ee3640aea45b26e58cd43192bef9364a0f9c3aa4de092841f8aa46e694b6f65e",
+      "deepdive/gateway.py": "4d16694651f7d4d3c139f01305ab39fd909487221454f12f95fdeb1e274275df",
+      "deepdive/guardrails.py": "a73b092b5edc5c56860b097afc46f14194fd6450b2ee8e62c1c930af6a578d27",
+      "deepdive/memory.py": "374c265dc1632e343d4c1579449df6a196fa491cbcb5f6e0f85eb013ab793ce2",
+      "deepdive/models.py": "90b85dd2ded28f8b865217b14956a82c31fd938a960fbb0d68e9e61bcca25dde",
+      "deepdive/monitoring_smoke.py": "475cdda1f9bdfb02084ce1f5566115b80d09ae607fa3abc84848237df4d8cd3c",
+      "deepdive/observability.py": "a7a7af7ce74105919880682e1eed0c85726f51bad3ad7d40e17853bcafd5ed3b",
+      "deepdive/ops.py": "6544cab2d159d37bf511edb59d84da8e8369be951713ecece7fcf4c1c3cbc55f",
+      "deepdive/rag.py": "a08ac54d1013140bad5af6f35a957a9243377078ef971fd137939f18d39df57f",
+      "deepdive/rag_evaluation.py": "d5da8b7cd91d19ed403e81ee485dd5023c4d2d21b9d9693168db5267300c41f6",
+      "deepdive/retrieval.py": "715c168f40a00e86b40d6b19b37302b655f01f8c96939408f8202167e50cf550",
+      "deepdive/service.py": "9c2a4b03279d906ea5d3908b7af620f95c17243b081fb3288dda3fab3a2998f8",
+      "deepdive/smoke.py": "22745de38be9497cc14ee9e5c75874869904d1ab30cadf9e0664b0006dc5137e",
+      "deepdive/storage.py": "dfffae9f356d7871b36aca2dc6991e0911d0f35e59f69df0928678bc6d8fb217",
+      "deepdive/tools.py": "a2027f0c480778c06c27ede2312f127f39b817f3dbb1be5938a9cc3693a98b9a",
+      "deepdive/verification.py": "17378d5a272044db1fa705eccec2a44c087f5c537c279ca02c16e0c8fbe51522",
+      "deepdive/workflow.py": "9d68e878771015a98706acd419cb9077026c14cf884ad4d67faf0255d6ecae86",
+      "uv.lock": "8967da7e6b58dd6dd11970d3655783aa20259f048506065d09ba9e3e1337b40d"
+    }
+  },
+  "independent_review": {},
+  "reference_label_status": "Author-created synthetic reference labels, separate from model decisions; independent human review pending.",
+  "date": "2026-10-19T07:25:02.838023+00:00",
+  "model": "openai/gpt-4o",
+  "policy": "2",
+  "tp": 11,
+  "fp": 0,
+  "fn": 0,
+  "tn": 21,
+  "precision": 1.0,
+  "recall": 1.0,
+  "count": 32,
+  "usage": {
+    "calls": 7,
+    "tokens": 8603
+  },
+  "decisions": [
+    {
+      "id": "decision_fefb10a92ad152dfd9fcdb4e",
+      "run_id": "run_df9e848f87f9473cb41b",
+      "claim_id": "case_02",
+      "policy": "2",
+      "claim_hash": "002f4f0b646033650004428dc13ffde66bbfbf7f3e7ee6f67cc58f77e30ea65c",
+      "model": "openai/gpt-4o",
+      "status": "unsupported",
+      "reason": "Numerical value absent from cited evidence; calculate derived values with the tool",
+      "quotes": {}
+    },
+    {
+      "id": "decision_093a1356f69d0dd730f3a5fb",
+      "run_id": "run_df9e848f87f9473cb41b",
+      "claim_id": "case_04",
+      "policy": "2",
+      "claim_hash": "e96848fe7d043077f5042d63a86cbd008b985ca8698039d2df65c790771c56f1",
+      "model": "openai/gpt-4o",
+      "status": "unsupported",
+      "reason": "Numerical value absent from cited evidence; calculate derived values with the tool",
+      "quotes": {}
+    },
+    {
+      "id": "decision_42a7bc3c329524b627ce0edc",
+      "run_id": "run_df9e848f87f9473cb41b",
+      "claim_id": "case_26",
+      "policy": "2",
+      "claim_hash": "ac479bb172a23768047023badc8d65da22595d43b98f2a3bca3ea2b2f4bc5926",
+      "model": "openai/gpt-4o",
+      "status": "unsupported",
+      "reason": "Numerical value absent from cited evidence; calculate derived values with the tool",
+      "quotes": {}
+    },
+    {
+      "id": "decision_dafa21203e383a7b167a961c",
+      "run_id": "run_df9e848f87f9473cb41b",
+      "claim_id": "case_27",
+      "policy": "2",
+      "claim_hash": "85070e8e278b96dd073327591b3556a3d5598fe34795708ff7de84f58af90abb",
+      "model": "openai/gpt-4o",
+      "status": "unsupported",
+      "reason": "Numerical value absent from cited evidence; calculate derived values with the tool",
+      "quotes": {}
+    },
+    {
+      "id": "decision_acbb83e37e6f2f35e564184c",
+      "run_id": "run_df9e848f87f9473cb41b",
+      "claim_id": "case_28",
+      "policy": "2",
+      "claim_hash": "865b40ea090ea666bd0e016a567beae8543f8e535e2d29e0822adc558a9d906c",
+      "model": "openai/gpt-4o",
+      "status": "unsupported",
+      "reason": "Candidate quotation does not exist in the cited passage",
+      "quotes": {}
+    },
+    {
+      "id": "decision_dd3437e1f3f5a7fda19c5ab0",
+      "run_id": "run_df9e848f87f9473cb41b",
+      "claim_id": "case_29",
+      "policy": "2",
+      "claim_hash": "fbe28b4671ea33634dd0b39430b2f266ee911a420fc532e85e8139016f156559",
+      "model": "openai/gpt-4o",
+      "status": "unsupported",
+      "reason": "Claim references missing or inaccessible evidence",
+      "quotes": {}
+    },
+    {
+      "id": "decision_41044bb1f63eba3b61f13d2c",
+      "run_id": "run_df9e848f87f9473cb41b",
+      "claim_id": "case_01",
+      "policy": "2",
+      "claim_hash": "93b6774f262e7af595b8c81374a1714477cc105327c38be876282c6f81afdb9b",
+      "model": "openai/gpt-4o",
+      "status": "supported",
+      "reason": "The claim is directly supported by the passage, which states the same information.",
+      "quotes": {
+        "run_df9e848f87f9473cb41b_p0": "The trial enrolled 20 adults in 2025."
+      }
+    },
+    {
+      "id": "decision_6601e7f61f409fe54e31046b",
+      "run_id": "run_df9e848f87f9473cb41b",
+      "claim_id": "case_03",
+      "policy": "2",
+      "claim_hash": "cf7eccab831e74555327425ac31fce852f184a9af0c4366333063d9548c5eaa4",
+      "model": "openai/gpt-4o",
+      "status": "contradicted",
+      "reason": "The claim states that 20 children were enrolled, but the passage states that 20 adults were enrolled, which directly contradicts the claim.",
+      "quotes": {
+        "run_df9e848f87f9473cb41b_p2": "The trial enrolled 20 adults in 2025."
+      }
+    },
+    {
+      "id": "decision_684252de041311789468ac27",
+      "run_id": "run_df9e848f87f9473cb41b",
+      "claim_id": "case_05",
+      "policy": "2",
+      "claim_hash": "c6966145e71e5992a74f6296735f1c744927d5aeb1aef645c0cd975c81768eda",
+      "model": "openai/gpt-4o",
+      "status": "contradicted",
+      "reason": "The claim states that the treatment improved survival, but the passage states that the treatment did not improve survival, which directly contradicts the claim.",
+      "quotes": {
+        "run_df9e848f87f9473cb41b_p4": "The treatment did not improve survival."
+      }
+    },
+    {
+      "id": "decision_96abc730473dad60ec5c00c2",
+      "run_id": "run_df9e848f87f9473cb41b",
+      "claim_id": "case_06",
+      "policy": "2",
+      "claim_hash": "e3ab1b1ce5adfa1defdd58b1cd771fbe2fda762bf054987d099cc6ebba5e7e44",
+      "model": "openai/gpt-4o",
+      "status": "supported",
+      "reason": "The claim is directly supported by the passage, which states the same information.",
+      "quotes": {
+        "run_df9e848f87f9473cb41b_p5": "The treatment did not improve survival."
+      }
+    },
+    {
+      "id": "decision_266b9c8bc2c0b22d6788ce90",
+      "run_id": "run_df9e848f87f9473cb41b",
+      "claim_id": "case_07",
+      "policy": "2",
+      "claim_hash": "1c68d8a0d21aaf8a02e9e6fc566d3b16c5897503bf3f6d1101e6889cacaf521b",
+      "model": "openai/gpt-4o",
+      "status": "contradicted",
+      "reason": "The claim states the median follow-up was 12 years, but the passage states it was 12 months.",
+      "quotes": {
+        "run_df9e848f87f9473cb41b_p6": "The median follow-up was 12 months."
+      }
+    },
+    {
+      "id": "decision_dfd3d92b8c21fb3fba8df8ae",
+      "run_id": "run_df9e848f87f9473cb41b",
+      "claim_id": "case_08",
+      "policy": "2",
+      "claim_hash": "38db91dd44f9b83bb85e5c22fa07d8c37c5fa0a5895ff6b1095fc3e06cea08b1",
+      "model": "openai/gpt-4o",
+      "status": "supported",
+      "reason": "The claim is directly supported by the passage, which states the median follow-up was 12 months.",
+      "quotes": {
+        "run_df9e848f87f9473cb41b_p7": "The median follow-up was 12 months."
+      }
+    },
+    {
+      "id": "decision_3d3149d6742aef092514dd1a",
+      "run_id": "run_df9e848f87f9473cb41b",
+      "claim_id": "case_09",
+      "policy": "2",
+      "claim_hash": "435035cf583dc0f76c5ef08bd7946932865f2a1aaffb15554ce7e45fc2fa130b",
+      "model": "openai/gpt-4o",
+      "status": "supported",
+      "reason": "The claim is directly supported by the passage, which states that revenue increased from 10 million USD to 12 million USD.",
+      "quotes": {
+        "run_df9e848f87f9473cb41b_p8": "Revenue increased from 10 million USD to 12 million USD."
+      }
+    },
+    {
+      "id": "decision_562e9462a98cf8c86a0c1f79",
+      "run_id": "run_df9e848f87f9473cb41b",
+      "claim_id": "case_10",
+      "policy": "2",
+      "claim_hash": "7fd6770cb3f8353037d32ef3d4c5126fb38c4234068df722fc4e256ca70e5e25",
+      "model": "openai/gpt-4o",
+      "status": "contradicted",
+      "reason": "The claim states that profit increased, but the passage refers to revenue, not profit.",
+      "quotes": {
+        "run_df9e848f87f9473cb41b_p9": "Revenue increased from 10 million USD to 12 million USD."
+      }
+    },
+    {
+      "id": "decision_198af5eb8062b5e5e9c24a90",
+      "run_id": "run_df9e848f87f9473cb41b",
+      "claim_id": "case_11",
+      "policy": "2",
+      "claim_hash": "d0832c4af08482bee1662f3840f03c2adb25d6e406b8713f2db6c2b4531f173a",
+      "model": "openai/gpt-4o",
+      "status": "contradicted",
+      "reason": "The claim states the revenue was 12 million EUR, but the passage states it was 12 million USD.",
+      "quotes": {
+        "run_df9e848f87f9473cb41b_p10": "Revenue was 12 million USD."
+      }
+    },
+    {
+      "id": "decision_ab240c9fd31215422d7ea6db",
+      "run_id": "run_df9e848f87f9473cb41b",
+      "claim_id": "case_12",
+      "policy": "2",
+      "claim_hash": "92c0646a3d0715ec36dcff095d45de87bcec64c9718b31d9b582cec3d29e459c",
+      "model": "openai/gpt-4o",
+      "status": "contradicted",
+      "reason": "The claim states the revenue was 12 billion USD, but the passage states it was 12 million USD.",
+      "quotes": {
+        "run_df9e848f87f9473cb41b_p11": "Revenue was 12 million USD."
+      }
+    },
+    {
+      "id": "decision_f2f2214d3cb7fe4d2caa36d3",
+      "run_id": "run_df9e848f87f9473cb41b",
+      "claim_id": "case_13",
+      "policy": "2",
+      "claim_hash": "31291684d47de6a274a3021b93888ae4b064803abc8edb1db2cc3b45c674df0b",
+      "model": "openai/gpt-4o",
+      "status": "contradicted",
+      "reason": "The claim states the study proved causation, but the passage only mentions an association found by an observational study, which does not prove causation.",
+      "quotes": {
+        "run_df9e848f87f9473cb41b_p12": "A small observational study found an association."
+      }
+    },
+    {
+      "id": "decision_e0d679c9fd2a53a291441057",
+      "run_id": "run_df9e848f87f9473cb41b",
+      "claim_id": "case_14",
+      "policy": "2",
+      "claim_hash": "bcaf6d1a04a130472afb773e6c238a12388e9c34a6a837e5e98296c7503cfa28",
+      "model": "openai/gpt-4o",
+      "status": "supported",
+      "reason": "The claim is directly supported by the passage, which states the same information.",
+      "quotes": {
+        "run_df9e848f87f9473cb41b_p13": "A small observational study found an association."
+      }
+    },
+    {
+      "id": "decision_2f7b3399bf777a3ec1addf52",
+      "run_id": "run_df9e848f87f9473cb41b",
+      "claim_id": "case_15",
+      "policy": "2",
+      "claim_hash": "1d05501d8818cd4118f06a155ad1250b391e5ea03ce7bcfb4c46b2f76c99558c",
+      "model": "openai/gpt-4o",
+      "status": "unsupported",
+      "reason": "The passage only mentions one forum participant, Alex, saying the tool felt faster. It does not indicate that all users agreed on this point.",
+      "quotes": {
+        "run_df9e848f87f9473cb41b_p14": "One forum participant, Alex, said the tool felt faster."
+      }
+    },
+    {
+      "id": "decision_3ed8ae53c17d45cb7a8945ca",
+      "run_id": "run_df9e848f87f9473cb41b",
+      "claim_id": "case_16",
+      "policy": "2",
+      "claim_hash": "9dcfbf98c52156d2cd2d931ef48daca15a3e23ba6543d4402849aa825a0c14fd",
+      "model": "openai/gpt-4o",
+      "status": "supported",
+      "reason": "The passage directly states that Alex said the tool felt faster, which matches the claim.",
+      "quotes": {
+        "run_df9e848f87f9473cb41b_p15": "One forum participant, Alex, said the tool felt faster."
+      }
+    },
+    {
+      "id": "decision_5a417926566089a029fd6fa0",
+      "run_id": "run_df9e848f87f9473cb41b",
+      "claim_id": "case_17",
+      "policy": "2",
+      "claim_hash": "668ced1518c4c45af81b583abf727cb0901d5c0daed6393fed6512f17ca91028",
+      "model": "openai/gpt-4o",
+      "status": "contradicted",
+      "reason": "The passage states that the beta may be released in October, which contradicts the claim that it was released in October.",
+      "quotes": {
+        "run_df9e848f87f9473cb41b_p16": "The beta may be released in October."
+      }
+    },
+    {
+      "id": "decision_072f83a0c87341a77cde8cd9",
+      "run_id": "run_df9e848f87f9473cb41b",
+      "claim_id": "case_18",
+      "policy": "2",
+      "claim_hash": "1fd598fd203351e8f24ddc40105dd93b26ad57be7f4d2aecbd52e244c9f4e5f4",
+      "model": "openai/gpt-4o",
+      "status": "supported",
+      "reason": "The passage directly states that the beta may be released in October, which matches the claim.",
+      "quotes": {
+        "run_df9e848f87f9473cb41b_p17": "The beta may be released in October."
+      }
+    },
+    {
+      "id": "decision_a08eb1bf91cfaf584871e635",
+      "run_id": "run_df9e848f87f9473cb41b",
+      "claim_id": "case_19",
+      "policy": "2",
+      "claim_hash": "4c73734f3dd80075430feb75964f8ea6b2074ed66222ba10420ee704a9a38475",
+      "model": "openai/gpt-4o",
+      "status": "contradicted",
+      "reason": "The passage states that the policy applies to adults in Region A, which directly contradicts the claim that it applies worldwide.",
+      "quotes": {
+        "run_df9e848f87f9473cb41b_p18": "The policy applies to adults in Region A."
+      }
+    },
+    {
+      "id": "decision_42564479f50b18da003badd0",
+      "run_id": "run_df9e848f87f9473cb41b",
+      "claim_id": "case_20",
+      "policy": "2",
+      "claim_hash": "128151c8505de10f85663e9c9fd9c53663f5f6d0d926f1dcbdaaf1a6e5388fec",
+      "model": "openai/gpt-4o",
+      "status": "supported",
+      "reason": "The passage directly states that the policy applies to adults in Region A, which matches the claim.",
+      "quotes": {
+        "run_df9e848f87f9473cb41b_p19": "The policy applies to adults in Region A."
+      }
+    },
+    {
+      "id": "decision_39571b8db5ca5db4cf365bfc",
+      "run_id": "run_df9e848f87f9473cb41b",
+      "claim_id": "case_21",
+      "policy": "2",
+      "claim_hash": "db994658549ec96b2fd5e6ed6487a84d4b680e5460b6bf8c36674e049280270b",
+      "model": "openai/gpt-4o",
+      "status": "contradicted",
+      "reason": "The passage states that the estimate excludes taxes, which directly contradicts the claim that it includes taxes.",
+      "quotes": {
+        "run_df9e848f87f9473cb41b_p20": "The estimate excludes taxes."
+      }
+    },
+    {
+      "id": "decision_4ce2fe4b0877b84c42be8600",
+      "run_id": "run_df9e848f87f9473cb41b",
+      "claim_id": "case_22",
+      "policy": "2",
+      "claim_hash": "43410e1d51ff0e7ee636ef6d51e519ccfc8c88693b7895b2c591cadf06ceffaa",
+      "model": "openai/gpt-4o",
+      "status": "supported",
+      "reason": "The passage directly states that the estimate excludes taxes, which matches the claim.",
+      "quotes": {
+        "run_df9e848f87f9473cb41b_p21": "The estimate excludes taxes."
+      }
+    },
+    {
+      "id": "decision_dfee0ea2d5e84158ea4a8cbb",
+      "run_id": "run_df9e848f87f9473cb41b",
+      "claim_id": "case_23",
+      "policy": "2",
+      "claim_hash": "c5fc4756f58e7c2dff744ed60762bd535ed17c45a09d18b3ceb57e9e76ad4f3b",
+      "model": "openai/gpt-4o",
+      "status": "insufficient",
+      "reason": "The passage only states that the server stores encrypted records, which does not provide information about whether the server has ever had a data breach.",
+      "quotes": {
+        "run_df9e848f87f9473cb41b_p22": "The server stores encrypted records."
+      }
+    },
+    {
+      "id": "decision_bd60d2f251aa568f64cf88ea",
+      "run_id": "run_df9e848f87f9473cb41b",
+      "claim_id": "case_24",
+      "policy": "2",
+      "claim_hash": "4723ca944fd479b77421dfa5a44810658feacdd868c2755f53e26cbcd242fe7f",
+      "model": "openai/gpt-4o",
+      "status": "contradicted",
+      "reason": "The passage states the temperature was 20 degrees Celsius, which directly contradicts the claim that it was 20 degrees Fahrenheit.",
+      "quotes": {
+        "run_df9e848f87f9473cb41b_p23": "The temperature was 20 degrees Celsius."
+      }
+    },
+    {
+      "id": "decision_f6b12245a952c30abef61b74",
+      "run_id": "run_df9e848f87f9473cb41b",
+      "claim_id": "case_25",
+      "policy": "2",
+      "claim_hash": "b8182fc7c72fe3d9f36c4c3fd11c5034f17c060fb563a343f0b27b3ab35b4e64",
+      "model": "openai/gpt-4o",
+      "status": "supported",
+      "reason": "The passage exactly matches the claim that the warranty lasts 2 years after purchase.",
+      "quotes": {
+        "run_df9e848f87f9473cb41b_p24": "The warranty lasts 2 years after purchase."
+      }
+    },
+    {
+      "id": "decision_0151e580d3f6b13fa094c379",
+      "run_id": "run_df9e848f87f9473cb41b",
+      "claim_id": "case_30",
+      "policy": "2",
+      "claim_hash": "ec4e199da8b0e8db85485afcca3210753d4b4d2e9f7b9951e9d87d65958907ff",
+      "model": "openai/gpt-4o",
+      "status": "contradicted",
+      "reason": "The passage states that each group had 20 adults, implying a total of 40 adults, which contradicts the claim that the study had 20 adults in total.",
+      "quotes": {
+        "run_df9e848f87f9473cb41b_p29": "The control and treatment groups each had 20 adults."
+      }
+    },
+    {
+      "id": "decision_951e80cd92b796c70368b8e3",
+      "run_id": "run_df9e848f87f9473cb41b",
+      "claim_id": "case_31",
+      "policy": "2",
+      "claim_hash": "6e859c7582d5b65fd92f189787eb117355c64ec382f083882e355a5c4a207278",
+      "model": "openai/gpt-4o",
+      "status": "contradicted",
+      "reason": "The claim states that the treatment reduced mortality, but the passage explicitly states that no mortality data were collected, making it impossible to support the claim.",
+      "quotes": {
+        "run_df9e848f87f9473cb41b_p30": "No mortality data were collected."
+      }
+    },
+    {
+      "id": "decision_2acc6613e387f0d01af2453f",
+      "run_id": "run_df9e848f87f9473cb41b",
+      "claim_id": "case_32",
+      "policy": "2",
+      "claim_hash": "d04766a9772e8f4668fd3204211cf056041d68c3828b857ace48e83a94032c9b",
+      "model": "openai/gpt-4o",
+      "status": "supported",
+      "reason": "The claim is directly supported by the passage, which states that the project is experimental and its API can change.",
+      "quotes": {
+        "run_df9e848f87f9473cb41b_p31": "The project is experimental and its API can change."
+      }
+    }
+  ]
+}

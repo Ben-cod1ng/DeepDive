@@ -54,6 +54,27 @@ No model is trained by this application. Its model operations concern evaluation
 
 **Why:** this is sufficient for the single-owner target and makes the same build runnable in CI and on a chosen Docker host. Remote host provisioning, TLS/account integration, branch protections, environment reviewers, and external alert recipients must be configured against actual accounts rather than represented by nonfunctional placeholders.
 
+## Hosted demo extension
+
+The user requested a free or temporary hosted hackathon demo that reviewers can
+use without the owner's laptop. Railway hosts two services from the same image:
+a public Streamlit frontend and a private FastAPI backend with a `/data` volume.
+This extends the original local deployment boundary. A separate shared demo code
+protects the frontend; visitors share documents, research, and the owner's Mesh
+budget. This does not provide separate accounts or tenant isolation.
+
+Railway supplies root-owned volumes. The API initializer changes only the mount
+directory's owner and then drops permanently to UID/GID 10001 before importing
+the service. The backend requires a persistent-volume configuration and an
+internal token; it accepts the exact Railway private hostname and deployment
+healthcheck hostname. A dual-stack listener supports internal IPv6 and IPv4.
+The frontend has no Mesh key and contacts the backend only after demo login.
+See [the deployment guide](railway.md) for settings and acceptance steps.
+
+The demo does not bypass the independently reviewed accuracy gate for publishing
+release images. Prior live evaluation records retain their original code hashes;
+hosted acceptance must be recorded separately.
+
 ## Organizer checks
 
 The organizer's workflow was retrieved and inspected on 2026-10-17 and installed unchanged at `.github/workflows/agent-arena-2026-checks.yml`. It requests GitHub OIDC, downloads the organizer's check script using `SUBMISSION_TOKEN`, and supplies Mesh/submission credentials to that script. The script itself is served only to authenticated GitHub Actions; it has not been fetched or executed locally.

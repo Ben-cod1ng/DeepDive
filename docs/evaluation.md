@@ -87,4 +87,16 @@ Run `uv run python -m deepdive.rag_evaluation --output evaluation/results/live-r
 
 The live-evaluation and release workflows retain this retrieval evidence alongside verifier results. Retrieval labels are authored synthetic cases pending independent review; successful command execution is not a retrieval quality threshold. The existing independently reviewed verifier precision/recall gate still controls image publication. Establish reviewed retrieval thresholds on a representative held-out corpus before treating the RAG experiment as a production promotion gate.
 
-Live Mesh results and independently measured final-claim support remain pending. Offline application and remote quality checks have passed previously; see [the checklist](../tasks/todo.md) for current validation.
+## Recorded live measurements
+
+On October 19, 2026, the [32-case live verifier evaluation](../evaluation/results/live-verifier.json) through Mesh with `openai/gpt-4o` produced 11 true positives, 21 true negatives, no false positives, and no false negatives against the authored reference labels. Precision and recall were both 1.0 on this set, using seven model requests and 8,603 reported tokens. These are measurements on a small synthetic set whose labels still await independent review, not an independently established production accuracy estimate.
+
+The [promotion gate](../evaluation/results/live-verifier-gate.json) remains **blocked by independent reference-label review**. Its precision and recall criteria passed; the review requirement has not been bypassed.
+
+The [live retrieval evaluation](../evaluation/results/live-rag.json) also completed all seven questions with actual embeddings and validated reranking. Final document-level Recall@3, MRR@3, and nDCG@3 were all 1.0; BM25 alone scored 0.8571 for each metric. Dense retrieval also scored 1.0, so this set does not establish that reranking improves over dense retrieval. See [the retrieval comparison](rag.md#evaluate-retrieval) for all stages and limitations.
+
+The [deployed document acceptance run](../evaluation/results/live-document-acceptance.json) used three authored synthetic policy documents and real Mesh inference. A script exercised the HTTP API in manual-review mode: upload, two research tasks, draft review, revision, an actual API-container restart at the second review checkpoint, approval, and download of eight artifacts. The PowerPoint, PNGs, and audit JSON parsed successfully; published references resolved and quotations matched their stored passages. This was a scripted acceptance exercise, not independent human review. The session remains available in the local UI as **Live Mesh acceptance (synthetic documents)**.
+
+That investigation used 47 model requests and 47,178 reported tokens across both versions and publication. Eight of its eleven uncached retrievals completed validated reranking; three fell back to hybrid order after two invalid-schema responses each. The fallback preserved source passages and did not falsely mark those retrievals as reranked. The final report repeated the carry-forward rule in two findings, so editorial concision remains a limitation. The separate seven-question retrieval evaluation above had no reranking fallbacks.
+
+The ten-question research benchmark, independent reference-label review, and independently measured final-claim support remain pending. See [the checklist](../tasks/todo.md) for acceptance and deployment validation.

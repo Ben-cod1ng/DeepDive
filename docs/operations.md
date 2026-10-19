@@ -1,6 +1,6 @@
 # Deployment and operations
 
-The supported deployment is one local Docker Compose stack, with persistent SQLite storage and optional monitoring. Default ports bind only to loopback. A public multi-user deployment needs separate account authorization and TLS ingress; neither is implied by the API service token.
+The local deployment is one Docker Compose stack, with persistent SQLite storage and optional monitoring. Default ports bind only to loopback. A [Railway shared demo](railway.md) uses a public HTTPS frontend with a demo code and a private API with persistent storage. Admitted demo visitors share one workspace; separate user accounts and tenant authorization are not implemented.
 
 ## Configuration
 
@@ -123,7 +123,7 @@ The repository root must be the contents of `DeepDive`, so `.github/workflows` i
 | `quality.yml` | Main pushes/PRs/reuse: lint, contract types, compile, tests, fixtures, dependency audit, container startup and smoke, Prometheus config, monitoring HTTP/data path |
 | `live-evaluation.yml` | Manual protected environment: Mesh verifier evaluation and independent-label quality gate |
 | `release.yml` | Published release: quality workflow, fresh live evaluation, then build and push immutable commit-tagged GHCR image |
-| `agent-arena-2026-checks.yml` | Organizer-supplied push checks; see submission guide |
+| `agent-arena-2026-checks.yml` | Organizer-supplied push checks; requires the organizer's submission token |
 
 The public repository is [Ben-cod1ng/DeepDive](https://github.com/Ben-cod1ng/DeepDive). Main-branch protection requires `Quality checks` and `Docker smoke`, with up-to-date branches, linear history, and no force pushes/deletion. Administrator bypass remains enabled for the repository owner. Distinct check names avoid collision with the organizer's `checks` job.
 

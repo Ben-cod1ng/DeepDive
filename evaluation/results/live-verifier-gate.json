@@ -1,0 +1,8 @@
+{
+  "passed": false,
+  "failures": [
+    "Independent reference-label review is pending"
+  ],
+  "precision_target": 0.9,
+  "recall_floor": 0.5
+}

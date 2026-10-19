@@ -1,0 +1,237 @@
+{
+  "mode": "live-mesh-retrieval",
+  "date": "2026-10-19T07:25:40.851983+00:00",
+  "dataset_version": "1.0",
+  "dataset_hash": "51e6359e20f31f631974eb1bc26b453844470d7a0bcd3ae10bd0fcee759a74a4",
+  "label_status": "authored synthetic retrieval cases; independent review pending",
+  "independent_review": {
+    "status": "pending",
+    "reviewer": null,
+    "date": null
+  },
+  "embedding_model": "openai/text-embedding-3-small",
+  "embedding_revision": "1",
+  "reranking_model": "openai/gpt-4o",
+  "pipeline": "174eeb3e322124d8334be053fbde73217e6a404662718e451bd715acb040f993",
+  "lock_hash": "fcd4fb214d1af0a751b892df7e880d4a714c6442b9867b614020b2403d5ebbe1",
+  "chunk_version": "structure-384-overlap64-v1",
+  "parser_version": "pdf-docx-text-v1",
+  "retrieval_version": "bm25-cosine-rrf60-rerank16-v1",
+  "results": [
+    {
+      "question_id": "synonym",
+      "metrics": {
+        "bm25": {
+          "recall_at_3": 0.0,
+          "mrr_at_3": 0,
+          "ndcg_at_3": 0.0
+        },
+        "dense": {
+          "recall_at_3": 1.0,
+          "mrr_at_3": 1.0,
+          "ndcg_at_3": 1.0
+        },
+        "hybrid": {
+          "recall_at_3": 1.0,
+          "mrr_at_3": 0.5,
+          "ndcg_at_3": 0.6309297535714575
+        },
+        "final": {
+          "recall_at_3": 1.0,
+          "mrr_at_3": 1.0,
+          "ndcg_at_3": 1.0
+        }
+      },
+      "reranked": true,
+      "seconds": 6.413
+    },
+    {
+      "question_id": "exact-code",
+      "metrics": {
+        "bm25": {
+          "recall_at_3": 1.0,
+          "mrr_at_3": 1.0,
+          "ndcg_at_3": 1.0
+        },
+        "dense": {
+          "recall_at_3": 1.0,
+          "mrr_at_3": 1.0,
+          "ndcg_at_3": 1.0
+        },
+        "hybrid": {
+          "recall_at_3": 1.0,
+          "mrr_at_3": 1.0,
+          "ndcg_at_3": 1.0
+        },
+        "final": {
+          "recall_at_3": 1.0,
+          "mrr_at_3": 1.0,
+          "ndcg_at_3": 1.0
+        }
+      },
+      "reranked": true,
+      "seconds": 6.699
+    },
+    {
+      "question_id": "version",
+      "metrics": {
+        "bm25": {
+          "recall_at_3": 1.0,
+          "mrr_at_3": 1.0,
+          "ndcg_at_3": 1.0
+        },
+        "dense": {
+          "recall_at_3": 1.0,
+          "mrr_at_3": 1.0,
+          "ndcg_at_3": 1.0
+        },
+        "hybrid": {
+          "recall_at_3": 1.0,
+          "mrr_at_3": 1.0,
+          "ndcg_at_3": 1.0
+        },
+        "final": {
+          "recall_at_3": 1.0,
+          "mrr_at_3": 1.0,
+          "ndcg_at_3": 1.0
+        }
+      },
+      "reranked": true,
+      "seconds": 5.74
+    },
+    {
+      "question_id": "procedure",
+      "metrics": {
+        "bm25": {
+          "recall_at_3": 1.0,
+          "mrr_at_3": 1.0,
+          "ndcg_at_3": 1.0
+        },
+        "dense": {
+          "recall_at_3": 1.0,
+          "mrr_at_3": 1.0,
+          "ndcg_at_3": 1.0
+        },
+        "hybrid": {
+          "recall_at_3": 1.0,
+          "mrr_at_3": 1.0,
+          "ndcg_at_3": 1.0
+        },
+        "final": {
+          "recall_at_3": 1.0,
+          "mrr_at_3": 1.0,
+          "ndcg_at_3": 1.0
+        }
+      },
+      "reranked": true,
+      "seconds": 5.997
+    },
+    {
+      "question_id": "negation",
+      "metrics": {
+        "bm25": {
+          "recall_at_3": 1.0,
+          "mrr_at_3": 1.0,
+          "ndcg_at_3": 1.0
+        },
+        "dense": {
+          "recall_at_3": 1.0,
+          "mrr_at_3": 1.0,
+          "ndcg_at_3": 1.0
+        },
+        "hybrid": {
+          "recall_at_3": 1.0,
+          "mrr_at_3": 1.0,
+          "ndcg_at_3": 1.0
+        },
+        "final": {
+          "recall_at_3": 1.0,
+          "mrr_at_3": 1.0,
+          "ndcg_at_3": 1.0
+        }
+      },
+      "reranked": true,
+      "seconds": 5.985
+    },
+    {
+      "question_id": "contradiction",
+      "metrics": {
+        "bm25": {
+          "recall_at_3": 1.0,
+          "mrr_at_3": 1.0,
+          "ndcg_at_3": 1.0
+        },
+        "dense": {
+          "recall_at_3": 1.0,
+          "mrr_at_3": 1.0,
+          "ndcg_at_3": 1.0
+        },
+        "hybrid": {
+          "recall_at_3": 1.0,
+          "mrr_at_3": 1.0,
+          "ndcg_at_3": 1.0
+        },
+        "final": {
+          "recall_at_3": 1.0,
+          "mrr_at_3": 1.0,
+          "ndcg_at_3": 1.0
+        }
+      },
+      "reranked": true,
+      "seconds": 4.491
+    },
+    {
+      "question_id": "refund",
+      "metrics": {
+        "bm25": {
+          "recall_at_3": 1.0,
+          "mrr_at_3": 1.0,
+          "ndcg_at_3": 1.0
+        },
+        "dense": {
+          "recall_at_3": 1.0,
+          "mrr_at_3": 1.0,
+          "ndcg_at_3": 1.0
+        },
+        "hybrid": {
+          "recall_at_3": 1.0,
+          "mrr_at_3": 1.0,
+          "ndcg_at_3": 1.0
+        },
+        "final": {
+          "recall_at_3": 1.0,
+          "mrr_at_3": 1.0,
+          "ndcg_at_3": 1.0
+        }
+      },
+      "reranked": true,
+      "seconds": 7.926
+    }
+  ],
+  "status": "completed",
+  "averages": {
+    "bm25": {
+      "recall_at_3": 0.8571428571428571,
+      "mrr_at_3": 0.8571428571428571,
+      "ndcg_at_3": 0.8571428571428571
+    },
+    "dense": {
+      "recall_at_3": 1.0,
+      "mrr_at_3": 1.0,
+      "ndcg_at_3": 1.0
+    },
+    "hybrid": {
+      "recall_at_3": 1.0,
+      "mrr_at_3": 0.9285714285714286,
+      "ndcg_at_3": 0.9472756790816368
+    },
+    "final": {
+      "recall_at_3": 1.0,
+      "mrr_at_3": 1.0,
+      "ndcg_at_3": 1.0
+    }
+  },
+  "reranking_completed_for_all_queries": true,
+  "model_requests": 15,
+  "tokens": 7699
+}

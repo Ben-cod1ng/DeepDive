@@ -28,4 +28,4 @@ USER 10001:10001
 EXPOSE 8000 8501
 HEALTHCHECK --interval=20s --timeout=5s --start-period=30s --retries=3 \
     CMD ["python", "-m", "deepdive.ops", "health"]
-CMD ["python", "-m", "uvicorn", "deepdive.api:app", "--host", "0.0.0.0", "--port", "8000", "--workers", "1", "--no-access-log"]
+CMD ["python", "-m", "deepdive.hosting"]
