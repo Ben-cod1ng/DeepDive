@@ -6,6 +6,11 @@ or synthetic documents. It is a demonstration workspace, without separate user
 accounts or tenant isolation. The independently reviewed accuracy release gate in
 [evaluation.md](evaluation.md) remains separate and has not been passed.
 
+The deployed demo is **https://deepdive-web-production.up.railway.app**. Obtain the
+demo code from the project owner or the judging materials; it is not stored in
+this public repository. The saved **Demo: annual leave policy (synthetic)** session
+shows a completed document research example without requiring another model call.
+
 ## Services
 
 ```mermaid
@@ -76,6 +81,8 @@ user. Set these service variables:
 | `DEEPDIVE_API_TOKEN` | `${{DeepDive.DEEPDIVE_API_TOKEN}}` |
 | `DEEPDIVE_DEMO_ACCESS_CODE` | A separate random secret of at least 24 characters |
 | `PORT` | `8501` |
+| `STREAMLIT_THEME_BASE` | `dark` |
+| `STREAMLIT_THEME_PRIMARY_COLOR` | `#4ec9b0` |
 
 Generate the demo code in a password manager. Give reviewers this code alongside
 the public link. Keep the internal API token and Mesh key private. Mesh credentials
@@ -104,7 +111,16 @@ The [local Docker check](../evaluation/results/railway-smoke-local.json) passed
 with a fresh root-owned volume, a non-root API process, IPv4/IPv6, host/token
 boundaries, restart persistence, and frontend-to-API private networking. The
 69-test local suite also passed, including login, logout, and code rotation.
-These checks do not replace acceptance on the hosted URL below.
+The [hosted acceptance record](../evaluation/results/railway-hosted.json) also
+passed on October 20, 2026, using an isolated browser against the public HTTPS
+address. It covered rejected/correct login, a synthetic Markdown upload, live Mesh
+research with three reranked hybrid retrievals, manual approval, seven downloaded
+artifacts, persistence across a backend restart, and logout. The research used
+15 model calls and 9,744 tokens. The two answers matched the authored policy.
+A follow-up check after configuring the dark theme confirmed login, the saved
+report, readable labels, and logout without additional model calls.
+
+Use this checklist again after deployment changes:
 
 1. Open the public URL in a private browser window. Confirm it asks for the demo
    code and an incorrect code does not reveal the workspace.
@@ -118,9 +134,10 @@ These checks do not replace acceptance on the hosted URL below.
 6. Sign out and confirm the workspace is hidden. Share the URL and **demo code**
    with reviewers. Document the final tested commit and URL.
 
-The existing live Mesh results were collected on an earlier local Docker build.
-They are historical evidence, not validation of this hosted deployment. Do not
-mark this checklist complete until it has been exercised on the Railway URL.
+The other live Mesh evaluation records were collected on an earlier local Docker
+build. The hosted record identifies its own tested commit and deployments.
+This small browser acceptance check does not establish general research accuracy
+or replace the pending independent review.
 
 ## Operations and troubleshooting
 

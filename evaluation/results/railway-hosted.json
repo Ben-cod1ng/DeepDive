@@ -1,0 +1,92 @@
+{
+  "date": "2026-10-20T10:04:43.802387+00:00",
+  "status": "passed",
+  "mode": "live-railway-public-browser-acceptance",
+  "url": "https://deepdive-web-production.up.railway.app",
+  "commit": "71bad8d2cc21fc876e00abdd53d9b753be18bafa",
+  "backend_deployment": "4e1597dc-5f89-4b6b-b5eb-77683127e744",
+  "frontend_deployment": "438aefc9-cada-4c97-8602-20193f6d3018",
+  "theme_followup": {
+    "date": "2026-10-20T15:49:35.280Z",
+    "frontend_deployment": "56d20ec8-84a9-48d3-92f4-920c8999893a",
+    "change": "Explicit dark Streamlit theme and teal primary color",
+    "checks": {
+      "correct_code_opens_workspace": true,
+      "saved_completed_report_visible": true,
+      "screenshot_label_contrast_reviewed": true,
+      "logout_hides_workspace": true
+    },
+    "additional_model_calls": 0
+  },
+  "browser": "Isolated headless Microsoft Edge via Playwright",
+  "run_id": "run_212e7bafc05d444db243",
+  "corpus": "One authored synthetic annual leave policy, 232 bytes, two section chunks",
+  "calls": 15,
+  "tokens": 9744,
+  "active_seconds": 24.576,
+  "published_claims": 2,
+  "retrievals": 3,
+  "reranked_retrievals": 3,
+  "checks": {
+    "public_https_200": true,
+    "public_health_200": true,
+    "unauthenticated_workspace_hidden": true,
+    "incorrect_code_rejected": true,
+    "correct_code_opens_workspace": true,
+    "frontend_private_api_connection": true,
+    "browser_document_upload": true,
+    "live_mesh_documents_only_research": true,
+    "manual_review_and_approval": true,
+    "two_expected_policy_answers_with_document_section_citation": true,
+    "seven_browser_artifact_downloads": true,
+    "png_and_pptx_files_valid": true,
+    "session_and_completed_run_survive_backend_restart": true,
+    "document_visible_after_backend_restart": true,
+    "report_download_identical_after_backend_restart": true,
+    "logout_hides_workspace": true
+  },
+  "artifacts": [
+    {
+      "name": "evidence.png",
+      "bytes": 15521,
+      "sha256": "a57f4b70cea77b7d778b814c25d1499c614ac7ed9b06c7f85c9ee3957d6c37bc"
+    },
+    {
+      "name": "insights.png",
+      "bytes": 22040,
+      "sha256": "840d3cebd549a8bf7a44bfa8c74c781dc8a882c3ecfc8862204a5590c3e59abd"
+    },
+    {
+      "name": "report.html",
+      "bytes": 2760,
+      "sha256": "24bd8c5c2c5f6ba432dd3db810a8b1e877fc4b8b1bfeffddcd42ce3185458d6b"
+    },
+    {
+      "name": "report.md",
+      "bytes": 960,
+      "sha256": "dd016eb28e54f1ef7ec90d86064d48206bf8c207b2ac04177d32f0eb065eba9f"
+    },
+    {
+      "name": "slides.html",
+      "bytes": 52772,
+      "sha256": "105c034f5e447a901600e3aeb8015e3e835445fd7bccce1a358c77354c4f0654"
+    },
+    {
+      "name": "slides.pptx",
+      "bytes": 64285,
+      "sha256": "d61543b351abb2f7ab9c14503306b9ac02f483ee5a559a3519150784d33f31c6"
+    },
+    {
+      "name": "audit.json",
+      "bytes": 31713,
+      "sha256": "47f88f3b0fde4b4a7b24409de7cd19b56c9b909e9790bbb889dfd5bf9242d5f3"
+    }
+  ],
+  "limitations": [
+    "One small synthetic document scenario; not independent accuracy evaluation or a load test.",
+    "The Streamlit report displays a literal HTML reference anchor; document section and passage remain readable. In-page citation navigation was not validated.",
+    "This hosted check did not exercise public web research, revision, or code rotation.",
+    "Independent label/report review and organizer submission acceptance remain pending.",
+    "Railway trial and Mesh balances determine ongoing availability."
+  ]
+}
