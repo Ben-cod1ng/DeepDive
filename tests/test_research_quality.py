@@ -7,6 +7,24 @@ from deepdive.service import ResearchService
 from .fakes import FixtureGateway, FixtureHTTP
 
 
+def test_quote_anchoring_restores_only_unique_literal_source_spans():
+    from deepdive.guardrails import anchor_quotes, validate_claim
+    from deepdive.models import Claim
+    passages = {"p": {"text": "Only one writer\ncan write. Readers  can read."}}
+    original = "Only one writer can write."
+    anchored, changes = anchor_quotes({"p": original}, passages)
+    assert anchored["p"] == "Only one writer\ncan write."
+    assert changes["p"]["submitted"] == original
+    assert passages["p"]["text"][changes["p"]["start"]:changes["p"]["end"]] == anchored["p"]
+    claim = Claim(id="c", task_id="t", text="Only one writer can write.", passage_ids=["p"], quotes=anchored)
+    assert validate_claim(claim, passages) is None
+    for changed in ["Only two writers can write.", "Only one writer cannot write.", "only one writer can write!", ""]:
+        result, changes = anchor_quotes({"p": changed}, passages)
+        assert result["p"] == changed and not changes
+    result, changes = anchor_quotes({"p": "one writer"}, {"p": {"text": "one\nwriter and one  writer"}})
+    assert result["p"] == "one writer" and not changes  # ambiguous spans stay rejected
+
+
 class InitiallyEmptyHTTP(FixtureHTTP):
     def get(self, url):
         if "duckduckgo.com" in url and "repair" not in url:

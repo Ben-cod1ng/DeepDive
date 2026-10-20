@@ -1,0 +1,164 @@
+{
+  "mode": "live-mesh-research-benchmark",
+  "experiment": "adde6ab67134dda47754010b826328a966fbf7e0f30fa253111d2e17a9bfdfce",
+  "manifest": {
+    "model": "openai/gpt-4o",
+    "gateway": "https://api.meshapi.ai/v1",
+    "policy": "2",
+    "dataset_sha256": "49e8d92610a302afea8dddc1348ec617876285402ca82a3c2221dcb16d87708e",
+    "release": "83f75f2f1108bdf23c3e82d2aecbd099c3db72bb",
+    "files": {
+      "deepdive/__init__.py": "6b92c0206f5756e236e1c8f542b2dd341d885ec56b4fda9a299a3c4e5f6fbfbf",
+      "deepdive/api.py": "bd3000acc3e46f77fbce8bfbe33d8ed9c06857606855273baef7815b599acfe9",
+      "deepdive/artifacts.py": "dad707389162420d31e9fa14df02801e6ca97e149f32f849814110626ce5e7aa",
+      "deepdive/benchmark.py": "e58b5da92a4ea32dfe71940301bdfe91d28d0edaf256b7d6cefc3102bca9f5da",
+      "deepdive/cli.py": "009b0b45466af871a2b3831c64ec8e9dbb0978a145acb871000e1437f8a04493",
+      "deepdive/client.py": "18163573fd2f64e506b6ce7414f6db601989d556e0de4bda30c331c36311b89b",
+      "deepdive/config.py": "54b01420541a367167ce988e3eaf7b6b8a66c07d5850f976bab09c265e13912c",
+      "deepdive/document_parser.py": "69b86bde5e081dfdf55f1c32d171564be91889a82ccb4fc5f91644c2516bce7c",
+      "deepdive/documents.py": "9d3a8c7ad28c3f27ff47552d4434a3f15f1d039b6f11ebcf55ae3a4f8f877352",
+      "deepdive/evaluation.py": "b39afb3cb11038deee0477f9095667357f496976378f60a51aaad765f367624d",
+      "deepdive/gateway.py": "71aac4605f1577042e45adfe7825b1b9decc557cbce382b1f832a11d45c24f5e",
+      "deepdive/guardrails.py": "a73b092b5edc5c56860b097afc46f14194fd6450b2ee8e62c1c930af6a578d27",
+      "deepdive/hosting.py": "52860f3b13f619506e7fec712082c93f5ee31ed0a1a91066c5a4d0fd99aecc13",
+      "deepdive/memory.py": "374c265dc1632e343d4c1579449df6a196fa491cbcb5f6e0f85eb013ab793ce2",
+      "deepdive/models.py": "90b85dd2ded28f8b865217b14956a82c31fd938a960fbb0d68e9e61bcca25dde",
+      "deepdive/monitoring_smoke.py": "475cdda1f9bdfb02084ce1f5566115b80d09ae607fa3abc84848237df4d8cd3c",
+      "deepdive/observability.py": "a7a7af7ce74105919880682e1eed0c85726f51bad3ad7d40e17853bcafd5ed3b",
+      "deepdive/ops.py": "6544cab2d159d37bf511edb59d84da8e8369be951713ecece7fcf4c1c3cbc55f",
+      "deepdive/presentation.py": "41400904bf9a623768dc0624f55e728ce1bb6d598b8b2f3e23141af4f5ed241d",
+      "deepdive/rag.py": "62fd30817020a03159f8b6bb55ce56fbf7d63d8fa15e44b4cdbc3f14e816d80e",
+      "deepdive/rag_evaluation.py": "6657f13ac47679a2f286a12914bab547de77c2dcb11c07040766de776c182fe2",
+      "deepdive/retrieval.py": "715c168f40a00e86b40d6b19b37302b655f01f8c96939408f8202167e50cf550",
+      "deepdive/review.py": "28c4dbff3b9486cc41a2b0934e0c3387e5e89bcc26d41911eb1e985c8159a6c5",
+      "deepdive/service.py": "9c2a4b03279d906ea5d3908b7af620f95c17243b081fb3288dda3fab3a2998f8",
+      "deepdive/smoke.py": "22745de38be9497cc14ee9e5c75874869904d1ab30cadf9e0664b0006dc5137e",
+      "deepdive/spending.py": "e9c938cfae094ba667f86affa06d9519608370f761fab9b345e886aef38a0996",
+      "deepdive/storage.py": "dfffae9f356d7871b36aca2dc6991e0911d0f35e59f69df0928678bc6d8fb217",
+      "deepdive/tools.py": "01d8cb28bd275a671086a496762c162e810a6cac25b883b436fa52732db71d86",
+      "deepdive/ui_access.py": "15815f3de902551d0cbab79d969dfe3646f10ef7fd839752fa8b2d23d5e86791",
+      "deepdive/ui_research.py": "c17719552a0cc6187d3bb765d7482758a554e12ee55f50c2ada0ecc4e4be54bc",
+      "deepdive/verification.py": "17378d5a272044db1fa705eccec2a44c087f5c537c279ca02c16e0c8fbe51522",
+      "deepdive/workflow.py": "f037914a5a2bc66cd5f0e3fe89060ec30484343349250e31274b5c811c89f014",
+      "uv.lock": "8967da7e6b58dd6dd11970d3655783aa20259f048506065d09ba9e3e1337b40d"
+    },
+    "limits": {
+      "subquestions": 2,
+      "sources": 8,
+      "claims": 8,
+      "repair_rounds": 1,
+      "model_calls": 25,
+      "active_seconds": 300
+    },
+    "input_tokens": 12000,
+    "output_tokens": 2000,
+    "embedding_model": "openai/text-embedding-3-small",
+    "embedding_revision": "1"
+  },
+  "date": "2026-10-20T21:01:02.638915+00:00",
+  "pipeline": "914a920ae7ba077e4b4c063c0cf638c8ab9e6923927d709287fb17fc62e8b611",
+  "cases": {
+    "technical": {
+      "session_id": "session_6736ce24250e43cdae0c",
+      "document_ids": [],
+      "run_ids": [
+        "run_f443eef608de4017bafa"
+      ],
+      "metrics": [
+        {
+          "run_id": "run_f443eef608de4017bafa",
+          "status": "completed",
+          "model": "openai/gpt-4o",
+          "claims": 8,
+          "published": 1,
+          "verifier_acceptance_rate": 0.125,
+          "citation_validity": 1.0,
+          "facet_coverage": 0.0,
+          "rejected": 7,
+          "repair_rounds": 0,
+          "cache_hits": 5,
+          "calls": 11,
+          "tokens": 30451,
+          "active_seconds": 94.57626000000164,
+          "independent_support_accuracy": null,
+          "reference_facet_completeness": null,
+          "round_coverage": [
+            {
+              "round": 0,
+              "version": 1,
+              "supported_facets": 0,
+              "missing_facets": 4
+            }
+          ],
+          "round_comparison_note": "Within-run planner-facet counts; not independent completeness or a randomized ablation",
+          "rubric_coverage_1_to_5": 1.0,
+          "rubric_traceability_1_to_5": 5.0
+        }
+      ],
+      "status": "completed",
+      "split": "development",
+      "reference_facets": [
+        "Reader/writer concurrency",
+        "Number of simultaneous writers",
+        "Scope and relevant qualifications"
+      ],
+      "review_status": "independent human review pending",
+      "source_snapshots_by_turn": {
+        "1": [
+          {
+            "id": "source_811313038e6ba6f73d45a27a",
+            "url": "https://nalar.dev/sqlite-wal-mode-concurrency-checkpoints-and-operational-pitfalls/",
+            "content_hash": "74f570d3f7fd38f028ee73ad2178d74bab8fedf89a7a35fce4d2817be2298659",
+            "retrieved_at": 1792530085.4416394
+          },
+          {
+            "id": "source_96ddf4c5a1f36de87717f267",
+            "url": "https://sqlite.org/lockingv3.html",
+            "content_hash": "fa67031159fc0658b6e3fcfa4e446c140838c75cb813ff9fafd47fdae927936f",
+            "retrieved_at": 1792530085.1786442
+          },
+          {
+            "id": "source_cc0025a4499d9e01971a2acd",
+            "url": "https://www.sqlite.org/wal.html",
+            "content_hash": "f3467b530b883d4a00574fe1a898b3d121ed72764ae28cf66941080ac0badb9e",
+            "retrieved_at": 1792530074.5463767
+          },
+          {
+            "id": "source_d0dae6a7337296ab1419630a",
+            "url": "https://systeminternals.dev/sqlite/wal/",
+            "content_hash": "3855739384c9a0904a6981df5f430f595d4c69a52d3ee4ce7714a875a8d41ce4",
+            "retrieved_at": 1792530087.9908037
+          },
+          {
+            "id": "source_f579b6f5c548b6beca4b3009",
+            "url": "https://sqlite.org/wal.html",
+            "content_hash": "f3467b530b883d4a00574fe1a898b3d121ed72764ae28cf66941080ac0badb9e",
+            "retrieved_at": 1792530081.4068947
+          }
+        ]
+      }
+    }
+  },
+  "status": "partial",
+  "independent_support_accuracy": null,
+  "data_id": "benchmark_adde6ab67134dda47754010b",
+  "spending": {
+    "ceiling_usd": "0.67373855",
+    "demo_reserve_usd": "0.67373855",
+    "accounted_upper_estimate_usd": "0.1314005000",
+    "attempts": 11,
+    "unknown_attempts": 1,
+    "meaning": "Conservative request reservations/token estimates, not measured provider charges"
+  },
+  "not_run": [
+    "comparative",
+    "scientific",
+    "temporal",
+    "numerical",
+    "conflicting",
+    "insufficient",
+    "community",
+    "mixed",
+    "follow_up"
+  ]
+}

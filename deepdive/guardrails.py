@@ -10,6 +10,26 @@ SECRET = re.compile(r"\b(?:rsk_|sk-)[A-Za-z0-9_\-]{12,}\b")
 def redact(text):
     return SECRET.sub("[REDACTED]", text)
 
+
+def anchor_quotes(quotes, passages):
+    """Recover a unique original span when a model changed only whitespace.
+
+    Words, punctuation, case and order must match literally. The recovered quote
+    is an exact slice; existing validation and semantic support gates still run.
+    """
+    anchored, changes = dict(quotes), {}
+    for pid, quote in quotes.items():
+        text = passages.get(pid, {}).get("text", "")
+        if not quote.strip() or quote in text:
+            continue
+        pattern = r"\s+".join(re.escape(word) for word in quote.split())
+        matches = list(re.finditer(pattern, text))
+        if len(matches) == 1:
+            match = matches[0]
+            anchored[pid] = text[match.start():match.end()]
+            changes[pid] = {"submitted": quote, "start": match.start(), "end": match.end()}
+    return anchored, changes
+
 def validate_url(url, resolver=socket.getaddrinfo):
     if len(url) > 4096 or any(ord(c) < 32 for c in url):
         raise ValueError("Invalid URL length or control character")

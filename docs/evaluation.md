@@ -132,6 +132,22 @@ The live-evaluation and release workflows retain this retrieval evidence alongsi
 
 ## Recorded live measurements
 
+The October 20 development pilot is preserved in
+[competition-benchmark.json](../evaluation/results/competition-benchmark.json).
+It completed one technical case but published only one of eight candidates and
+covered none of the four planner facets. Seven candidates failed exact quotation
+matching; inspection found line-break/spacing changes in five of those candidates.
+This is an observed weakness, not a successful answer-quality result.
+
+The follow-up fix anchors a model quotation only when its literal words,
+punctuation, case, and order match one unique source span with whitespace
+differences. It stores the original exact slice and records submitted quotation
+and offsets in the audit. Both deterministic and semantic gates still run; already
+verified claims are untouched. Offline replay recovered five exact quotations;
+that replay is not a new semantic support score. Analysis also reserves candidate
+capacity for later tasks instead of letting the first task consume the entire
+run's claim limit. Any live retest is a new experiment, preserving the failed pilot.
+
 On October 19, 2026, the [32-case live verifier evaluation](../evaluation/results/live-verifier.json) through Mesh with `openai/gpt-4o` produced 11 true positives, 21 true negatives, no false positives, and no false negatives against the authored reference labels. Precision and recall were both 1.0 on this set, using seven model requests and 8,603 reported tokens. These are measurements on a small synthetic set whose labels still await independent review, not an independently established production accuracy estimate.
 
 The [promotion gate](../evaluation/results/live-verifier-gate.json) remains **blocked by independent reference-label review**. Its precision and recall criteria passed; the review requirement has not been bypassed.

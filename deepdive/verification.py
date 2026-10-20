@@ -2,7 +2,7 @@
 import time
 from .config import POLICY_VERSION
 from .gateway import BudgetExceeded, ContextExceeded
-from .guardrails import cache_key, validate_claim, validate_verdict
+from .guardrails import cache_key, validate_claim, validate_verdict, anchor_quotes
 from .models import Claim, Verdict, VerdictBatch
 from .storage import digest
 
@@ -76,6 +76,10 @@ def verify_claims(store, gateway, context, run, claims):
             store.event(run["id"], "verification_incomplete", error=str(exc))
         for claim, passages, key in batch:
             decision = by_id.get(claim.id, Verdict(claim_id=claim.id, status="insufficient", reason="No valid verifier decision"))
+            anchored, changes = anchor_quotes(decision.quotes, passages)
+            if changes:
+                decision = decision.model_copy(update={"quotes": anchored})
+                store.event(run["id"], "quotation_anchored", role="verifier", claim_id=claim.id, spans=changes)
             error = validate_verdict(claim, decision, passages)
             if error:
                 decision = Verdict(claim_id=claim.id, status="unsupported", reason=error)

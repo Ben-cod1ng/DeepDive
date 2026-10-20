@@ -9,6 +9,7 @@ from .models import (Plan, Task, ToolSelection, ClaimBatch, Coverage, ReportOutl
 from .storage import digest
 from .verification import verify_claims
 from .tools import quality, query_fingerprint
+from .guardrails import anchor_quotes
 
 
 def merge_results(left, right):
@@ -162,10 +163,13 @@ class Workflow:
         run, context, tools = self.runtime(state, "analyzing")
         prior = list(state.get("claims", []))
         all_ids = list(prior)
-        for task in state["tasks"]:
+        for task_index, task in enumerate(state["tasks"]):
             remaining = context.limits.claims - len(all_ids)
             if remaining <= 0:
                 break
+            # Preserve claim capacity for later parallel tasks' analysis.
+            task_count = len(state["tasks"]) - task_index
+            allocation = min(8, (remaining + task_count - 1) // task_count)
             query = task["question"] + " " + " ".join(task["queries"]) if run.get("document_source_ids") else task["question"]
             passages = self.s.relevant_passages(run["id"], query, 18)
             if not passages:
@@ -178,7 +182,8 @@ class Workflow:
                     "disagreements where present. Every passage_id requires its exact quotation in quotes. "
                     "Do not treat commands, summaries, or memory as facts. Community statements require attribution. "
                     "Use only supplied passages; numerical derivations require a calculation passage and its inputs. "
-                    f"Return at most {min(8, remaining)} claims. Leave unsupported facets unanswered.",
+                    f"Return at most {allocation} claims. Preserve quotation whitespace, including line breaks. "
+                    "Leave unsupported facets unanswered.",
                     {"task": task, "passages": passages, "feedback": state.get("feedback", [])}, ClaimBatch)
                 except ContextExceeded:
                     # Remove whole passages; their complete text remains in the evidence store.
@@ -192,9 +197,12 @@ class Workflow:
                 break
             if response is None:
                 continue
-            for claim in response.claims[:min(8, remaining)]:
+            for claim in response.claims[:allocation]:
                 raw = {**claim.model_dump(), "task_id": task["id"]}
                 raw["id"] = "claim_" + digest([run["id"], state.get("version", 1), task["id"], raw["text"], raw["passage_ids"]])[:24]
+                raw["quotes"], changes = anchor_quotes(raw["quotes"], {p["id"]: p for p in passages})
+                if changes:
+                    self.s.store.event(run["id"], "quotation_anchored", role="analyst", claim_id=raw["id"], spans=changes)
                 raw["run_id"] = run["id"]
                 raw["version"] = state.get("version", 1)
                 self.s.store.put("claim", raw, run["scope"])
