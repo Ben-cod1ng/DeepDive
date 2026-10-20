@@ -21,7 +21,7 @@ dependencies = [
   "matplotlib==3.10.8",
   "pandas==3.0.1",
   "python-pptx==1.0.2",
-  "pillow>=12.3,<13",
+  "pillow>=13,<14",
   "tiktoken==0.11.0",
   "prometheus-client>=0.21,<1",
   "sentry-sdk>=2.20,<3",
@@ -32,6 +32,12 @@ dependencies = [
 
 [project.optional-dependencies]
 dev = ["pytest>=8,<10", "ruff>=0.11,<1", "mypy>=1.15,<2", "pip-audit>=2.9,<3"]
+
+[tool.uv]
+# Streamlit still declares Pillow <13. Keep the patched image library and verify
+# our image/export/UI paths; remove this override when upstream widens its bound.
+override-dependencies = ["pillow>=13,<14"]
+constraint-dependencies = ["certifi>=2026.10.19"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

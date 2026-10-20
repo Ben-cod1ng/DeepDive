@@ -1,0 +1,1672 @@
+{
+  "title": "Web research: SQLite concurrency (recorded excerpt)",
+  "summary": "Inspect three published findings and one withheld candidate from a real web investigation. The excerpt includes only public-domain SQLite passages; the full experiment metrics remain in the evidence index.",
+  "recorded_at": "2026-10-20T21:05:58.088031+00:00",
+  "tested_release": "2a3361d",
+  "original_audit_sha256": "8ad57345d87bce28bf8a7bb4b2aa376819e1e58e84505a502b15d39631e21ee0",
+  "limitations": [
+    "Independent human review remains pending. No repair round occurred because the assessor marked the planned facets covered.",
+    "Similar but differently worded claims remain separate; only exact duplicates are grouped.",
+    "Recorded excerpt: 3 of 7 original published claims. Usage and round totals describe the original full run."
+  ],
+  "run": {
+    "id": "run_7cb74bb623774592ab39",
+    "model": "openai/gpt-4o",
+    "calls": 12,
+    "tokens": 54708,
+    "status": "completed",
+    "created": 1792530358.0880308,
+    "completed_at": 1792530471.0269666,
+    "version": 1,
+    "plan": {
+      "resolved_question": "In SQLite WAL mode, can readers proceed alongside a writer, and can multiple writers write at the same time? Explain the distinction using the official documentation.",
+      "time_sensitive": false,
+      "tasks": [
+        {
+          "id": "task_1",
+          "question": "Can readers proceed alongside a writer in SQLite WAL mode?",
+          "facets": [
+            "reader-writer concurrency",
+            "WAL mode"
+          ],
+          "queries": [
+            "SQLite WAL mode reader writer concurrency",
+            "SQLite WAL mode documentation reader access"
+          ],
+          "role": "primary"
+        },
+        {
+          "id": "task_2",
+          "question": "Can multiple writers write at the same time in SQLite WAL mode?",
+          "facets": [
+            "multiple writers",
+            "WAL mode"
+          ],
+          "queries": [
+            "SQLite WAL mode multiple writers",
+            "SQLite WAL mode documentation writer access"
+          ],
+          "role": "primary"
+        }
+      ]
+    },
+    "outline": {
+      "title": "In SQLite WAL mode, can readers proceed alongside a writer, and can multiple writers write at the same time? Explain the distinction using the official documentation.",
+      "sections": [
+        {
+          "title": "Findings 1",
+          "claim_ids": [
+            "claim_81bddffb50bc0bb03ff256a8",
+            "claim_d2bfc983be7aafb5c3117040"
+          ]
+        },
+        {
+          "title": "Findings 2",
+          "claim_ids": [
+            "claim_aa42ea5de92651baf7073dc5",
+            "claim_35dd85fe6c34a3891905e37e"
+          ]
+        },
+        {
+          "title": "Findings 3",
+          "claim_ids": [
+            "claim_d321967ca8878fce2cb9b1c7",
+            "claim_8b96b9e322e8260a2cee455a"
+          ]
+        },
+        {
+          "title": "Findings 4",
+          "claim_ids": [
+            "claim_f50b152f5b0a359d43168099"
+          ]
+        }
+      ],
+      "summary_claim_ids": [
+        "claim_81bddffb50bc0bb03ff256a8",
+        "claim_aa42ea5de92651baf7073dc5",
+        "claim_35dd85fe6c34a3891905e37e"
+      ]
+    },
+    "coverage": [
+      {
+        "task_id": "task_1",
+        "supported_facets": {
+          "reader-writer concurrency": [
+            "claim_81bddffb50bc0bb03ff256a8"
+          ],
+          "WAL mode": [
+            "claim_81bddffb50bc0bb03ff256a8",
+            "claim_d2bfc983be7aafb5c3117040"
+          ]
+        },
+        "missing_facets": [],
+        "contradictions": [],
+        "next_queries": []
+      },
+      {
+        "task_id": "task_2",
+        "supported_facets": {
+          "multiple writers": [
+            "claim_aa42ea5de92651baf7073dc5",
+            "claim_35dd85fe6c34a3891905e37e"
+          ],
+          "WAL mode": [
+            "claim_aa42ea5de92651baf7073dc5"
+          ]
+        },
+        "missing_facets": [],
+        "contradictions": [],
+        "next_queries": []
+      }
+    ],
+    "published_claim_ids": [
+      "claim_81bddffb50bc0bb03ff256a8",
+      "claim_8b96b9e322e8260a2cee455a",
+      "claim_d321967ca8878fce2cb9b1c7"
+    ],
+    "request": {
+      "question": "In SQLite WAL mode, can readers proceed alongside a writer, and can multiple writers write at the same time? Explain the distinction using the official documentation.",
+      "research_mode": "web",
+      "review_mode": "auto",
+      "limits": {
+        "subquestions": 2,
+        "sources": 8,
+        "claims": 8,
+        "repair_rounds": 1,
+        "model_calls": 25,
+        "active_seconds": 300
+      },
+      "source_urls": [
+        "https://www.sqlite.org/wal.html"
+      ]
+    }
+  },
+  "sources": [
+    {
+      "id": "source_eb43b0641345715d4275efd6",
+      "title": "Write-Ahead Logging",
+      "final_url": "https://sqlite.org/wal.html",
+      "retrieved_at": 1792530373.7003317,
+      "published_at": null,
+      "content_hash": "f3467b530b883d4a00574fe1a898b3d121ed72764ae28cf66941080ac0badb9e",
+      "quality": {
+        "rank": 2,
+        "label": "unclassified web source",
+        "reason": "Authorship and primary status require inspection"
+      }
+    },
+    {
+      "id": "source_ee14571a5f6e397aa610a178",
+      "title": "Write-Ahead Logging",
+      "final_url": "https://www.sqlite.org/wal.html",
+      "retrieved_at": 1792530367.7089787,
+      "published_at": null,
+      "content_hash": "f3467b530b883d4a00574fe1a898b3d121ed72764ae28cf66941080ac0badb9e",
+      "quality": {
+        "rank": 2,
+        "label": "unclassified web source",
+        "reason": "Authorship and primary status require inspection"
+      }
+    }
+  ],
+  "passages": [
+    {
+      "id": "source_ee14571a5f6e397aa610a178_p0",
+      "source_id": "source_ee14571a5f6e397aa610a178",
+      "text": "Small. Fast. Reliable.\nChoose any three.\nHome\nMenu\nAbout\nDocumentation\nDownload\nLicense\nSupport\nPurchase\nSearch\nAbout\nDocumentation\nDownload\nSupport\nPurchase\nWrite-Ahead Logging\nTable Of Contents\n1. Overview\n2. How WAL Works\n2.1. Checkpointing\n2.2. Concurrency\n2.3. Performance Considerations\n3. Activating And Configuring WAL Mode\n3.1. Automatic Checkpoint\n3.2. Application-Initiated Checkpoints\n3.3. Persistence of WAL mode\n4. The WAL File\n5. Read-Only Databases\n6. Avoiding Excessively Large WAL Files\n7. Implementation Of Shared-Memory For The WAL-Index\n8. Use of WAL Without Shared-Memory\n9. Sometimes Queries Return SQLITE_BUSY In WAL Mode\n10. Backwards Compatibility\n11. The WAL-Reset Bug\n11.1. Bug Details\n11.2. Low Probability Of Occurrence\n1.\nOverview\nThe default method by which SQLite implements\natomic commit and rollback\nis a\nrollback journal\n.\nBeginning with\nversion 3.7.0\n(2010-07-21), a new \"Write-Ahead Log\" option\n(hereafter referred to as \"WAL\") is available.\nThere are advantages and disadvantages to using WAL instead of\na rollback journal.  Advantages include:\nWAL is significantly faster in most scenarios.\nWAL provides more concurrency as readers do not block writers and\na writer does not block readers.  Reading and writing can proceed\nconcurrently.\nDisk I/O operations tends to be more sequential using WAL.\nWAL uses many fewer fsync() operations and is thus less vulnerable to\nproblems on systems where the fsync() system call is broken.\nBut there are also disadvantages:\nAll processes using a database must be on the same host computer;\nWAL does not work over a network filesystem.  This is because WAL requires\nall processes to share a small amount of memory and processes on\nseparate host machines obviously cannot share memory with each other.\nTransactions that involve changes against multiple\nATTACHed\ndatabases are atomic for each individual database, but are not\natomic across all databases as a set.\nIt is not possible to change the\npage_size\nafter entering WAL\nmode, either on an empty database or by using\nVACUUM\nor by restoring\nfrom a backup using the\nbackup API\n.  You must be in a rollback journal\nmode to change the page size.\nIt is not possible to open",
+      "location": "text:0",
+      "kind": "text",
+      "created": 1792530367.7923098
+    },
+    {
+      "id": "source_ee14571a5f6e397aa610a178_p3",
+      "source_id": "source_ee14571a5f6e397aa610a178",
+      "text": "then the page is read from the original database file.  Readers can\nexist in separate processes, so to avoid forcing every reader to scan\nthe entire WAL looking for pages (the WAL file can grow to\nmultiple megabytes, depending on how often checkpoints are run), a\ndata structure called the \"wal-index\" is maintained in shared memory\nwhich helps readers locate pages in the WAL quickly and with a minimum\nof I/O.  The wal-index greatly improves the performance of readers,\nbut the use of shared memory means that all readers must exist on the\nsame machine.  This is why the write-ahead log implementation will not\nwork on a network filesystem.\nWriters merely append new content to the end of the WAL file.\nBecause writers do nothing that would interfere with the actions of\nreaders, writers and readers can run at the same time.  However,\nsince there is only one WAL file, there can only be one writer at\na time.\nA checkpoint operation takes content from the WAL file\nand transfers it back into the original database file.\nA checkpoint can run concurrently with readers, however the checkpoint\nmust stop when it reaches a page in the WAL that is past the end mark\nof any current reader.  The checkpoint has to stop at that point because\notherwise it might overwrite part of the database file that the reader\nis actively using.  The checkpoint remembers (in the wal-index) how far\nit got and will resume transferring content from the WAL to the database\nfrom where it left off on the next invocation.\nThus a long-running read transaction can prevent a checkpointer from\nmaking progress.  But presumably every read transaction will eventually\nend and the checkpointer will be able to continue.\nWhenever a write operation occurs, the writer checks how much progress\nthe checkpointer has made, and if the entire WAL has been transferred into\nthe database and synced and if no readers are making use of the WAL, then\nthe writer will rewind the WAL back to the beginning and start putting new\ntransactions at the beginning of the WAL.  This mechanism prevents a WAL\nfile from growing without bound.\n2.3.\nPerformance Considerations\nWrite transactions are very fast since they only involve writing",
+      "location": "text:3",
+      "kind": "text",
+      "created": 1792530367.858852
+    },
+    {
+      "id": "source_eb43b0641345715d4275efd6_p0",
+      "source_id": "source_eb43b0641345715d4275efd6",
+      "text": "Small. Fast. Reliable.\nChoose any three.\nHome\nMenu\nAbout\nDocumentation\nDownload\nLicense\nSupport\nPurchase\nSearch\nAbout\nDocumentation\nDownload\nSupport\nPurchase\nWrite-Ahead Logging\nTable Of Contents\n1. Overview\n2. How WAL Works\n2.1. Checkpointing\n2.2. Concurrency\n2.3. Performance Considerations\n3. Activating And Configuring WAL Mode\n3.1. Automatic Checkpoint\n3.2. Application-Initiated Checkpoints\n3.3. Persistence of WAL mode\n4. The WAL File\n5. Read-Only Databases\n6. Avoiding Excessively Large WAL Files\n7. Implementation Of Shared-Memory For The WAL-Index\n8. Use of WAL Without Shared-Memory\n9. Sometimes Queries Return SQLITE_BUSY In WAL Mode\n10. Backwards Compatibility\n11. The WAL-Reset Bug\n11.1. Bug Details\n11.2. Low Probability Of Occurrence\n1.\nOverview\nThe default method by which SQLite implements\natomic commit and rollback\nis a\nrollback journal\n.\nBeginning with\nversion 3.7.0\n(2010-07-21), a new \"Write-Ahead Log\" option\n(hereafter referred to as \"WAL\") is available.\nThere are advantages and disadvantages to using WAL instead of\na rollback journal.  Advantages include:\nWAL is significantly faster in most scenarios.\nWAL provides more concurrency as readers do not block writers and\na writer does not block readers.  Reading and writing can proceed\nconcurrently.\nDisk I/O operations tends to be more sequential using WAL.\nWAL uses many fewer fsync() operations and is thus less vulnerable to\nproblems on systems where the fsync() system call is broken.\nBut there are also disadvantages:\nAll processes using a database must be on the same host computer;\nWAL does not work over a network filesystem.  This is because WAL requires\nall processes to share a small amount of memory and processes on\nseparate host machines obviously cannot share memory with each other.\nTransactions that involve changes against multiple\nATTACHed\ndatabases are atomic for each individual database, but are not\natomic across all databases as a set.\nIt is not possible to change the\npage_size\nafter entering WAL\nmode, either on an empty database or by using\nVACUUM\nor by restoring\nfrom a backup using the\nbackup API\n.  You must be in a rollback journal\nmode to change the page size.\nIt is not possible to open",
+      "location": "text:0",
+      "kind": "text",
+      "created": 1792530373.7504623
+    },
+    {
+      "id": "source_eb43b0641345715d4275efd6_p3",
+      "source_id": "source_eb43b0641345715d4275efd6",
+      "text": "then the page is read from the original database file.  Readers can\nexist in separate processes, so to avoid forcing every reader to scan\nthe entire WAL looking for pages (the WAL file can grow to\nmultiple megabytes, depending on how often checkpoints are run), a\ndata structure called the \"wal-index\" is maintained in shared memory\nwhich helps readers locate pages in the WAL quickly and with a minimum\nof I/O.  The wal-index greatly improves the performance of readers,\nbut the use of shared memory means that all readers must exist on the\nsame machine.  This is why the write-ahead log implementation will not\nwork on a network filesystem.\nWriters merely append new content to the end of the WAL file.\nBecause writers do nothing that would interfere with the actions of\nreaders, writers and readers can run at the same time.  However,\nsince there is only one WAL file, there can only be one writer at\na time.\nA checkpoint operation takes content from the WAL file\nand transfers it back into the original database file.\nA checkpoint can run concurrently with readers, however the checkpoint\nmust stop when it reaches a page in the WAL that is past the end mark\nof any current reader.  The checkpoint has to stop at that point because\notherwise it might overwrite part of the database file that the reader\nis actively using.  The checkpoint remembers (in the wal-index) how far\nit got and will resume transferring content from the WAL to the database\nfrom where it left off on the next invocation.\nThus a long-running read transaction can prevent a checkpointer from\nmaking progress.  But presumably every read transaction will eventually\nend and the checkpointer will be able to continue.\nWhenever a write operation occurs, the writer checks how much progress\nthe checkpointer has made, and if the entire WAL has been transferred into\nthe database and synced and if no readers are making use of the WAL, then\nthe writer will rewind the WAL back to the beginning and start putting new\ntransactions at the beginning of the WAL.  This mechanism prevents a WAL\nfile from growing without bound.\n2.3.\nPerformance Considerations\nWrite transactions are very fast since they only involve writing",
+      "location": "text:3",
+      "kind": "text",
+      "created": 1792530373.8620374
+    }
+  ],
+  "claims": [
+    {
+      "id": "claim_81bddffb50bc0bb03ff256a8",
+      "task_id": "task_1",
+      "text": "In SQLite WAL mode, readers do not block writers and writers do not block readers, allowing them to proceed concurrently.",
+      "passage_ids": [
+        "source_ee14571a5f6e397aa610a178_p0",
+        "source_eb43b0641345715d4275efd6_p0"
+      ],
+      "kind": "fact",
+      "quotes": {
+        "source_ee14571a5f6e397aa610a178_p0": "WAL provides more concurrency as readers do not block writers and\na writer does not block readers.  Reading and writing can proceed\nconcurrently.",
+        "source_eb43b0641345715d4275efd6_p0": "WAL provides more concurrency as readers do not block writers and\na writer does not block readers.  Reading and writing can proceed\nconcurrently."
+      },
+      "run_id": "run_7cb74bb623774592ab39",
+      "version": 1,
+      "created": 1792530414.9491842
+    },
+    {
+      "id": "claim_d321967ca8878fce2cb9b1c7",
+      "task_id": "task_1",
+      "text": "In SQLite WAL mode, a checkpoint can run concurrently with readers but must stop if it reaches a page needed by a current reader.",
+      "passage_ids": [
+        "source_ee14571a5f6e397aa610a178_p3",
+        "source_eb43b0641345715d4275efd6_p3"
+      ],
+      "kind": "fact",
+      "quotes": {
+        "source_ee14571a5f6e397aa610a178_p3": "A checkpoint can run concurrently with readers, however the checkpoint\nmust stop when it reaches a page in the WAL that is past the end mark\nof any current reader.",
+        "source_eb43b0641345715d4275efd6_p3": "A checkpoint can run concurrently with readers, however the checkpoint\nmust stop when it reaches a page in the WAL that is past the end mark\nof any current reader."
+      },
+      "run_id": "run_7cb74bb623774592ab39",
+      "version": 1,
+      "created": 1792530415.0295882
+    },
+    {
+      "id": "claim_8b96b9e322e8260a2cee455a",
+      "task_id": "task_1",
+      "text": "In SQLite WAL mode, a long-running read transaction can prevent a checkpointer from making progress.",
+      "passage_ids": [
+        "source_ee14571a5f6e397aa610a178_p3",
+        "source_eb43b0641345715d4275efd6_p3"
+      ],
+      "kind": "fact",
+      "quotes": {
+        "source_ee14571a5f6e397aa610a178_p3": "Thus a long-running read transaction can prevent a checkpointer from\nmaking progress.",
+        "source_eb43b0641345715d4275efd6_p3": "Thus a long-running read transaction can prevent a checkpointer from\nmaking progress."
+      },
+      "run_id": "run_7cb74bb623774592ab39",
+      "version": 1,
+      "created": 1792530415.079229
+    },
+    {
+      "id": "claim_038344df5b805018aa5cccef",
+      "task_id": "task_2",
+      "text": "SQLite's WAL mode improves concurrency by allowing readers and a writer to operate simultaneously, but it does not allow multiple writers to write concurrently.",
+      "passage_ids": [
+        "source_ee14571a5f6e397aa610a178_p0",
+        "source_eb43b0641345715d4275efd6_p0"
+      ],
+      "kind": "fact",
+      "quotes": {
+        "source_ee14571a5f6e397aa610a178_p0": "WAL provides more concurrency as readers do not block writers and\na writer does not block readers.",
+        "source_eb43b0641345715d4275efd6_p0": "WAL provides more concurrency as readers do not block writers and\na writer does not block readers."
+      },
+      "run_id": "run_7cb74bb623774592ab39",
+      "version": 1,
+      "created": 1792530425.0498636
+    }
+  ],
+  "decisions": [
+    {
+      "id": "decision_2d7895da8f0e04345ecbc36f",
+      "run_id": "run_7cb74bb623774592ab39",
+      "claim_id": "claim_81bddffb50bc0bb03ff256a8",
+      "policy": "2",
+      "claim_hash": "3a1e7add34ad047d0db694d93d4863eb021da42cb75bf6cf6b1a570202124a60",
+      "model": "openai/gpt-4o",
+      "status": "supported",
+      "reason": "The claim is directly supported by the quoted passages, which state that in SQLite WAL mode, readers do not block writers and writers do not block readers, allowing reading and writing to proceed concurrently.",
+      "quotes": {
+        "source_ee14571a5f6e397aa610a178_p0": "WAL provides more concurrency as readers do not block writers and\na writer does not block readers.  Reading and writing can proceed\nconcurrently.",
+        "source_eb43b0641345715d4275efd6_p0": "WAL provides more concurrency as readers do not block writers and\na writer does not block readers.  Reading and writing can proceed\nconcurrently."
+      },
+      "created": 1792530446.4695468
+    },
+    {
+      "id": "decision_789b860a8965ebd14404402a",
+      "run_id": "run_7cb74bb623774592ab39",
+      "claim_id": "claim_d321967ca8878fce2cb9b1c7",
+      "policy": "2",
+      "claim_hash": "6bfda42def5eec2f18d034baedc29d743dec6ca3f8604a22e81bb4b423201ee6",
+      "model": "openai/gpt-4o",
+      "status": "supported",
+      "reason": "The claim is supported by the quoted passages, which state that a checkpoint can run concurrently with readers but must stop when it reaches a page in the WAL that is past the end mark of any current reader.",
+      "quotes": {
+        "source_ee14571a5f6e397aa610a178_p3": "A checkpoint can run concurrently with readers, however the checkpoint\nmust stop when it reaches a page in the WAL that is past the end mark\nof any current reader.",
+        "source_eb43b0641345715d4275efd6_p3": "A checkpoint can run concurrently with readers, however the checkpoint\nmust stop when it reaches a page in the WAL that is past the end mark\nof any current reader."
+      },
+      "created": 1792530446.5667455
+    },
+    {
+      "id": "decision_78bd46b1d4f3a888b025bcc3",
+      "run_id": "run_7cb74bb623774592ab39",
+      "claim_id": "claim_8b96b9e322e8260a2cee455a",
+      "policy": "2",
+      "claim_hash": "35ccc6d3427e5985ac183b7dcab4c6758822a47f3d7a34cc00a454736e27cb41",
+      "model": "openai/gpt-4o",
+      "status": "supported",
+      "reason": "The claim is directly supported by the quoted passages, which state that a long-running read transaction can prevent a checkpointer from making progress.",
+      "quotes": {
+        "source_ee14571a5f6e397aa610a178_p3": "Thus a long-running read transaction can prevent a checkpointer from\nmaking progress.",
+        "source_eb43b0641345715d4275efd6_p3": "Thus a long-running read transaction can prevent a checkpointer from\nmaking progress."
+      },
+      "created": 1792530446.6625555
+    },
+    {
+      "id": "decision_3dce9e5c94ec8590847a9ebb",
+      "run_id": "run_7cb74bb623774592ab39",
+      "claim_id": "claim_038344df5b805018aa5cccef",
+      "policy": "2",
+      "claim_hash": "79e28232ba0da7ee8534f7f970239a328199ef166c90682115b36cec751c17ee",
+      "model": "openai/gpt-4o",
+      "status": "insufficient",
+      "reason": "The provided passages confirm that WAL mode allows readers and a writer to operate simultaneously, improving concurrency. However, they do not explicitly state that multiple writers cannot write concurrently, which is a crucial part of the claim. Thus, the evidence is insufficient to fully support the claim.",
+      "quotes": {
+        "source_ee14571a5f6e397aa610a178_p0": "WAL provides more concurrency as readers do not block writers and\na writer does not block readers.",
+        "source_eb43b0641345715d4275efd6_p0": "WAL provides more concurrency as readers do not block writers and\na writer does not block readers."
+      },
+      "created": 1792530446.859645
+    }
+  ],
+  "events": [
+    {
+      "seq": 1,
+      "created": 1792530358.2143843,
+      "event": "run_created",
+      "limits": {
+        "subquestions": 2,
+        "sources": 8,
+        "claims": 8,
+        "repair_rounds": 1,
+        "model_calls": 25,
+        "active_seconds": 300
+      },
+      "review_mode": "auto"
+    },
+    {
+      "seq": 2,
+      "created": 1792530358.3320844,
+      "event": "stage",
+      "stage": "context and cache",
+      "round": 0,
+      "version": 1
+    },
+    {
+      "seq": 3,
+      "created": 1792530358.388575,
+      "event": "stage",
+      "stage": "planning",
+      "round": 0,
+      "version": 1
+    },
+    {
+      "seq": 4,
+      "created": 1792530361.484676,
+      "event": "model_request",
+      "role": "planner",
+      "format_attempt": 0,
+      "transport_attempt": 0
+    },
+    {
+      "seq": 5,
+      "created": 1792530365.1407387,
+      "event": "model_response",
+      "role": "planner",
+      "model": "openai/gpt-4o",
+      "usage": {
+        "completion_tokens": 146,
+        "prompt_tokens": 521,
+        "total_tokens": 667,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": 0,
+          "audio_tokens": 0,
+          "reasoning_tokens": 0,
+          "rejected_prediction_tokens": 0
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": 0,
+          "cached_tokens": 0,
+          "cache_write_tokens": 0,
+          "cache_write_1h_tokens": 0
+        },
+        "byok_used": false,
+        "fallback_triggered": false
+      },
+      "seconds": 3.656
+    },
+    {
+      "seq": 6,
+      "created": 1792530365.2503023,
+      "event": "stage",
+      "stage": "researching",
+      "round": 0,
+      "version": 1
+    },
+    {
+      "seq": 7,
+      "created": 1792530365.2899523,
+      "event": "task_started",
+      "task_id": "task_1",
+      "role": "primary",
+      "round": 0,
+      "version": 1,
+      "question": "Can readers proceed alongside a writer in SQLite WAL mode?",
+      "queries": [
+        "SQLite WAL mode reader writer concurrency",
+        "SQLite WAL mode documentation reader access"
+      ]
+    },
+    {
+      "seq": 8,
+      "created": 1792530365.286022,
+      "event": "stage",
+      "stage": "researching",
+      "round": 0,
+      "version": 1
+    },
+    {
+      "seq": 9,
+      "created": 1792530365.3272738,
+      "event": "task_started",
+      "task_id": "task_2",
+      "role": "primary",
+      "round": 0,
+      "version": 1,
+      "question": "Can multiple writers write at the same time in SQLite WAL mode?",
+      "queries": [
+        "SQLite WAL mode multiple writers",
+        "SQLite WAL mode documentation writer access"
+      ]
+    },
+    {
+      "seq": 10,
+      "created": 1792530368.2619946,
+      "event": "tool_result",
+      "role": "researcher",
+      "tool": "fetch_source",
+      "arguments": {
+        "url": "https://www.sqlite.org/wal.html"
+      },
+      "seconds": 2.923,
+      "outcome": "ok"
+    },
+    {
+      "seq": 11,
+      "created": 1792530368.293098,
+      "event": "cache_hit",
+      "cache": "page",
+      "source_id": "source_ee14571a5f6e397aa610a178"
+    },
+    {
+      "seq": 12,
+      "created": 1792530368.335377,
+      "event": "tool_result",
+      "role": "researcher",
+      "tool": "fetch_source",
+      "arguments": {
+        "url": "https://www.sqlite.org/wal.html"
+      },
+      "seconds": 2.948,
+      "outcome": "ok"
+    },
+    {
+      "seq": 13,
+      "created": 1792530371.3986368,
+      "event": "tool_result",
+      "role": "researcher",
+      "tool": "search_web",
+      "arguments": {
+        "query": "SQLite WAL mode reader writer concurrency"
+      },
+      "seconds": 3.086,
+      "outcome": "ok"
+    },
+    {
+      "seq": 14,
+      "created": 1792530371.931434,
+      "event": "tool_result",
+      "role": "researcher",
+      "tool": "search_web",
+      "arguments": {
+        "query": "SQLite WAL mode multiple writers"
+      },
+      "seconds": 3.561,
+      "outcome": "ok"
+    },
+    {
+      "seq": 15,
+      "created": 1792530374.6081254,
+      "event": "tool_result",
+      "role": "researcher",
+      "tool": "fetch_source",
+      "arguments": {
+        "url": "https://sqlite.org/wal.html"
+      },
+      "seconds": 3.187,
+      "outcome": "ok"
+    },
+    {
+      "seq": 16,
+      "created": 1792530374.7159884,
+      "event": "cache_hit",
+      "cache": "page",
+      "source_id": "source_eb43b0641345715d4275efd6"
+    },
+    {
+      "seq": 17,
+      "created": 1792530374.8377361,
+      "event": "tool_result",
+      "role": "researcher",
+      "tool": "fetch_source",
+      "arguments": {
+        "url": "https://sqlite.org/wal.html"
+      },
+      "seconds": 2.866,
+      "outcome": "ok"
+    },
+    {
+      "seq": 18,
+      "created": 1792530375.9928358,
+      "event": "tool_result",
+      "role": "researcher",
+      "tool": "fetch_source",
+      "arguments": {
+        "url": "https://coddy.tech/docs/sqlite/wal-mode-and-concurrency"
+      },
+      "seconds": 1.32,
+      "outcome": "error",
+      "error": "Source returned HTTP 403"
+    },
+    {
+      "seq": 19,
+      "created": 1792530377.0294967,
+      "event": "tool_result",
+      "role": "researcher",
+      "tool": "fetch_source",
+      "arguments": {
+        "url": "https://coddy.tech/docs/sqlite/wal-mode-and-concurrency"
+      },
+      "seconds": 2.129,
+      "outcome": "error",
+      "error": "Source returned HTTP 403"
+    },
+    {
+      "seq": 20,
+      "created": 1792530378.1232557,
+      "event": "tool_result",
+      "role": "researcher",
+      "tool": "fetch_source",
+      "arguments": {
+        "url": "https://nalar.dev/sqlite-wal-mode-concurrency-checkpoints-and-operational-pitfalls/"
+      },
+      "seconds": 1.971,
+      "outcome": "ok"
+    },
+    {
+      "seq": 21,
+      "created": 1792530380.5308976,
+      "event": "tool_result",
+      "role": "researcher",
+      "tool": "fetch_source",
+      "arguments": {
+        "url": "https://sqlite.org/lockingv3.html"
+      },
+      "seconds": 3.471,
+      "outcome": "ok"
+    },
+    {
+      "seq": 22,
+      "created": 1792530381.181099,
+      "event": "tool_result",
+      "role": "researcher",
+      "tool": "fetch_source",
+      "arguments": {
+        "url": "https://stackoverflow.com/questions/4060772/sqlite-concurrent-access"
+      },
+      "seconds": 0.593,
+      "outcome": "error",
+      "error": "Source returned HTTP 403"
+    },
+    {
+      "seq": 23,
+      "created": 1792530381.2053201,
+      "event": "tool_result",
+      "role": "researcher",
+      "tool": "fetch_source",
+      "arguments": {
+        "url": "https://systeminternals.dev/sqlite/wal/"
+      },
+      "seconds": 3.014,
+      "outcome": "ok"
+    },
+    {
+      "seq": 24,
+      "created": 1792530381.4523277,
+      "event": "cache_hit",
+      "cache": "page",
+      "source_id": "source_59d8bcb6301db959fa173c35"
+    },
+    {
+      "seq": 25,
+      "created": 1792530381.5291166,
+      "event": "tool_result",
+      "role": "researcher",
+      "tool": "fetch_source",
+      "arguments": {
+        "url": "https://sqlite.org/lockingv3.html"
+      },
+      "seconds": 0.201,
+      "outcome": "ok"
+    },
+    {
+      "seq": 26,
+      "created": 1792530381.7609816,
+      "event": "tool_result",
+      "role": "researcher",
+      "tool": "fetch_source",
+      "arguments": {
+        "url": "https://stackoverflow.com/questions/14234007/sqlite-wal-mode-with-multiple-transactions-in-multiple-threads"
+      },
+      "seconds": 0.485,
+      "outcome": "error",
+      "error": "Source returned HTTP 403"
+    },
+    {
+      "seq": 27,
+      "created": 1792530385.2141337,
+      "event": "tool_result",
+      "role": "researcher",
+      "tool": "search_web",
+      "arguments": {
+        "query": "SQLite WAL mode documentation writer access"
+      },
+      "seconds": 3.411,
+      "outcome": "ok"
+    },
+    {
+      "seq": 28,
+      "created": 1792530385.2513845,
+      "event": "cache_hit",
+      "cache": "page",
+      "source_id": "source_eb43b0641345715d4275efd6"
+    },
+    {
+      "seq": 29,
+      "created": 1792530385.311831,
+      "event": "tool_result",
+      "role": "researcher",
+      "tool": "fetch_source",
+      "arguments": {
+        "url": "https://sqlite.org/wal.html"
+      },
+      "seconds": 0.069,
+      "outcome": "ok"
+    },
+    {
+      "seq": 30,
+      "created": 1792530385.6551666,
+      "event": "tool_result",
+      "role": "researcher",
+      "tool": "search_web",
+      "arguments": {
+        "query": "SQLite WAL mode documentation reader access"
+      },
+      "seconds": 4.037,
+      "outcome": "ok"
+    },
+    {
+      "seq": 31,
+      "created": 1792530385.6998792,
+      "event": "cache_hit",
+      "cache": "page",
+      "source_id": "source_eb43b0641345715d4275efd6"
+    },
+    {
+      "seq": 32,
+      "created": 1792530385.7542288,
+      "event": "tool_result",
+      "role": "researcher",
+      "tool": "fetch_source",
+      "arguments": {
+        "url": "https://sqlite.org/wal.html"
+      },
+      "seconds": 0.066,
+      "outcome": "ok"
+    },
+    {
+      "seq": 33,
+      "created": 1792530385.7864616,
+      "event": "tool_result",
+      "role": "researcher",
+      "tool": "fetch_source",
+      "arguments": {
+        "url": "https://sqldocs.org/sqlite-write-ahead-logging/"
+      },
+      "seconds": 0.004,
+      "outcome": "error",
+      "error": "Source limit reached"
+    },
+    {
+      "seq": 34,
+      "created": 1792530386.4158802,
+      "event": "tool_result",
+      "role": "researcher",
+      "tool": "fetch_source",
+      "arguments": {
+        "url": "https://coddy.tech/docs/sqlite/wal-mode-and-concurrency"
+      },
+      "seconds": 1.072,
+      "outcome": "error",
+      "error": "Source returned HTTP 403"
+    },
+    {
+      "seq": 35,
+      "created": 1792530386.5368705,
+      "event": "tool_result",
+      "role": "researcher",
+      "tool": "fetch_source",
+      "arguments": {
+        "url": "https://sqlite.org/wal.html?trk=public_post_comment-text"
+      },
+      "seconds": 0.005,
+      "outcome": "error",
+      "error": "Source limit reached"
+    },
+    {
+      "seq": 36,
+      "created": 1792530386.5889814,
+      "event": "tool_result",
+      "role": "researcher",
+      "tool": "fetch_source",
+      "arguments": {
+        "url": "https://sqldocs.org/sqlite-write-ahead-logging/"
+      },
+      "seconds": 0.003,
+      "outcome": "error",
+      "error": "Source limit reached"
+    },
+    {
+      "seq": 37,
+      "created": 1792530386.6308963,
+      "event": "tool_result",
+      "role": "researcher",
+      "tool": "fetch_source",
+      "arguments": {
+        "url": "http://www3.sqlite.org/matrix/wal.html"
+      },
+      "seconds": 0.003,
+      "outcome": "error",
+      "error": "Source limit reached"
+    },
+    {
+      "seq": 38,
+      "created": 1792530387.4406471,
+      "event": "tool_result",
+      "role": "researcher",
+      "tool": "fetch_source",
+      "arguments": {
+        "url": "https://coddy.tech/docs/sqlite/wal-mode-and-concurrency"
+      },
+      "seconds": 1.62,
+      "outcome": "error",
+      "error": "Source returned HTTP 403"
+    },
+    {
+      "seq": 39,
+      "created": 1792530387.5045617,
+      "event": "tool_result",
+      "role": "researcher",
+      "tool": "fetch_source",
+      "arguments": {
+        "url": "https://wizardforcel.gitbooks.io/sqlite-doc-en/content/48.html"
+      },
+      "seconds": 0.003,
+      "outcome": "error",
+      "error": "Source limit reached"
+    },
+    {
+      "seq": 40,
+      "created": 1792530387.5630429,
+      "event": "tool_result",
+      "role": "researcher",
+      "tool": "fetch_source",
+      "arguments": {
+        "url": "https://adhdecode.com/articles/sqlite/sqlite-wal-mode-explained/"
+      },
+      "seconds": 0.004,
+      "outcome": "error",
+      "error": "Source limit reached"
+    },
+    {
+      "seq": 41,
+      "created": 1792530390.6420805,
+      "event": "model_request",
+      "role": "researcher",
+      "format_attempt": 0,
+      "transport_attempt": 0
+    },
+    {
+      "seq": 42,
+      "created": 1792530393.6155944,
+      "event": "model_request",
+      "role": "researcher",
+      "format_attempt": 0,
+      "transport_attempt": 0
+    },
+    {
+      "seq": 43,
+      "created": 1792530394.507399,
+      "event": "model_response",
+      "role": "researcher",
+      "model": "openai/gpt-4o",
+      "usage": {
+        "completion_tokens": 58,
+        "prompt_tokens": 3913,
+        "total_tokens": 3971,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": 0,
+          "audio_tokens": 0,
+          "reasoning_tokens": 0,
+          "rejected_prediction_tokens": 0
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": 0,
+          "cached_tokens": 0,
+          "cache_write_tokens": 0,
+          "cache_write_1h_tokens": 0
+        },
+        "byok_used": false,
+        "fallback_triggered": false
+      },
+      "seconds": 3.865
+    },
+    {
+      "seq": 44,
+      "created": 1792530394.6338603,
+      "event": "tool_result",
+      "role": "researcher",
+      "tool": "read_passages",
+      "arguments": {
+        "passage_ids": [
+          "source_07a861ddc72a31840daf03ff_p10",
+          "source_4e6b7f4a351487f14d8a02a5_p1"
+        ]
+      },
+      "seconds": 0.05,
+      "outcome": "ok"
+    },
+    {
+      "seq": 45,
+      "created": 1792530398.0146494,
+      "event": "model_request",
+      "role": "researcher",
+      "format_attempt": 0,
+      "transport_attempt": 0
+    },
+    {
+      "seq": 46,
+      "created": 1792530398.1125762,
+      "event": "model_response",
+      "role": "researcher",
+      "model": "openai/gpt-4o",
+      "usage": {
+        "completion_tokens": 81,
+        "prompt_tokens": 3967,
+        "total_tokens": 4048,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": 0,
+          "audio_tokens": 0,
+          "reasoning_tokens": 0,
+          "rejected_prediction_tokens": 0
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": 0,
+          "cached_tokens": 0,
+          "cache_write_tokens": 0,
+          "cache_write_1h_tokens": 0
+        },
+        "byok_used": false,
+        "fallback_triggered": false
+      },
+      "seconds": 4.495
+    },
+    {
+      "seq": 47,
+      "created": 1792530398.2378745,
+      "event": "tool_result",
+      "role": "researcher",
+      "tool": "read_passages",
+      "arguments": {
+        "passage_ids": [
+          "source_07a861ddc72a31840daf03ff_p10",
+          "source_4e6b7f4a351487f14d8a02a5_p0",
+          "source_4e6b7f4a351487f14d8a02a5_p4"
+        ]
+      },
+      "seconds": 0.071,
+      "outcome": "ok"
+    },
+    {
+      "seq": 48,
+      "created": 1792530401.6045427,
+      "event": "model_request",
+      "role": "researcher",
+      "format_attempt": 0,
+      "transport_attempt": 0
+    },
+    {
+      "seq": 49,
+      "created": 1792530401.6996894,
+      "event": "model_response",
+      "role": "researcher",
+      "model": "openai/gpt-4o",
+      "usage": {
+        "completion_tokens": 62,
+        "prompt_tokens": 4197,
+        "total_tokens": 4259,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": 0,
+          "audio_tokens": 0,
+          "reasoning_tokens": 0,
+          "rejected_prediction_tokens": 0
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": 0,
+          "cached_tokens": 2944,
+          "cache_write_tokens": 0,
+          "cache_write_1h_tokens": 0
+        },
+        "byok_used": false,
+        "fallback_triggered": false
+      },
+      "seconds": 3.685
+    },
+    {
+      "seq": 50,
+      "created": 1792530401.754562,
+      "event": "tool_result",
+      "role": "researcher",
+      "tool": "read_passages",
+      "arguments": {
+        "passage_ids": [
+          "source_07a861ddc72a31840daf03ff_p10",
+          "source_4e6b7f4a351487f14d8a02a5_p1"
+        ]
+      },
+      "seconds": 0.021,
+      "outcome": "ok"
+    },
+    {
+      "seq": 51,
+      "created": 1792530401.7788157,
+      "event": "task_finished",
+      "task_id": "task_2",
+      "round": 0,
+      "version": 1,
+      "outcome": "collected"
+    },
+    {
+      "seq": 52,
+      "created": 1792530403.6300702,
+      "event": "model_response",
+      "role": "researcher",
+      "model": "openai/gpt-4o",
+      "usage": {
+        "completion_tokens": 58,
+        "prompt_tokens": 4236,
+        "total_tokens": 4294,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": 0,
+          "audio_tokens": 0,
+          "reasoning_tokens": 0,
+          "rejected_prediction_tokens": 0
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": 0,
+          "cached_tokens": 2944,
+          "cache_write_tokens": 0,
+          "cache_write_1h_tokens": 0
+        },
+        "byok_used": false,
+        "fallback_triggered": false
+      },
+      "seconds": 2.026
+    },
+    {
+      "seq": 53,
+      "created": 1792530403.6782608,
+      "event": "tool_result",
+      "role": "researcher",
+      "tool": "read_passages",
+      "arguments": {
+        "passage_ids": [
+          "source_07a861ddc72a31840daf03ff_p10",
+          "source_4e6b7f4a351487f14d8a02a5_p0"
+        ]
+      },
+      "seconds": 0.02,
+      "outcome": "ok"
+    },
+    {
+      "seq": 54,
+      "created": 1792530403.703788,
+      "event": "task_finished",
+      "task_id": "task_1",
+      "round": 0,
+      "version": 1,
+      "outcome": "collected"
+    },
+    {
+      "seq": 55,
+      "created": 1792530403.7870088,
+      "event": "stage",
+      "stage": "analyzing",
+      "round": 0,
+      "version": 1
+    },
+    {
+      "seq": 56,
+      "created": 1792530406.827788,
+      "event": "model_request",
+      "role": "analyst",
+      "format_attempt": 0,
+      "transport_attempt": 0
+    },
+    {
+      "seq": 57,
+      "created": 1792530414.8914244,
+      "event": "model_response",
+      "role": "analyst",
+      "model": "openai/gpt-4o",
+      "usage": {
+        "completion_tokens": 685,
+        "prompt_tokens": 8893,
+        "total_tokens": 9578,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": 0,
+          "audio_tokens": 0,
+          "reasoning_tokens": 0,
+          "rejected_prediction_tokens": 0
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": 0,
+          "cached_tokens": 0,
+          "cache_write_tokens": 0,
+          "cache_write_1h_tokens": 0
+        },
+        "byok_used": false,
+        "fallback_triggered": false
+      },
+      "seconds": 8.064
+    },
+    {
+      "seq": 58,
+      "created": 1792530414.9180079,
+      "event": "quotation_anchored",
+      "role": "analyst",
+      "claim_id": "claim_81bddffb50bc0bb03ff256a8",
+      "spans": {
+        "source_ee14571a5f6e397aa610a178_p0": {
+          "submitted": "WAL provides more concurrency as readers do not block writers and a writer does not block readers. Reading and writing can proceed concurrently.",
+          "start": 1131,
+          "end": 1276
+        },
+        "source_eb43b0641345715d4275efd6_p0": {
+          "submitted": "WAL provides more concurrency as readers do not block writers and a writer does not block readers. Reading and writing can proceed concurrently.",
+          "start": 1131,
+          "end": 1276
+        }
+      }
+    },
+    {
+      "seq": 59,
+      "created": 1792530415.0116901,
+      "event": "quotation_anchored",
+      "role": "analyst",
+      "claim_id": "claim_d321967ca8878fce2cb9b1c7",
+      "spans": {
+        "source_ee14571a5f6e397aa610a178_p3": {
+          "submitted": "A checkpoint can run concurrently with readers, however the checkpoint must stop when it reaches a page in the WAL that is past the end mark of any current reader.",
+          "start": 1022,
+          "end": 1185
+        },
+        "source_eb43b0641345715d4275efd6_p3": {
+          "submitted": "A checkpoint can run concurrently with readers, however the checkpoint must stop when it reaches a page in the WAL that is past the end mark of any current reader.",
+          "start": 1022,
+          "end": 1185
+        }
+      }
+    },
+    {
+      "seq": 60,
+      "created": 1792530415.0514188,
+      "event": "quotation_anchored",
+      "role": "analyst",
+      "claim_id": "claim_8b96b9e322e8260a2cee455a",
+      "spans": {
+        "source_ee14571a5f6e397aa610a178_p3": {
+          "submitted": "Thus a long-running read transaction can prevent a checkpointer from making progress.",
+          "start": 1499,
+          "end": 1584
+        },
+        "source_eb43b0641345715d4275efd6_p3": {
+          "submitted": "Thus a long-running read transaction can prevent a checkpointer from making progress.",
+          "start": 1499,
+          "end": 1584
+        }
+      }
+    },
+    {
+      "seq": 61,
+      "created": 1792530418.0846412,
+      "event": "model_request",
+      "role": "analyst",
+      "format_attempt": 0,
+      "transport_attempt": 0
+    },
+    {
+      "seq": 62,
+      "created": 1792530424.8923113,
+      "event": "model_response",
+      "role": "analyst",
+      "model": "openai/gpt-4o",
+      "usage": {
+        "completion_tokens": 640,
+        "prompt_tokens": 8672,
+        "total_tokens": 9312,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": 0,
+          "audio_tokens": 0,
+          "reasoning_tokens": 0,
+          "rejected_prediction_tokens": 0
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": 0,
+          "cached_tokens": 0,
+          "cache_write_tokens": 0,
+          "cache_write_1h_tokens": 0
+        },
+        "byok_used": false,
+        "fallback_triggered": false
+      },
+      "seconds": 6.815
+    },
+    {
+      "seq": 64,
+      "created": 1792530425.0148919,
+      "event": "quotation_anchored",
+      "role": "analyst",
+      "claim_id": "claim_038344df5b805018aa5cccef",
+      "spans": {
+        "source_ee14571a5f6e397aa610a178_p0": {
+          "submitted": "WAL provides more concurrency as readers do not block writers and a writer does not block readers.",
+          "start": 1131,
+          "end": 1229
+        },
+        "source_eb43b0641345715d4275efd6_p0": {
+          "submitted": "WAL provides more concurrency as readers do not block writers and a writer does not block readers.",
+          "start": 1131,
+          "end": 1229
+        }
+      }
+    },
+    {
+      "seq": 65,
+      "created": 1792530425.127417,
+      "event": "stage",
+      "stage": "verifying",
+      "round": 0,
+      "version": 1
+    },
+    {
+      "seq": 66,
+      "created": 1792530428.5520074,
+      "event": "model_request",
+      "role": "verifier",
+      "format_attempt": 0,
+      "transport_attempt": 0
+    },
+    {
+      "seq": 67,
+      "created": 1792530436.350545,
+      "event": "model_response",
+      "role": "verifier",
+      "model": "openai/gpt-4o",
+      "usage": {
+        "completion_tokens": 614,
+        "prompt_tokens": 5685,
+        "total_tokens": 6299,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": 0,
+          "audio_tokens": 0,
+          "reasoning_tokens": 0,
+          "rejected_prediction_tokens": 0
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": 0,
+          "cached_tokens": 0,
+          "cache_write_tokens": 0,
+          "cache_write_1h_tokens": 0
+        },
+        "byok_used": false,
+        "fallback_triggered": false
+      },
+      "seconds": 7.799
+    },
+    {
+      "seq": 68,
+      "created": 1792530439.2714252,
+      "event": "model_request",
+      "role": "verifier",
+      "format_attempt": 0,
+      "transport_attempt": 0
+    },
+    {
+      "seq": 69,
+      "created": 1792530446.3661795,
+      "event": "model_response",
+      "role": "verifier",
+      "model": "openai/gpt-4o",
+      "usage": {
+        "completion_tokens": 695,
+        "prompt_tokens": 5079,
+        "total_tokens": 5774,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": 0,
+          "audio_tokens": 0,
+          "reasoning_tokens": 0,
+          "rejected_prediction_tokens": 0
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": 0,
+          "cached_tokens": 0,
+          "cache_write_tokens": 0,
+          "cache_write_1h_tokens": 0
+        },
+        "byok_used": false,
+        "fallback_triggered": false
+      },
+      "seconds": 7.094
+    },
+    {
+      "seq": 70,
+      "created": 1792530446.49552,
+      "event": "claim_decision",
+      "claim_id": "claim_81bddffb50bc0bb03ff256a8",
+      "status": "supported",
+      "reason": "The claim is directly supported by the quoted passages, which state that in SQLite WAL mode, readers do not block writers and writers do not block readers, allowing reading and writing to proceed concurrently."
+    },
+    {
+      "seq": 72,
+      "created": 1792530446.6185565,
+      "event": "claim_decision",
+      "claim_id": "claim_d321967ca8878fce2cb9b1c7",
+      "status": "supported",
+      "reason": "The claim is supported by the quoted passages, which state that a checkpoint can run concurrently with readers but must stop when it reaches a page in the WAL that is past the end mark of any current reader."
+    },
+    {
+      "seq": 73,
+      "created": 1792530446.6933358,
+      "event": "claim_decision",
+      "claim_id": "claim_8b96b9e322e8260a2cee455a",
+      "status": "supported",
+      "reason": "The claim is directly supported by the quoted passages, which state that a long-running read transaction can prevent a checkpointer from making progress."
+    },
+    {
+      "seq": 76,
+      "created": 1792530446.8821898,
+      "event": "claim_decision",
+      "claim_id": "claim_038344df5b805018aa5cccef",
+      "status": "insufficient",
+      "reason": "The provided passages confirm that WAL mode allows readers and a writer to operate simultaneously, improving concurrency. However, they do not explicitly state that multiple writers cannot write concurrently, which is a crucial part of the claim. Thus, the evidence is insufficient to fully support the claim."
+    },
+    {
+      "seq": 78,
+      "created": 1792530447.0075536,
+      "event": "stage",
+      "stage": "checking coverage",
+      "round": 0,
+      "version": 1
+    },
+    {
+      "seq": 79,
+      "created": 1792530450.013682,
+      "event": "model_request",
+      "role": "coverage assessor",
+      "format_attempt": 0,
+      "transport_attempt": 0
+    },
+    {
+      "seq": 80,
+      "created": 1792530452.991644,
+      "event": "model_response",
+      "role": "coverage assessor",
+      "model": "openai/gpt-4o",
+      "usage": {
+        "completion_tokens": 172,
+        "prompt_tokens": 2102,
+        "total_tokens": 2274,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": 0,
+          "audio_tokens": 0,
+          "reasoning_tokens": 0,
+          "rejected_prediction_tokens": 0
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": 0,
+          "cached_tokens": 0,
+          "cache_write_tokens": 0,
+          "cache_write_1h_tokens": 0
+        },
+        "byok_used": false,
+        "fallback_triggered": false
+      },
+      "seconds": 2.978
+    },
+    {
+      "seq": 81,
+      "created": 1792530453.1032252,
+      "event": "round_assessed",
+      "round": 0,
+      "version": 1,
+      "coverage": [
+        {
+          "task_id": "task_1",
+          "supported_facets": {
+            "reader-writer concurrency": [
+              "claim_81bddffb50bc0bb03ff256a8"
+            ],
+            "WAL mode": [
+              "claim_81bddffb50bc0bb03ff256a8",
+              "claim_d2bfc983be7aafb5c3117040"
+            ]
+          },
+          "missing_facets": [],
+          "contradictions": [],
+          "next_queries": []
+        },
+        {
+          "task_id": "task_2",
+          "supported_facets": {
+            "multiple writers": [
+              "claim_aa42ea5de92651baf7073dc5",
+              "claim_35dd85fe6c34a3891905e37e"
+            ],
+            "WAL mode": [
+              "claim_aa42ea5de92651baf7073dc5"
+            ]
+          },
+          "missing_facets": [],
+          "contradictions": [],
+          "next_queries": []
+        }
+      ],
+      "source_ids": [
+        "source_07a861ddc72a31840daf03ff",
+        "source_4e6b7f4a351487f14d8a02a5",
+        "source_59d8bcb6301db959fa173c35",
+        "source_eb43b0641345715d4275efd6",
+        "source_ee14571a5f6e397aa610a178"
+      ],
+      "passage_ids": [
+        "source_ee14571a5f6e397aa610a178_p0",
+        "source_ee14571a5f6e397aa610a178_p1",
+        "source_ee14571a5f6e397aa610a178_p2",
+        "source_ee14571a5f6e397aa610a178_p3",
+        "source_ee14571a5f6e397aa610a178_p4",
+        "source_ee14571a5f6e397aa610a178_p5",
+        "source_ee14571a5f6e397aa610a178_p6",
+        "source_ee14571a5f6e397aa610a178_p7",
+        "source_ee14571a5f6e397aa610a178_p8",
+        "source_ee14571a5f6e397aa610a178_p9",
+        "source_ee14571a5f6e397aa610a178_p10",
+        "source_ee14571a5f6e397aa610a178_p11",
+        "source_ee14571a5f6e397aa610a178_p12",
+        "source_ee14571a5f6e397aa610a178_p13",
+        "source_ee14571a5f6e397aa610a178_p14",
+        "source_eb43b0641345715d4275efd6_p0",
+        "source_eb43b0641345715d4275efd6_p1",
+        "source_eb43b0641345715d4275efd6_p2",
+        "source_eb43b0641345715d4275efd6_p3",
+        "source_eb43b0641345715d4275efd6_p4",
+        "source_eb43b0641345715d4275efd6_p5",
+        "source_eb43b0641345715d4275efd6_p6",
+        "source_eb43b0641345715d4275efd6_p7",
+        "source_eb43b0641345715d4275efd6_p8",
+        "source_eb43b0641345715d4275efd6_p9",
+        "source_eb43b0641345715d4275efd6_p10",
+        "source_eb43b0641345715d4275efd6_p11",
+        "source_eb43b0641345715d4275efd6_p12",
+        "source_eb43b0641345715d4275efd6_p13",
+        "source_eb43b0641345715d4275efd6_p14",
+        "source_4e6b7f4a351487f14d8a02a5_p0",
+        "source_4e6b7f4a351487f14d8a02a5_p1",
+        "source_4e6b7f4a351487f14d8a02a5_p2",
+        "source_4e6b7f4a351487f14d8a02a5_p3",
+        "source_4e6b7f4a351487f14d8a02a5_p4",
+        "source_4e6b7f4a351487f14d8a02a5_p5",
+        "source_59d8bcb6301db959fa173c35_p0",
+        "source_59d8bcb6301db959fa173c35_p1",
+        "source_59d8bcb6301db959fa173c35_p2",
+        "source_59d8bcb6301db959fa173c35_p3",
+        "source_59d8bcb6301db959fa173c35_p4",
+        "source_59d8bcb6301db959fa173c35_p5",
+        "source_59d8bcb6301db959fa173c35_p6",
+        "source_59d8bcb6301db959fa173c35_p7",
+        "source_59d8bcb6301db959fa173c35_p8",
+        "source_59d8bcb6301db959fa173c35_p9",
+        "source_07a861ddc72a31840daf03ff_p0",
+        "source_59d8bcb6301db959fa173c35_p10",
+        "source_07a861ddc72a31840daf03ff_p1",
+        "source_59d8bcb6301db959fa173c35_t0",
+        "source_07a861ddc72a31840daf03ff_p2",
+        "source_07a861ddc72a31840daf03ff_p3",
+        "source_07a861ddc72a31840daf03ff_p4",
+        "source_07a861ddc72a31840daf03ff_p5",
+        "source_07a861ddc72a31840daf03ff_p6",
+        "source_07a861ddc72a31840daf03ff_p7",
+        "source_07a861ddc72a31840daf03ff_p8",
+        "source_07a861ddc72a31840daf03ff_p9",
+        "source_07a861ddc72a31840daf03ff_p10",
+        "source_07a861ddc72a31840daf03ff_p11"
+      ],
+      "new_source_ids": [
+        "source_07a861ddc72a31840daf03ff",
+        "source_4e6b7f4a351487f14d8a02a5",
+        "source_59d8bcb6301db959fa173c35",
+        "source_eb43b0641345715d4275efd6",
+        "source_ee14571a5f6e397aa610a178"
+      ],
+      "new_passage_ids": [
+        "source_07a861ddc72a31840daf03ff_p0",
+        "source_07a861ddc72a31840daf03ff_p1",
+        "source_07a861ddc72a31840daf03ff_p10",
+        "source_07a861ddc72a31840daf03ff_p11",
+        "source_07a861ddc72a31840daf03ff_p2",
+        "source_07a861ddc72a31840daf03ff_p3",
+        "source_07a861ddc72a31840daf03ff_p4",
+        "source_07a861ddc72a31840daf03ff_p5",
+        "source_07a861ddc72a31840daf03ff_p6",
+        "source_07a861ddc72a31840daf03ff_p7",
+        "source_07a861ddc72a31840daf03ff_p8",
+        "source_07a861ddc72a31840daf03ff_p9",
+        "source_4e6b7f4a351487f14d8a02a5_p0",
+        "source_4e6b7f4a351487f14d8a02a5_p1",
+        "source_4e6b7f4a351487f14d8a02a5_p2",
+        "source_4e6b7f4a351487f14d8a02a5_p3",
+        "source_4e6b7f4a351487f14d8a02a5_p4",
+        "source_4e6b7f4a351487f14d8a02a5_p5",
+        "source_59d8bcb6301db959fa173c35_p0",
+        "source_59d8bcb6301db959fa173c35_p1",
+        "source_59d8bcb6301db959fa173c35_p10",
+        "source_59d8bcb6301db959fa173c35_p2",
+        "source_59d8bcb6301db959fa173c35_p3",
+        "source_59d8bcb6301db959fa173c35_p4",
+        "source_59d8bcb6301db959fa173c35_p5",
+        "source_59d8bcb6301db959fa173c35_p6",
+        "source_59d8bcb6301db959fa173c35_p7",
+        "source_59d8bcb6301db959fa173c35_p8",
+        "source_59d8bcb6301db959fa173c35_p9",
+        "source_59d8bcb6301db959fa173c35_t0",
+        "source_eb43b0641345715d4275efd6_p0",
+        "source_eb43b0641345715d4275efd6_p1",
+        "source_eb43b0641345715d4275efd6_p10",
+        "source_eb43b0641345715d4275efd6_p11",
+        "source_eb43b0641345715d4275efd6_p12",
+        "source_eb43b0641345715d4275efd6_p13",
+        "source_eb43b0641345715d4275efd6_p14",
+        "source_eb43b0641345715d4275efd6_p2",
+        "source_eb43b0641345715d4275efd6_p3",
+        "source_eb43b0641345715d4275efd6_p4",
+        "source_eb43b0641345715d4275efd6_p5",
+        "source_eb43b0641345715d4275efd6_p6",
+        "source_eb43b0641345715d4275efd6_p7",
+        "source_eb43b0641345715d4275efd6_p8",
+        "source_eb43b0641345715d4275efd6_p9",
+        "source_ee14571a5f6e397aa610a178_p0",
+        "source_ee14571a5f6e397aa610a178_p1",
+        "source_ee14571a5f6e397aa610a178_p10",
+        "source_ee14571a5f6e397aa610a178_p11",
+        "source_ee14571a5f6e397aa610a178_p12",
+        "source_ee14571a5f6e397aa610a178_p13",
+        "source_ee14571a5f6e397aa610a178_p14",
+        "source_ee14571a5f6e397aa610a178_p2",
+        "source_ee14571a5f6e397aa610a178_p3",
+        "source_ee14571a5f6e397aa610a178_p4",
+        "source_ee14571a5f6e397aa610a178_p5",
+        "source_ee14571a5f6e397aa610a178_p6",
+        "source_ee14571a5f6e397aa610a178_p7",
+        "source_ee14571a5f6e397aa610a178_p8",
+        "source_ee14571a5f6e397aa610a178_p9"
+      ],
+      "supported_claim_ids": [
+        "claim_81bddffb50bc0bb03ff256a8",
+        "claim_d2bfc983be7aafb5c3117040",
+        "claim_d321967ca8878fce2cb9b1c7",
+        "claim_8b96b9e322e8260a2cee455a",
+        "claim_aa42ea5de92651baf7073dc5",
+        "claim_35dd85fe6c34a3891905e37e",
+        "claim_f50b152f5b0a359d43168099"
+      ],
+      "rejected_claim_ids": [
+        "claim_038344df5b805018aa5cccef"
+      ]
+    },
+    {
+      "seq": 82,
+      "created": 1792530453.1546955,
+      "event": "research_next_step",
+      "round": 0,
+      "version": 1,
+      "decision": "synthesize",
+      "reason": "facets_covered"
+    },
+    {
+      "seq": 83,
+      "created": 1792530453.2431397,
+      "event": "stage",
+      "stage": "synthesizing",
+      "round": 0,
+      "version": 1
+    },
+    {
+      "seq": 84,
+      "created": 1792530457.2477994,
+      "event": "model_request",
+      "role": "synthesizer",
+      "format_attempt": 0,
+      "transport_attempt": 0
+    },
+    {
+      "seq": 85,
+      "created": 1792530461.36056,
+      "event": "model_response",
+      "role": "synthesizer",
+      "model": "openai/gpt-4o",
+      "usage": {
+        "completion_tokens": 255,
+        "prompt_tokens": 2126,
+        "total_tokens": 2381,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": 0,
+          "audio_tokens": 0,
+          "reasoning_tokens": 0,
+          "rejected_prediction_tokens": 0
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": 0,
+          "cached_tokens": 0,
+          "cache_write_tokens": 0,
+          "cache_write_1h_tokens": 0
+        },
+        "byok_used": false,
+        "fallback_triggered": false
+      },
+      "seconds": 4.113
+    },
+    {
+      "seq": 86,
+      "created": 1792530461.5457246,
+      "event": "publication_gate_passed",
+      "claim_count": 7
+    },
+    {
+      "seq": 87,
+      "created": 1792530461.5804265,
+      "event": "review_decision",
+      "decision": "approve",
+      "feedback": ""
+    },
+    {
+      "seq": 88,
+      "created": 1792530461.66421,
+      "event": "stage",
+      "stage": "charts",
+      "round": 0,
+      "version": 1
+    },
+    {
+      "seq": 89,
+      "created": 1792530461.7416987,
+      "event": "stage",
+      "stage": "summary",
+      "round": 0,
+      "version": 1
+    },
+    {
+      "seq": 90,
+      "created": 1792530466.0903223,
+      "event": "model_request",
+      "role": "summarizer",
+      "format_attempt": 0,
+      "transport_attempt": 0
+    },
+    {
+      "seq": 91,
+      "created": 1792530468.5556056,
+      "event": "model_response",
+      "role": "summarizer",
+      "model": "openai/gpt-4o",
+      "usage": {
+        "completion_tokens": 111,
+        "prompt_tokens": 1740,
+        "total_tokens": 1851,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": 0,
+          "audio_tokens": 0,
+          "reasoning_tokens": 0,
+          "rejected_prediction_tokens": 0
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": 0,
+          "cached_tokens": 0,
+          "cache_write_tokens": 0,
+          "cache_write_1h_tokens": 0
+        },
+        "byok_used": false,
+        "fallback_triggered": false
+      },
+      "seconds": 2.464
+    },
+    {
+      "seq": 92,
+      "created": 1792530468.8752117,
+      "event": "stage",
+      "stage": "publishing",
+      "round": 0,
+      "version": 1
+    },
+    {
+      "seq": 93,
+      "created": 1792530469.005103,
+      "event": "publication_gate_passed",
+      "claim_count": 7
+    },
+    {
+      "seq": 94,
+      "created": 1792530471.361128,
+      "event": "run_finished",
+      "status": "completed",
+      "supported": 7,
+      "completeness": "covered"
+    }
+  ],
+  "report_markdown": "# Web research: SQLite concurrency (recorded excerpt)\n\nRecorded excerpt: 3 of 7 original published claims. Usage and round totals describe the original full run.\n\nIn SQLite WAL mode, readers do not block writers and writers do not block readers, allowing them to proceed concurrently.\nReferences: source_ee14571a5f6e397aa610a178_p0, source_eb43b0641345715d4275efd6_p0\n\nIn SQLite WAL mode, a checkpoint can run concurrently with readers but must stop if it reaches a page needed by a current reader.\nReferences: source_ee14571a5f6e397aa610a178_p3, source_eb43b0641345715d4275efd6_p3\n\nIn SQLite WAL mode, a long-running read transaction can prevent a checkpointer from making progress.\nReferences: source_ee14571a5f6e397aa610a178_p3, source_eb43b0641345715d4275efd6_p3\n\n## source_ee14571a5f6e397aa610a178_p0\nSmall. Fast. Reliable.\nChoose any three.\nHome\nMenu\nAbout\nDocumentation\nDownload\nLicense\nSupport\nPurchase\nSearch\nAbout\nDocumentation\nDownload\nSupport\nPurchase\nWrite-Ahead Logging\nTable Of Contents\n1. Overview\n2. How WAL Works\n2.1. Checkpointing\n2.2. Concurrency\n2.3. Performance Considerations\n3. Activating And Configuring WAL Mode\n3.1. Automatic Checkpoint\n3.2. Application-Initiated Checkpoints\n3.3. Persistence of WAL mode\n4. The WAL File\n5. Read-Only Databases\n6. Avoiding Excessively Large WAL Files\n7. Implementation Of Shared-Memory For The WAL-Index\n8. Use of WAL Without Shared-Memory\n9. Sometimes Queries Return SQLITE_BUSY In WAL Mode\n10. Backwards Compatibility\n11. The WAL-Reset Bug\n11.1. Bug Details\n11.2. Low Probability Of Occurrence\n1.\nOverview\nThe default method by which SQLite implements\natomic commit and rollback\nis a\nrollback journal\n.\nBeginning with\nversion 3.7.0\n(2010-07-21), a new \"Write-Ahead Log\" option\n(hereafter referred to as \"WAL\") is available.\nThere are advantages and disadvantages to using WAL instead of\na rollback journal.  Advantages include:\nWAL is significantly faster in most scenarios.\nWAL provides more concurrency as readers do not block writers and\na writer does not block readers.  Reading and writing can proceed\nconcurrently.\nDisk I/O operations tends to be more sequential using WAL.\nWAL uses many fewer fsync() operations and is thus less vulnerable to\nproblems on systems where the fsync() system call is broken.\nBut there are also disadvantages:\nAll processes using a database must be on the same host computer;\nWAL does not work over a network filesystem.  This is because WAL requires\nall processes to share a small amount of memory and processes on\nseparate host machines obviously cannot share memory with each other.\nTransactions that involve changes against multiple\nATTACHed\ndatabases are atomic for each individual database, but are not\natomic across all databases as a set.\nIt is not possible to change the\npage_size\nafter entering WAL\nmode, either on an empty database or by using\nVACUUM\nor by restoring\nfrom a backup using the\nbackup API\n.  You must be in a rollback journal\nmode to change the page size.\nIt is not possible to open\n\n## source_ee14571a5f6e397aa610a178_p3\nthen the page is read from the original database file.  Readers can\nexist in separate processes, so to avoid forcing every reader to scan\nthe entire WAL looking for pages (the WAL file can grow to\nmultiple megabytes, depending on how often checkpoints are run), a\ndata structure called the \"wal-index\" is maintained in shared memory\nwhich helps readers locate pages in the WAL quickly and with a minimum\nof I/O.  The wal-index greatly improves the performance of readers,\nbut the use of shared memory means that all readers must exist on the\nsame machine.  This is why the write-ahead log implementation will not\nwork on a network filesystem.\nWriters merely append new content to the end of the WAL file.\nBecause writers do nothing that would interfere with the actions of\nreaders, writers and readers can run at the same time.  However,\nsince there is only one WAL file, there can only be one writer at\na time.\nA checkpoint operation takes content from the WAL file\nand transfers it back into the original database file.\nA checkpoint can run concurrently with readers, however the checkpoint\nmust stop when it reaches a page in the WAL that is past the end mark\nof any current reader.  The checkpoint has to stop at that point because\notherwise it might overwrite part of the database file that the reader\nis actively using.  The checkpoint remembers (in the wal-index) how far\nit got and will resume transferring content from the WAL to the database\nfrom where it left off on the next invocation.\nThus a long-running read transaction can prevent a checkpointer from\nmaking progress.  But presumably every read transaction will eventually\nend and the checkpointer will be able to continue.\nWhenever a write operation occurs, the writer checks how much progress\nthe checkpointer has made, and if the entire WAL has been transferred into\nthe database and synced and if no readers are making use of the WAL, then\nthe writer will rewind the WAL back to the beginning and start putting new\ntransactions at the beginning of the WAL.  This mechanism prevents a WAL\nfile from growing without bound.\n2.3.\nPerformance Considerations\nWrite transactions are very fast since they only involve writing\n\n## source_eb43b0641345715d4275efd6_p0\nSmall. Fast. Reliable.\nChoose any three.\nHome\nMenu\nAbout\nDocumentation\nDownload\nLicense\nSupport\nPurchase\nSearch\nAbout\nDocumentation\nDownload\nSupport\nPurchase\nWrite-Ahead Logging\nTable Of Contents\n1. Overview\n2. How WAL Works\n2.1. Checkpointing\n2.2. Concurrency\n2.3. Performance Considerations\n3. Activating And Configuring WAL Mode\n3.1. Automatic Checkpoint\n3.2. Application-Initiated Checkpoints\n3.3. Persistence of WAL mode\n4. The WAL File\n5. Read-Only Databases\n6. Avoiding Excessively Large WAL Files\n7. Implementation Of Shared-Memory For The WAL-Index\n8. Use of WAL Without Shared-Memory\n9. Sometimes Queries Return SQLITE_BUSY In WAL Mode\n10. Backwards Compatibility\n11. The WAL-Reset Bug\n11.1. Bug Details\n11.2. Low Probability Of Occurrence\n1.\nOverview\nThe default method by which SQLite implements\natomic commit and rollback\nis a\nrollback journal\n.\nBeginning with\nversion 3.7.0\n(2010-07-21), a new \"Write-Ahead Log\" option\n(hereafter referred to as \"WAL\") is available.\nThere are advantages and disadvantages to using WAL instead of\na rollback journal.  Advantages include:\nWAL is significantly faster in most scenarios.\nWAL provides more concurrency as readers do not block writers and\na writer does not block readers.  Reading and writing can proceed\nconcurrently.\nDisk I/O operations tends to be more sequential using WAL.\nWAL uses many fewer fsync() operations and is thus less vulnerable to\nproblems on systems where the fsync() system call is broken.\nBut there are also disadvantages:\nAll processes using a database must be on the same host computer;\nWAL does not work over a network filesystem.  This is because WAL requires\nall processes to share a small amount of memory and processes on\nseparate host machines obviously cannot share memory with each other.\nTransactions that involve changes against multiple\nATTACHed\ndatabases are atomic for each individual database, but are not\natomic across all databases as a set.\nIt is not possible to change the\npage_size\nafter entering WAL\nmode, either on an empty database or by using\nVACUUM\nor by restoring\nfrom a backup using the\nbackup API\n.  You must be in a rollback journal\nmode to change the page size.\nIt is not possible to open\n\n## source_eb43b0641345715d4275efd6_p3\nthen the page is read from the original database file.  Readers can\nexist in separate processes, so to avoid forcing every reader to scan\nthe entire WAL looking for pages (the WAL file can grow to\nmultiple megabytes, depending on how often checkpoints are run), a\ndata structure called the \"wal-index\" is maintained in shared memory\nwhich helps readers locate pages in the WAL quickly and with a minimum\nof I/O.  The wal-index greatly improves the performance of readers,\nbut the use of shared memory means that all readers must exist on the\nsame machine.  This is why the write-ahead log implementation will not\nwork on a network filesystem.\nWriters merely append new content to the end of the WAL file.\nBecause writers do nothing that would interfere with the actions of\nreaders, writers and readers can run at the same time.  However,\nsince there is only one WAL file, there can only be one writer at\na time.\nA checkpoint operation takes content from the WAL file\nand transfers it back into the original database file.\nA checkpoint can run concurrently with readers, however the checkpoint\nmust stop when it reaches a page in the WAL that is past the end mark\nof any current reader.  The checkpoint has to stop at that point because\notherwise it might overwrite part of the database file that the reader\nis actively using.  The checkpoint remembers (in the wal-index) how far\nit got and will resume transferring content from the WAL to the database\nfrom where it left off on the next invocation.\nThus a long-running read transaction can prevent a checkpointer from\nmaking progress.  But presumably every read transaction will eventually\nend and the checkpointer will be able to continue.\nWhenever a write operation occurs, the writer checks how much progress\nthe checkpointer has made, and if the entire WAL has been transferred into\nthe database and synced and if no readers are making use of the WAL, then\nthe writer will rewind the WAL back to the beginning and start putting new\ntransactions at the beginning of the WAL.  This mechanism prevents a WAL\nfile from growing without bound.\n2.3.\nPerformance Considerations\nWrite transactions are very fast since they only involve writing\n",
+  "original_published_claim_ids": [
+    "claim_35dd85fe6c34a3891905e37e",
+    "claim_81bddffb50bc0bb03ff256a8",
+    "claim_8b96b9e322e8260a2cee455a",
+    "claim_aa42ea5de92651baf7073dc5",
+    "claim_d2bfc983be7aafb5c3117040",
+    "claim_d321967ca8878fce2cb9b1c7",
+    "claim_f50b152f5b0a359d43168099"
+  ],
+  "excerpt": true
+}

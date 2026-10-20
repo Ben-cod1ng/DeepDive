@@ -19,6 +19,7 @@ def main():
     parser.add_argument("--summary", required=True)
     parser.add_argument("--release", required=True)
     parser.add_argument("--limitation", action="append", required=True)
+    parser.add_argument("--claim", action="append", help="Publish an explicitly labeled excerpt containing these original claim IDs")
     args = parser.parse_args()
     raw = Path(args.audit).read_bytes()
     data = json.loads(raw)
@@ -40,6 +41,30 @@ def main():
               "sources": [{k: s[k] for k in source_fields if k in s} for s in data["sources"]],
               **{key: data[key] for key in ("passages", "claims", "decisions", "events")},
               "report_markdown": Path(args.report).read_text(encoding="utf-8")}
+    if args.claim:
+        selected = set(args.claim)
+        if selected - {c["id"] for c in data["claims"]}:
+            raise ValueError("Excerpt contains unknown claim IDs")
+        output["original_published_claim_ids"] = run["published_claim_ids"]
+        output["excerpt"] = True
+        output["claims"] = [c for c in data["claims"] if c["id"] in selected]
+        output["decisions"] = [d for d in data["decisions"] if d["claim_id"] in selected]
+        cited = {pid for c in output["claims"] for pid in c["passage_ids"]}
+        output["passages"] = [p for p in data["passages"] if p["id"] in cited]
+        sources = {p["source_id"] for p in output["passages"]}
+        output["sources"] = [s for s in output["sources"] if s["id"] in sources]
+        saved_run["published_claim_ids"] = [cid for cid in run["published_claim_ids"] if cid in selected]
+        output["limitations"].append(f"Recorded excerpt: {len(saved_run['published_claim_ids'])} of {len(run['published_claim_ids'])} original published claims. Usage and round totals describe the original full run.")
+        # Events can contain third-party quotations; retain operational/round
+        # events and only selected claims' quotation/decision events.
+        output["events"] = [e for e in data["events"] if not e.get("claim_id") or e["claim_id"] in selected]
+        lines = ["# " + args.title, "", output["limitations"][-1], ""]
+        for claim in output["claims"]:
+            if claim["id"] in saved_run["published_claim_ids"]:
+                lines.extend([claim["text"], "References: " + ", ".join(claim["passage_ids"]), ""])
+        for passage in output["passages"]:
+            lines.extend(["## " + passage["id"], passage["text"], ""])
+        output["report_markdown"] = "\n".join(lines)
     path = Path(args.output)
     path.parent.mkdir(parents=True, exist_ok=True)
     with path.open("x", encoding="utf-8") as handle:

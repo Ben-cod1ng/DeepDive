@@ -114,3 +114,12 @@ found complete labeled quotations in the existing chunks, so no measured boundar
 failure justified a tuning sweep. Passage-level metrics and fallback categories
 make remaining retrieval weaknesses observable. Real recorded examples retain
 their original provenance and make no API/model calls when inspected.
+
+The October 20 CI dependency audit reported nine advisories in Pillow 12.3.0 and
+certifi 2026.7.22. Patched targets are Pillow 13.0.0 and certifi 2026.10.19. Streamlit
+1.56.0 (and latest 1.66.0 when checked) still declares Pillow <13. A narrow uv
+dependency override selects Pillow 13 while keeping the tested Streamlit release;
+our UI, chart, image and PowerPoint export checks must pass before deployment.
+This does not claim upstream support for every Streamlit/Pillow combination.
+Remove the override when Streamlit permits the patched major version. The audit
+does not ignore or suppress the reported advisories.

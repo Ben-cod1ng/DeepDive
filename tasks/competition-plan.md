@@ -262,5 +262,25 @@ This is a planning target, not an assurance that unmeasured quality gates will p
 - **Approval received:** full implementation scope, subject to the credit limit.
 - **External input:** independent human label/report review and the private
   organizer submission token. These do not block offline fixes or review tooling.
-- **Unmeasured:** current Mesh balance, credit available through judging, and the
-  final candidate's live quality. No result or approval is inferred.
+- **Measured:** initial Mesh balance and model prices were read through metadata;
+  half is reserved in a private, persistent allocation. Two development web pilots
+  are recorded separately, including the initial quotation-formatting failure.
+  Final independent quality and credit available through judging remain unmeasured.
+
+## 6. Implementation progress
+
+- [x] A: isolated case selection, interruption/resume checks, persistent spending
+  reservations, model/embedding/retry accounting, and an evidence index.
+- [x] B: empty-first-round regression, normalized attempts, bounded stop reasons,
+  task events, and per-round evidence/claim snapshots; recovery tests pass.
+- [x] C: native citation inspection, conservative grouping, shared export ordering,
+  revision comparisons and visible research rounds; offline UI tests pass.
+- [x] D: frozen 50-chunk public-document corpus, exact-span boundary audit,
+  passage-level metrics, answer-absent cases and distinct rerank fallback reasons.
+- [ ] D: complete and inspect the current live retrieval comparison.
+- [x] E: freeze ten scenarios, separate reference facets, provide blind worksheets,
+  and retain the real web pilot plus development retest with original manifests.
+- [ ] E: remaining live cases within credit limits; independent human review.
+- [x] F: recorded document example and public-domain web excerpt, judge guide and
+  README evidence map. Hosting credit checked separately: 29 trial days remained.
+- [ ] F: final required CI, hosted browser acceptance, organizer secrets and dashboard confirmation.
