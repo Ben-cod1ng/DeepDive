@@ -6,7 +6,7 @@ DeepDive separates three questions: **does the application work, does the verifi
 
 `evaluation/claims.v1.json` contains 32 synthetic claim/passage cases, including numerical, attribution, negation, causal, quotation, and missing-source negatives. Its current dataset version is **1.1**. Labels were authored with the implementation and **have not been independently reviewed**. The filename stays stable; the embedded version and SHA-256 identify the actual content.
 
-`evaluation/questions.v1.json` contains ten research questions spanning technical, scientific, market, comparative, time-sensitive, contradictory, and insufficient-evidence tasks. These are an acceptance set, not evidence that the application has already answered them successfully.
+`evaluation/questions.v2.json` freezes ten research scenarios, including mixed document/web research and a real two-turn follow-up in one session. Two development cases and eight held-out cases are identified before evaluation. Reference facets are authored separately from the planner. The older v1 dataset remains historical evidence.
 
 Before a release, an independent reviewer must inspect every claim, passage, quotation, and reference label. Record actual reviewer identity/date in the dataset's `independent_review` object with `status: approved`, update its label status/version, and retain review notes in version control. Do not fill these fields merely to pass automation. Freeze reviewed evaluation cases before tuning prompts against other development examples.
 
@@ -53,17 +53,60 @@ The recall floor prevents a reject-everything verifier from appearing safe and u
 
 ## End-to-end benchmark and final-claim review
 
-With the API running and Mesh configured:
+Run directly with Mesh configured; no API server is needed. First read the current
+Mesh balance and model pricing through the documented [usage API](https://developers.meshapi.ai/docs/reference/usage-api)
+and [model metadata](https://developers.meshapi.ai/docs/reference/models). Choose an
+allocation from existing credit, preserving at least half the measured balance for
+demos. Set the following PowerShell variables to those **reviewed amounts**; the
+command deliberately has no automatic dollar allocation:
 
 ```powershell
-uv run python -m deepdive.evaluation benchmark --output evaluation/results/live-benchmark.json
+uv run python -m deepdive.evaluation benchmark --case technical --model-calls 25 --input-tokens 12000 --output-tokens 2000 --ledger .secrets/evaluation-ledger.json --max-spend-usd $evaluationAllocation --reserve-usd $demoReserve --output evaluation/results/competition-benchmark.json
+# Continue this exact experiment without rerunning completed cases:
+uv run python -m deepdive.evaluation benchmark --case follow_up --resume --model-calls 25 --input-tokens 12000 --output-tokens 2000 --ledger .secrets/evaluation-ledger.json --max-spend-usd $evaluationAllocation --reserve-usd $demoReserve --output evaluation/results/competition-benchmark.json
 ```
 
-The benchmark creates real research sessions, explicitly uses automatic approval, and checkpoints its result file after each question. It may make up to ten runs' worth of bounded provider requests. It records actual per-run coverage, citation validity, acceptance/rejection counts, repair rounds, usage, and duration. Keep detailed run exports private if their source material or questions are sensitive.
+The benchmark isolates its SQLite store, checkpoints each run ID, and explicitly
+uses automatic approval. Completed cases are never rerun by `--resume`; failed or
+limited cases are retained. Configuration/code/dataset changes require a new
+output and experiment. Detailed exports stay under `data/evaluations/benchmark_*`.
+Only this experiment's run IDs enter its metrics. `not_run` explicitly lists
+unexecuted cases. An incomplete ten-case run is reported as partial.
+
+The persistent ledger reserves a conservative request cost **before each chat,
+embedding, transport retry, and formatting retry**. It uses UTF-8 input-size bounds,
+the configured output limit, current token prices, and a 10% margin. Missing usage
+or failed transport retains the reservation. Concurrent threads share an atomic
+reservation; an exclusive lock prevents a second evaluation process. The current
+provider balance is checked before each request. These are estimates, not provider
+charges, and they do not control spending by other clients using the same key.
+Reconcile the balance between batches. Keep the original allocation and ledger
+across experiments; do not reset either to recover spent credit. After an abrupt
+process exit, inspect the ledger and confirm the owner has stopped before removing
+only its `.lock` file. Retain unresolved request reservations.
+
+Round snapshots compare planner-assessed facet counts before and after repair.
+They are a within-run observation, not an independent completeness score or a
+randomized no-repair baseline. `reference_facet_completeness` and
+`independent_support_accuracy` remain null until human review supplies evidence.
 
 For manual acceptance, also run one question with manual review, revise it, restart at a waiting review, resume/approve, and inspect every export. Demonstrate an actual rejected claim and a repair that obtains new supporting evidence. Fixture demonstrations are useful for regression testing but do not substitute for this live exercise.
 
 An independent reviewer must inspect **every published factual claim** against its stored passages and assess the required facets against the original question. Record claim ID, supported/unsupported/ambiguous label, reviewer, rationale, and any omitted qualification. Calculate final support accuracy from those independent labels; `independent_support_accuracy` remains null until such review exists. Also report unanswered facets and contradictions. A tiny report with valid citations may still be inadequate.
+
+The [blind 32-case worksheet](../evaluation/review/claims.v1.blind.csv) omits the
+authored labels. Fill `human_label` (`supported`, `unsupported`, or `ambiguous`),
+`reviewer`, `reviewed_at`, and `notes`. Do not edit the evidence columns. Commands
+refuse to overwrite worksheets and reject changed evidence or missing judgments:
+
+```powershell
+uv run python -m deepdive.review claims evaluation/claims.v1.json --labels evaluation/review/claims.v1.blind.csv --output evaluation/results/label-review.json
+uv run python -m deepdive.review report data/evaluations/EXPERIMENT/technical-turn-1.json --output evaluation/review/technical.blind.csv
+```
+
+A validated worksheet does not itself establish reviewer independence or approve
+the release. Resolve corrections, record who reviewed them, and run the unchanged
+quality gate against the resulting reviewed dataset and current candidate.
 
 ## Rubrics, calibration, and drift
 

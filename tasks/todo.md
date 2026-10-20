@@ -1,7 +1,12 @@
 # DeepDive completion checklist
 
-The user removed the calendar target and added end-to-end operations. The approved
-design remains in [PLAN.md](../PLAN.md); subsequent scope and decisions are recorded
+The original calendar target was removed when end-to-end operations were added.
+The organizer now closes submissions on October 30, 2026, at 23:00 IST (17:30 UTC).
+The approved [competition improvement plan](competition-plan.md) records the
+October 20 audit, priorities, acceptance checks, and remaining-credit constraint.
+Implementation is in progress; its work is not marked complete until verified.
+
+The approved design remains in [PLAN.md](../PLAN.md); subsequent scope and decisions are recorded
 in [docs/decisions.md](../docs/decisions.md). Checkmarks describe implemented and
 locally verified behavior, not unperformed live model evaluation.
 

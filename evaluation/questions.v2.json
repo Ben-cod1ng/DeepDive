@@ -1,0 +1,80 @@
+{
+  "version": "2.0",
+  "created": "2026-10-20",
+  "label_status": "Authored reference facets; independent review pending. Facets are not supplied to the planner.",
+  "questions": [
+    {
+      "id": "technical",
+      "split": "development",
+      "question": "In SQLite WAL mode, can readers proceed alongside a writer, and can multiple writers write at the same time? Explain the distinction using the official documentation.",
+      "source_urls": ["https://www.sqlite.org/wal.html"],
+      "reference_facets": ["Reader/writer concurrency", "Number of simultaneous writers", "Scope and relevant qualifications"]
+    },
+    {
+      "id": "comparative",
+      "split": "development",
+      "question": "Compare SQLite WAL and rollback-journal modes for a local research application: concurrency, checkpointing, and network-filesystem limitations.",
+      "source_urls": ["https://www.sqlite.org/wal.html", "https://www.sqlite.org/lockingv3.html"],
+      "reference_facets": ["Reader/writer behavior in both modes", "WAL checkpointing", "Network-filesystem qualifications"]
+    },
+    {
+      "id": "scientific",
+      "split": "heldout",
+      "question": "Why does an association in an observational study not by itself establish causation? Find primary methodological sources and explain the assumptions and limitations.",
+      "reference_facets": ["Association versus causal effect", "Confounding", "Assumptions needed for causal interpretation", "Limits of the retrieved evidence"]
+    },
+    {
+      "id": "temporal",
+      "split": "heldout",
+      "question": "What changed in Python 3.14 compared with 3.13? Compare the official release notes, distinguishing stable features from experimental or optional features.",
+      "source_urls": ["https://docs.python.org/3.14/whatsnew/3.14.html", "https://docs.python.org/3.13/whatsnew/3.13.html"],
+      "reference_facets": ["Specific version comparison", "Supported feature changes", "Experimental or optional qualifications", "Source versions and dates"]
+    },
+    {
+      "id": "numerical",
+      "split": "heldout",
+      "question": "Using Microsoft's official annual reports, compare fiscal 2024 and fiscal 2025 revenue and calculate the percentage change. State currency, units and fiscal periods.",
+      "reference_facets": ["Both fiscal-year revenue values", "Currency and units", "Source-linked arithmetic", "Fiscal rather than calendar-year comparison"]
+    },
+    {
+      "id": "conflicting",
+      "split": "heldout",
+      "question": "Why do published electric-vehicle battery lifetime estimates differ? Compare at least two sources and distinguish definitions, conditions and actual disagreements.",
+      "reference_facets": ["At least two attributable estimates", "Lifetime definition", "Operating conditions", "Disagreement versus different scope"]
+    },
+    {
+      "id": "insufficient",
+      "split": "heldout",
+      "question": "What will the exact closing price of MSFT be on October 30, 2030? Explain what the available evidence can and cannot establish.",
+      "reference_facets": ["No invented exact future price", "Distinguish projections from observed facts", "Explicit insufficient-evidence conclusion"]
+    },
+    {
+      "id": "community",
+      "split": "heldout",
+      "question": "What do developers report about Streamlit deployment difficulties, and which reports can be checked against official documentation? Attribute individual opinions.",
+      "source_urls": ["https://docs.streamlit.io/deploy"],
+      "reference_facets": ["Attributed developer reports", "Official documentation comparison", "Opinions distinguished from facts", "No unsupported population-wide generalization"]
+    },
+    {
+      "id": "mixed",
+      "split": "heldout",
+      "question": "Check the uploaded proposed database policy against SQLite's official WAL documentation. Which assertions are supported or contradicted, and what needs qualification?",
+      "research_mode": "mixed",
+      "source_urls": ["https://www.sqlite.org/wal.html"],
+      "documents": [
+        {"name": "proposed-policy.md", "text": "# Proposed policy — deliberately unverified assertions\n\nThe proposal claims that SQLite WAL permits multiple simultaneous writers and that every SQLite client on different machines can safely share a WAL database over a network filesystem.\n\nThese assertions are proposed for checking, not approved policy.\n"}
+      ],
+      "reference_facets": ["Proposed statements treated as unverified", "Simultaneous writer assertion checked", "Network-filesystem assertion checked", "Both document and web citations"]
+    },
+    {
+      "id": "follow_up",
+      "split": "heldout",
+      "source_urls": ["https://www.sqlite.org/wal.html"],
+      "turns": [
+        {"question": "Explain SQLite WAL reader/writer concurrency using the official documentation."},
+        {"question": "For the mode we just discussed, what happens during checkpointing and what can a long-running reader affect?"}
+      ],
+      "reference_facets": ["Second turn resolves the previous subject", "Evidence is reused or refreshed with provenance", "Checkpoint behavior", "Effect of a long-running reader"]
+    }
+  ]
+}

@@ -69,6 +69,11 @@ def quality(url):
     return {"rank": 2, "label": "unclassified web source", "reason": "Authorship and primary status require inspection"}
 
 
+def query_fingerprint(query):
+    """Ignore case/spacing while retaining meaningful search operators."""
+    return digest(" ".join(query.casefold().split()))
+
+
 class ToolBox:
     def __init__(self, store, memory, context, run, http=None):
         self.store, self.memory, self.context, self.run = store, memory, context, run
@@ -119,6 +124,11 @@ class ToolBox:
 
     def search_web(self, args):
         self.allow_network()
+        with self.store.lock:
+            run = self.store.get("run", self.run["id"])
+            attempted = set(run.get("web_queries", []))
+            attempted.add(query_fingerprint(args.query))
+            self.store.update("run", run["id"], web_queries=sorted(attempted))
         return self._cached("search", {"query": args.query.strip(), "provider": "ddg-html-lite"}, 3600,
                             lambda: search_public(self.http, args.query.strip()))
 

@@ -11,6 +11,7 @@ Built for Agent Arena 2026 with Python, LangGraph, FastAPI, and Streamlit. Every
 - Investigate a question with parallel primary-source, reporting, and community researchers.
 - Upload PDF, DOCX, TXT, or Markdown documents and research them using BM25 + vector search, rank fusion, and Mesh reranking. Choose documents only or combine them with public web sources.
 - Inspect exact source passages, accepted and rejected claims, missing evidence, and the research timeline.
+- Open a finding's **Inspect evidence** panel for its full passage, exact quotation, source date, and verification reason. Follow repair decisions by round and compare revised drafts.
 - Approve, revise, or stop a saved review; resume interrupted work after a restart.
 - Keep isolated sessions or share verified research within an explicit project. Inspect, edit, and forget saved memory.
 - Export cited Markdown/HTML reports, HTML/PowerPoint presentations, source-backed PNG charts, and JSON audit records.
@@ -53,7 +54,7 @@ flowchart TD
     R --> A[Analyst: source-linked candidate claims]
     A --> V[Deterministic checks and semantic verifier]
     V --> C[Coverage assessment]
-    C -->|Missing evidence and budget remains| R
+    C -->|Missing evidence, fresh query and budget remain| R
     C -->|Enough evidence or limits reached| S[Synthesize checked claim IDs]
     S --> G[Final publication gate]
     G --> H{Durable human review}
@@ -62,6 +63,22 @@ flowchart TD
     H -->|Approve| Parallel[Parallel summary and chart preparation]
     Parallel --> Output[Reports, decks, charts, audit export]
 ```
+
+## Judge walkthrough and evidence
+
+Start with [the judge walkthrough](docs/judge-walkthrough.md). Recorded examples
+can be opened without new model calls; live investigations still use the normal
+review and spending limits. [The evidence index](evaluation/results/README.md)
+distinguishes current experiments from older measurements.
+
+| Judging area | Implementation | Inspect |
+|---|---|---|
+| Agent orchestration | LangGraph fan-out, sequential verification, bounded repair | [workflow](deepdive/workflow.py), Timeline |
+| Verification and self-evaluation | Exact-quote/number gates, semantic verification, coverage, durable review | [verification](deepdive/verification.py), finding evidence panels |
+| Ingestion and domain research | Public pages, PDF/DOCX/text, BM25/vectors/fusion/reranking | [RAG design and measurements](docs/rag.md) |
+| Auditability | Immutable passages, claim-version decisions, per-round records, exports | [judge walkthrough](docs/judge-walkthrough.md) |
+| Reproducibility | Frozen cases, isolated resumable benchmark, persistent spending ledger | [evaluation guide](docs/evaluation.md) |
+| Deployment | Docker, private API, public frontend, persistent volume, CI/monitoring | [Railway](docs/railway.md), [operations](docs/operations.md) |
 
 ```mermaid
 sequenceDiagram

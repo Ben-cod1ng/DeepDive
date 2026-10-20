@@ -52,14 +52,20 @@ def test_gateway_routes_mesh_and_bounds_transport_and_schema_retries(tmp_path, m
     monkeypatch.setattr("deepdive.gateway.OpenAI", FakeClient)
     monkeypatch.setattr("deepdive.gateway.token_count", lambda value: 100)
     monkeypatch.setattr("deepdive.gateway.time.sleep", lambda value: None)
-    gateway = MeshGateway(Settings(tmp_path, mesh_key="test-only"), store)
+    from deepdive.spending import SpendLedger
+    prices = {"openai/gpt-4o": {"input": "2.5", "output": "10", "request": "0"}}
+    ledger = SpendLedger(tmp_path / "budget.json", "1", "1", prices, lambda: "2")
+    gateway = MeshGateway(Settings(tmp_path, mesh_key="test-only"), store, spend_guard=ledger)
     result = gateway.ask(run_context, "summarizer", "Select IDs", {"text": "rsk_abcdefghijklmnopqrst"}, SummarySelection)
     assert result.claim_ids == ["c"]
     assert captured[0]["base_url"] == MESH_BASE_URL and captured[0]["max_retries"] == 0
     assert store.get("run", "run_test")["calls"] == 3
     assert store.get("run", "run_test")["tokens"] == 14
+    assert ledger.summary()["attempts"] == 3  # transport retry AND schema retry reserve credit
+    assert ledger.summary()["unknown_attempts"] == 3  # missing token breakdown cannot refund
     assert "rsk_abcdefghijklmnopqrst" not in json.dumps(captured[1]["messages"])
     gateway.close()
+    ledger.close()
 
 
 def test_context_budget_and_elapsed_limit_stop_before_request(tmp_path, monkeypatch):

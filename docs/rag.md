@@ -114,3 +114,36 @@ The [live Mesh run on October 19, 2026](../evaluation/results/live-rag.json) com
 Labels are authored synthetic examples and await independent review. These ten small documents are useful for regression investigation, not a claim of production accuracy or a demonstrated advantage over dense retrieval on this dataset. Add independently reviewed examples from the intended corpus and a held-out set before tuning chunk sizes, candidate counts, or ranking prompts.
 
 Design references: [Mesh embeddings](https://developers.meshapi.ai/docs/capabilities/embeddings), [SQLite FTS5/BM25](https://www.sqlite.org/fts5.html#the_bm25_function), [reciprocal rank fusion paper](https://plg.uwaterloo.ca/~gvcormac/cormacksigir09-rrf.pdf), [LLM reranking research](https://arxiv.org/abs/2304.09542), and [pypdf extraction limits](https://pypdf.readthedocs.io/en/stable/user/extract-text.html).
+
+## Passage-level competition corpus
+
+`evaluation/documents.v2.json` freezes 55,029 characters from two public SQLite
+documentation pages plus an explicitly incorrect synthetic draft. Each public
+snapshot records its URL, retrieval time, original response hash, extracted-text
+hash, extraction method, and [public-domain permission](https://www.sqlite.org/copyright.html).
+The snapshot builder refuses to overwrite an existing freeze. Superseded source
+text remains marked as superseded. The draft includes a conflicting table.
+
+Seven questions cover single writers, network storage, an exact checkpoint macro,
+locking semantics, a dated version change, contradictory sources, and an answer
+absent from the corpus. Exact reference quotations identify eligible chunks;
+overlapping chunks containing the quotation count separately as relevant. Labels
+remain authored and unreviewed. Two development queries and five held-out queries
+are identified before inference.
+
+```powershell
+# No credentials or model calls:
+uv run python -m deepdive.rag_evaluation --dataset evaluation/documents.v2.json --offline --output evaluation/results/competition-chunk-audit.json
+# Paid comparison; use the SAME persistent ledger/allocation as the research benchmark:
+uv run python -m deepdive.rag_evaluation --dataset evaluation/documents.v2.json --ledger .secrets/evaluation-ledger.json --max-spend-usd $evaluationAllocation --reserve-usd $demoReserve --output evaluation/results/competition-rag.json
+```
+
+The offline audit found 50 chunks, exact source offsets, and all labeled quotations
+contained in complete chunks. This supports keeping the existing 384/64 defaults;
+it does **not** establish that this is an optimal chunk size. The live command
+records both document- and passage-level Recall@3/MRR@3/nDCG@3, actual rankings,
+latency, requests/tokens, and rerank fallback categories. Answer-absent ratios are
+null and excluded from means; returned passages are counted explicitly. Retrieval
+alone does not decide whether an answer is supported. Formatting retries provide
+sanitized schema field/type feedback; invalid permutations, schema failures,
+context limits, and budget limits are recorded separately.

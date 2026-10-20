@@ -9,7 +9,7 @@ from deepdive.gateway import MeshGateway
 from deepdive.guardrails import scope_for
 from deepdive.models import RunRequest
 from deepdive.rag import fuse, normalized
-from deepdive.rag_evaluation import rank_metrics
+from deepdive.rag_evaluation import rank_metrics, passage_labels, averages
 from deepdive.service import ResearchService
 from .test_documents import DocumentGateway
 from .test_gateway import context
@@ -90,9 +90,32 @@ def test_rerank_reorders_only_existing_candidates_and_reports_fallback(tmp_path)
         assert result and all(p["id"] != "invented" for p in result)
         event = [e for e in s.store.events(run["id"]) if e["event"] == "document_retrieval"][-1]
         assert event["reranked"] is False
+        assert event["fallback_reason"] == "invalid_permutation"
         assert any(e["event"] == "document_rerank_fallback" for e in s.store.events(run["id"]))
     finally:
         s.close()
+
+
+def test_passage_labels_require_exact_eligible_evidence_and_absence_is_undefined():
+    passages = [{"id": "p1", "source_id": "s1", "text": "One writer at a time."},
+                {"id": "p2", "source_id": "s2", "text": "One writer at a time."}]
+    question = {"id": "q", "relevant_passages": [{"document": "wal.md", "quote": "One writer"}]}
+    assert passage_labels(question, passages, {"s1": "wal.md", "s2": "draft.md"}) == ["p1"]
+    with pytest.raises(ValueError, match="chunk boundary"):
+        passage_labels(question, passages, {"s1": "other.md", "s2": "draft.md"})
+    assert all(v is None for v in rank_metrics(["p1"], []).values())
+    rows = [{"passage_metrics": {stage: rank_metrics(["p1"], []) for stage in ("bm25", "dense", "hybrid", "final")}}]
+    assert averages(rows, "passage_metrics")["final"]["recall_at_3"] is None
+
+
+def test_frozen_public_corpus_reference_spans_survive_chunking():
+    from deepdive.config import ROOT
+    from deepdive.rag_evaluation import audit_corpus
+    dataset = json.loads((ROOT / "evaluation/documents.v2.json").read_text(encoding="utf-8"))
+    result = audit_corpus(dataset)
+    assert result["ai_calls"] == 0 and result["exact_offsets"]
+    assert result["reference_chunks"]["absent"] == []
+    assert len(result["reference_chunks"]["conflicting"]) >= 2
 
 
 def test_document_calculations_remain_available_to_analysis(tmp_path):

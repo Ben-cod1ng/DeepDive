@@ -28,6 +28,7 @@ class Settings:
     embedding_model: str = "openai/text-embedding-3-small"
     embedding_revision: str = "1"
     allowed_hosts: tuple[str, ...] = LOCAL_HOSTS
+    output_tokens: int = 5000
 
     @classmethod
     def load(cls):
