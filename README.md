@@ -1,6 +1,6 @@
 # DeepDive
 
-[Repository](https://github.com/Ben-cod1ng/DeepDive) · [Quality CI](https://github.com/Ben-cod1ng/DeepDive/actions/workflows/quality.yml)
+[Live demo](https://deepdive-web-production.up.railway.app) · [Repository](https://github.com/Ben-cod1ng/DeepDive) · [Quality CI](https://github.com/Ben-cod1ng/DeepDive/actions/workflows/quality.yml)
 
 **Follow the evidence.** DeepDive researches a question, saves the passages behind its claims, checks those claims, and pauses for your review before producing reports and presentations.
 
@@ -16,7 +16,7 @@ Built for Agent Arena 2026 with Python, LangGraph, FastAPI, and Streamlit. Every
 - Export cited Markdown/HTML reports, HTML/PowerPoint presentations, source-backed PNG charts, and JSON audit records.
 - Run the same service from the browser, API, or CLI. Operate it with Docker, health checks, structured logs, error tracking, Prometheus, and Grafana.
 
-**Validation status:** [Quality CI](https://github.com/Ben-cod1ng/DeepDive/actions/runs/39120462295) passed **63 tests**, dependency audit, Docker document ingestion/removal, and monitoring checks. Tests cover web/document research, hybrid retrieval, revisions, recovery, exports, and UI review using explicitly synthetic model responses and vectors. Public retrieval/search also worked in a recorded live check.
+**Validation status:** [Quality CI](https://github.com/Ben-cod1ng/DeepDive/actions/runs/39343973660) passed **69 tests**, dependency audit, Docker document ingestion/removal, Railway storage/private-network checks, and monitoring checks. Tests cover web/document research, hybrid retrieval, revisions, recovery, exports, and UI review using explicitly synthetic model responses and vectors. Public retrieval/search also worked in a recorded live check.
 
 On October 19, 2026, [live Mesh verification](evaluation/results/live-verifier.json) matched all 32 authored claim labels, and [live document retrieval](evaluation/results/live-rag.json) completed all seven queries with validated reranking and final Recall@3 of 1.0. Both datasets are small synthetic sets pending independent review; these results do not establish production accuracy. The ten-question research benchmark, independent label and final-claim review, and release/submission acceptance remain pending. See [the completion checklist](tasks/todo.md) and [evaluation guide](docs/evaluation.md).
 
@@ -85,12 +85,25 @@ sequenceDiagram
 
 ## Share a hosted demo
 
-Follow the [Railway deployment guide](docs/railway.md) to run a public HTTPS
-frontend with a shared demo code, a private API, and persistent document storage.
-Give reviewers the frontend link and demo code; keep API credentials private.
-Visitors share one workspace, so use public or sample documents. The guide includes
-a deployment diagram, exact settings, troubleshooting, and an acceptance checklist.
-Public URL acceptance remains pending.
+Open the [live demo](https://deepdive-web-production.up.railway.app) and enter the
+demo code provided by the project owner with the judging materials. Visitors share
+one workspace, so use public or sample documents. The API and Mesh credentials
+stay private.
+
+To try document research, expand **Documents · upload and manage**, choose a TXT,
+Markdown, PDF, or DOCX file, and click **Upload to library**. Select **Documents only**
+and your document in **Research settings**, ask a question, inspect the draft and evidence,
+then choose **Approve and generate exports**. A saved synthetic policy example is
+available in the research library.
+
+The [Railway deployment guide](docs/railway.md) explains the two services,
+persistent storage, access-code setup, and operations. The demo uses temporary
+hosting credit; availability depends on Railway and Mesh balances.
+
+[Hosted browser acceptance](evaluation/results/railway-hosted.json) passed login,
+document upload, live Mesh research, review/approval, seven artifact downloads,
+backend restart persistence, and logout on October 20, 2026. This is a small
+synthetic workflow check, not an independent accuracy benchmark.
 
 ## Quick start: local development
 

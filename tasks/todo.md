@@ -44,7 +44,7 @@ Railway demo work is tracked separately from the independent accuracy release ga
 - [x] Private API hostname support, volume initialization with privilege drop, and shared demo login
 - [x] Two-service setup and acceptance instructions in [the Railway guide](../docs/railway.md)
 - [x] 69 local tests passed; container validation covered Railway volume permissions, IPv4/IPv6, restart persistence, and private frontend/API access: [evidence](../evaluation/results/railway-smoke-local.json)
-- [ ] Hosted frontend/backend deployment and public URL acceptance
+- [x] Hosted frontend/backend deployment and public HTTPS browser acceptance: login, synthetic document research with live Mesh, approval, seven downloads, backend restart persistence, and logout ([record](../evaluation/results/railway-hosted.json))
 
 - [x] Full local suite passed (62 tests); final document/retrieval regressions passed (21 tests), including calculation evidence and backup restoration
 - [x] Document RAG CI passed all 63 tests, dependency audit, deployed document ingestion/removal, and monitoring checks: [recorded run](https://github.com/Ben-cod1ng/DeepDive/actions/runs/39120462295)
@@ -61,7 +61,7 @@ Railway demo work is tracked separately from the independent accuracy release ga
 - [ ] Ten-question live benchmark and independent final-claim review
 - [x] Scripted live document research/revise/restart/export acceptance through the deployed manual-review API; eight artifacts validated, with three recorded rerank fallbacks and a repeated finding
 - [ ] Independent human review of live reports and complete web research acceptance
-- [ ] Optional live Sentry delivery and chosen remote-host deployment, if used
+- [ ] Optional live Sentry delivery, if used
 - [x] GitHub environment reviewers and required main-branch application checks configured
 - [ ] Release-image publication verified after live evaluation gates pass
 - [ ] Organizer secrets/check execution and dashboard submission acceptance
