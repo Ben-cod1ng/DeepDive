@@ -1,5 +1,5 @@
 # Locked runtime dependencies; build without credentials.
-FROM ghcr.io/astral-sh/uv:0.9.0 AS uv
+FROM ghcr.io/astral-sh/uv:0.13.4 AS uv
 FROM python:3.13-slim AS builder
 COPY --from=uv /uv /usr/local/bin/uv
 WORKDIR /app
