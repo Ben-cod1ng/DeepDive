@@ -161,11 +161,29 @@ or replace the pending independent review.
   available. The local Prometheus/Grafana Compose stack is not automatically
   deployed to Railway.
 - **Backups:** use Railway volume snapshots and the application's stopped-owner
-  backup procedure in [operations.md](operations.md). Keep backups private.
+  backup procedure in [operations.md](operations.md). On October 21 the Railway
+  API rejected native snapshots because they require a Pro workspace. No upgrade
+  was purchased. Use a stopped-owner application backup on the current trial;
+  verify its manifest and restore into a separate empty directory. Keep backups private.
 - **Updates:** use commits that pass the application's Quality checks. The separate
   organizer workflow needs its submission token and may prevent Railway's blanket
   "Wait for CI" option from proceeding until configured. Do not remove failing
   organizer checks to hide that prerequisite. Check the deployed commit explicitly.
+
+### Competition deployment attempt, October 21
+
+Commit `fca719fe2361f0f78e24643e881804ace4e1cffe` passed both required application
+checks and merged through PR #16. Railway rejected the deployment with
+`Deploys have been paused temporarily`; its [status page](https://status.railway.com/)
+reported a build outage beginning at 07:24 UTC. Both existing services still ran
+`71bad8d` successfully. Login, the saved annual-leave report, download, and logout
+were rechecked without model calls. These are checks of the earlier hosted build.
+
+A temporary backup-before-start command was prepared, then reverted to
+`python -m deepdive.hosting` when deployment was blocked. No new backup was created,
+no volume was replaced, and the candidate's hosted acceptance remains pending.
+After Railway resumes builds, take and verify the stopped-owner backup, deploy
+both services from the tested candidate, and repeat the checklist above.
 
 Official references: [Compose migration](https://docs.railway.com/guides/docker-compose),
 [volumes and permissions](https://docs.railway.com/volumes),

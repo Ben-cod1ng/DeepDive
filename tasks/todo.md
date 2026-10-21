@@ -61,7 +61,10 @@ locally verified behavior, not unperformed live model evaluation.
 - [x] Stop paid evaluation within the original allocation; demo reserve preserved.
 - [ ] Independent review of relevance/verifier labels and final reports; eight
   research scenarios remain unrun. Live repair effectiveness is unestablished.
-- [ ] Deploy the competition candidate and record hosted browser acceptance.
+- [x] Merge competition candidate `fca719fe` with passing required PR/main CI.
+- [ ] Deploy the competition candidate and record hosted browser acceptance:
+  Railway rejected new deploys during its October 21 build outage. Existing hosted
+  login/report/download/logout remain functional; no new backup/deployment occurred.
 - [ ] Organizer `SUBMISSION_TOKEN` and Mesh repository secret; official checks
   and dashboard submission confirmation. Application CI is separate.
 

@@ -1,0 +1,87 @@
+{
+  "date": "2026-10-21",
+  "status": "implementation-merged-deployment-blocked",
+  "candidate_commit": "fca719fe2361f0f78e24643e881804ace4e1cffe",
+  "implementation_pr": "https://github.com/Ben-cod1ng/DeepDive/pull/16",
+  "application_ci": {
+    "main_run": "https://github.com/Ben-cod1ng/DeepDive/actions/runs/39570547946",
+    "pr_run": "https://github.com/Ben-cod1ng/DeepDive/actions/runs/39570158520",
+    "quality_checks": "success",
+    "docker_smoke": "success",
+    "tests": 78,
+    "dependency_audit": "no known vulnerabilities",
+    "scope": ["lint", "contract types", "compilation", "offline regressions", "dependency audit", "Docker startup and persistence", "private networking", "monitoring HTTP/data path"]
+  },
+  "local_browser": {
+    "tested_implementation_commit": "84fd94e16ad2816edc32cc46b0f6d921b407eba5",
+    "browser": "Isolated headless Microsoft Edge via Playwright",
+    "api_url": "http://127.0.0.1:1",
+    "api_deliberately_unavailable": true,
+    "checks": {
+      "recorded_web_example_opens": true,
+      "recorded_document_example_opens": true,
+      "source_quotation_and_complete_passage_visible": true,
+      "source_location_date_and_reference_id_visible": true,
+      "withheld_claim_and_reason_visible": true,
+      "markdown_download_validated": true,
+      "evidence_json_download_validated": true
+    },
+    "screenshot": "../../docs/images/citation-inspection.png",
+    "download_sha256": {
+      "sqlite-web-excerpt.md": "8e01b82cd748967bf435012ac76a60065210cf29e8b1ffae797458a1083d7810",
+      "sqlite-web-excerpt.json": "963bac0847591d57e8935419628bd36ab24bb6baeb9b5b4b2d987be0cc76e91b"
+    },
+    "additional_model_calls": 0
+  },
+  "railway": {
+    "deployment_status": "blocked",
+    "api_error": "Deploys have been paused temporarily",
+    "status_page": "https://status.railway.com/",
+    "incident": "Builds are temporarily paused",
+    "incident_started_utc": "2026-10-21T07:24:00Z",
+    "candidate_deployed": false,
+    "hosted_candidate_acceptance": "pending",
+    "native_backup": "API rejected: manual backups and backup schedules require a Pro workspace",
+    "application_backup": "Prepared but not executed; deployment did not start",
+    "backend_start_command_restored": "python -m deepdive.hosting",
+    "hosting_upgrade_purchased": false,
+    "volume_replaced": false
+  },
+  "existing_hosted_demo": {
+    "url": "https://deepdive-web-production.up.railway.app",
+    "commit": "71bad8d2cc21fc876e00abdd53d9b753be18bafa",
+    "backend_deployment": "4e1597dc-5f89-4b6b-b5eb-77683127e744",
+    "frontend_deployment": "56d20ec8-84a9-48d3-92f4-920c8999893a",
+    "service_statuses": "SUCCESS",
+    "public_https_status": 200,
+    "frontend_health_status": 200,
+    "incorrect_code_rejected": true,
+    "correct_code_opens_workspace": true,
+    "saved_report_readable": true,
+    "download_matches_original": true,
+    "report_sha256": "dd016eb28e54f1ef7ec90d86064d48206bf8c207b2ac04177d32f0eb065eba9f",
+    "logout_hides_workspace": true,
+    "additional_model_calls": 0,
+    "note": "This recheck establishes availability of the earlier build, not deployment of the candidate."
+  },
+  "evaluation_budget": {
+    "initial_balance_usd": "1.3474771",
+    "original_demo_reserve_usd": "0.67373855",
+    "evaluation_ceiling_usd": "0.67373855",
+    "accounted_upper_estimate_usd": "0.5798933800",
+    "unresolved_request_reservations": 1,
+    "provider_balance_after_last_batch_usd": "0.8692058",
+    "paid_evaluations_stopped": true,
+    "meaning": "Ledger estimates are not measured provider charges. Original allocation retained across every experiment."
+  },
+  "pending": [
+    "Stopped-owner hosted backup and separate restore rehearsal before deployment",
+    "Railway deployment of both services and new hosted browser acceptance",
+    "Independent verifier/relevance labels and final-report review",
+    "Current-candidate live verifier promotion gate after reviewed labels",
+    "Eight unrun research scenarios under the credit fallback",
+    "Live demonstration of effective repair; no successful repair occurred in this batch",
+    "GitHub organizer SUBMISSION_TOKEN and MESH_API_KEY repository secrets",
+    "Official organizer checks and dashboard submission confirmation"
+  ]
+}

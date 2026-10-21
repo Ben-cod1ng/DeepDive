@@ -289,4 +289,9 @@ This is a planning target, not an assurance that unmeasured quality gates will p
   fallback. No live successful repair round was observed.
 - [x] F: recorded document example and public-domain web excerpt, judge guide and
   README evidence map. Hosting credit checked separately: 29 trial days remained.
-- [ ] F: final required CI, hosted browser acceptance, organizer secrets and dashboard confirmation.
+- [x] F: required PR and merged-main CI passed; PR #16 merged as `fca719fe`.
+  Local recorded-example browser acceptance passed without API/model access.
+- [ ] F: new hosted deployment/backup/acceptance blocked by Railway's October 21
+  build outage. Existing hosted login/report/download/logout still work.
+- [ ] F: organizer secrets and dashboard confirmation; the official check reports
+  `token_missing`. No quality or eligibility gate was bypassed.
