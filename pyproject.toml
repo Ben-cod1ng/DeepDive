@@ -12,7 +12,7 @@ dependencies = [
   "langgraph-checkpoint>=4.1.1,<5",
   "langgraph-checkpoint-sqlite>=3.1.1,<4",
   "langgraph-sdk>=0.4.4,<0.5",
-  "openai==1.99.6",
+  "openai==3.35.1",
   "pydantic==2.11.7",
   "httpx==0.28.1",
   "beautifulsoup4==4.14.3",
