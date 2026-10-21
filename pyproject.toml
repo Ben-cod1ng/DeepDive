@@ -31,7 +31,7 @@ dependencies = [
 ]
 
 [project.optional-dependencies]
-dev = ["pytest>=8,<10", "ruff>=0.11,<1", "mypy>=1.15,<2", "pip-audit>=2.9,<3"]
+dev = ["pytest>=8,<10", "ruff>=0.11,<1", "mypy>=2.4.0,<3", "pip-audit>=2.9,<3"]
 
 [tool.uv]
 # Streamlit still declares Pillow <13. Keep the patched image library and verify
