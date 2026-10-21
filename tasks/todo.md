@@ -44,6 +44,29 @@ locally verified behavior, not unperformed live model evaluation.
 
 ## Measured validation
 
+### Competition improvements, October 20–21
+
+- [x] Bounded fresh-query repair, audited round decisions, exact quotation anchoring,
+  native citation inspection, conservative deduplication, and revision comparisons.
+- [x] Persistent evaluation spending ledger and isolated resumable benchmarks.
+- [x] [78-test Quality CI](https://github.com/Ben-cod1ng/DeepDive/actions/runs/39498872999),
+  dependency audit, Docker/private-network/storage and monitoring checks passed.
+- [x] Frozen 50-chunk corpus and seven-query passage-level comparison; all queries
+  reranked without fallback. [Results and limitations](../docs/rag.md#measured-passage-level-results).
+- [x] Initial web pilot, separate development retest, and one held-out mixed run
+  preserved, including incomplete coverage and a potential semantic false positive.
+- [x] Two real recorded investigations with zero-inference browsing; local browser
+  opened quotations, full passages, rejection reasons, and report/evidence downloads
+  with the API deliberately unavailable.
+- [x] Stop paid evaluation within the original allocation; demo reserve preserved.
+- [ ] Independent review of relevance/verifier labels and final reports; eight
+  research scenarios remain unrun. Live repair effectiveness is unestablished.
+- [ ] Deploy the competition candidate and record hosted browser acceptance.
+- [ ] Organizer `SUBMISSION_TOKEN` and Mesh repository secret; official checks
+  and dashboard submission confirmation. Application CI is separate.
+
+### Earlier deployment and acceptance records
+
 Railway demo work is tracked separately from the independent accuracy release gate:
 
 - [x] Private API hostname support, volume initialization with privilege drop, and shared demo login

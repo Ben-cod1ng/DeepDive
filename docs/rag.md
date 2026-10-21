@@ -147,3 +147,29 @@ null and excluded from means; returned passages are counted explicitly. Retrieva
 alone does not decide whether an answer is supported. Formatting retries provide
 sanitized schema field/type feedback; invalid permutations, schema failures,
 context limits, and budget limits are recorded separately.
+
+### Measured passage-level results
+
+The [October 20 comparison](../evaluation/results/competition-rag.json) used commit
+`84fd94e`, the frozen v2 corpus, and unchanged 384-token chunks with 64-token
+overlap. The six answerable queries produced these means; the seventh,
+answer-absent query has undefined relevance ratios and is excluded.
+
+| Ranking stage | Passage Recall@3 | Passage MRR@3 | Passage nDCG@3 |
+|---|---|---|---|
+| BM25 | 0.8889 | 0.9167 | 0.8827 |
+| Dense | 0.3333 | 0.2500 | 0.2718 |
+| Hybrid fusion | 0.8611 | 0.8333 | 0.7972 |
+| Final reranked | 0.9444 | 1.0000 | 0.9609 |
+
+All seven queries completed validated reranking without fallback. Indexing and
+retrieval used 16 model requests and 51,324 reported tokens. Full per-query
+rankings and elapsed times are retained. This is an uncached comparison;
+repeated-query cache behavior is covered separately by regression tests.
+
+Document-level Recall@3 was 1.0 for every stage despite the substantial
+passage-level differences. The answer-absent query still returned 16 passages:
+retrieval is not an abstention decision, and the downstream verifier must reject
+unsupported claims. Reranking improved over fusion on this frozen small set;
+independent relevance review and broader generalization remain unestablished.
+No chunk/ranking defaults were tuned on the held-out results.

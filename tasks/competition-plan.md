@@ -277,10 +277,16 @@ This is a planning target, not an assurance that unmeasured quality gates will p
   revision comparisons and visible research rounds; offline UI tests pass.
 - [x] D: frozen 50-chunk public-document corpus, exact-span boundary audit,
   passage-level metrics, answer-absent cases and distinct rerank fallback reasons.
-- [ ] D: complete and inspect the current live retrieval comparison.
+- [x] D: inspect all seven live retrieval queries, preserve stage rankings and
+  answer-absent limits; no held-out tuning. Passage Recall@3: 0.8611 fused,
+  0.9444 reranked across the six answerable cases, with no rerank fallbacks.
 - [x] E: freeze ten scenarios, separate reference facets, provide blind worksheets,
   and retain the real web pilot plus development retest with original manifests.
-- [ ] E: remaining live cases within credit limits; independent human review.
+- [x] E: bounded held-out mixed-source case inspected; incomplete coverage and a
+  potential semantic false positive recorded. Stop further paid batches with
+  $0.8692058 available and the original $0.67373855 demo reserve intact.
+- [ ] E: independent human review; eight scenarios remain unrun under the budget
+  fallback. No live successful repair round was observed.
 - [x] F: recorded document example and public-domain web excerpt, judge guide and
   README evidence map. Hosting credit checked separately: 29 trial days remained.
 - [ ] F: final required CI, hosted browser acceptance, organizer secrets and dashboard confirmation.

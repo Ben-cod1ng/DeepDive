@@ -148,6 +148,40 @@ that replay is not a new semantic support score. Analysis also reserves candidat
 capacity for later tasks instead of letting the first task consume the entire
 run's claim limit. Any live retest is a new experiment, preserving the failed pilot.
 
+The [separate development retest](../evaluation/results/competition-benchmark-v2.json)
+on commit `2a3361d` retained seven of eight candidates and covered four of four
+planner facets, using 12 requests and 54,708 tokens. One candidate remained
+insufficient. Neither run selected a repair round, so there is no claim of
+observed live repair success. Fresh retrieval and a changed candidate allocation
+make this a development retest, not a matched quotation-only ablation. Independent
+claim support and reference-facet completeness remain unmeasured.
+
+The [v2 retrieval comparison](../evaluation/results/competition-rag.json) on
+commit `84fd94e` measures passage-level relevance on longer public documents.
+Reranked mean Recall@3 was 0.9444 versus 0.8611 for fusion across six answerable
+queries; all seven queries reranked without fallback. See the
+[stage comparison and limitations](rag.md#measured-passage-level-results).
+
+The [October 21 held-out mixed-source case](../evaluation/results/competition-benchmark-v3.json)
+used the unchanged `84fd94e` candidate. It retained two of four candidates,
+covered only two of five planner facets, and stopped with `no_untried_queries`.
+It used 20 requests, 47,336 tokens, and 18 cache hits. Assistant inspection flagged
+one retained claim: it describes a contradiction, but its quotation establishes
+reader/writer concurrency rather than directly excluding simultaneous writers.
+That is a potential semantic-verifier false positive requiring independent review,
+not a passing answer-quality result. No prompt/configuration tuning followed this
+held-out result. [Inspection notes](../evaluation/results/competition-review-notes.md)
+identify the claim and the review requirements.
+
+Paid evaluation stopped after these three research runs (two technical pilots,
+one mixed case) and the retrieval comparison. Eight distinct research scenarios
+remain unrun. The measured Mesh balance was $0.8692058, above the original
+$0.67373855 demo reserve. The persistent ledger accounted for $0.57989338 of the
+$0.67373855 evaluation ceiling, including one unresolved transport reservation.
+These ledger values are conservative estimates, not provider charges. The
+remaining evaluation headroom cannot fund a comparable complete research run;
+it has not been reallocated from demo credit.
+
 On October 19, 2026, the [32-case live verifier evaluation](../evaluation/results/live-verifier.json) through Mesh with `openai/gpt-4o` produced 11 true positives, 21 true negatives, no false positives, and no false negatives against the authored reference labels. Precision and recall were both 1.0 on this set, using seven model requests and 8,603 reported tokens. These are measurements on a small synthetic set whose labels still await independent review, not an independently established production accuracy estimate.
 
 The [promotion gate](../evaluation/results/live-verifier-gate.json) remains **blocked by independent reference-label review**. Its precision and recall criteria passed; the review requirement has not been bypassed.
