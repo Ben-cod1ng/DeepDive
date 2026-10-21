@@ -1,0 +1,173 @@
+{
+  "mode": "live-mesh-research-benchmark",
+  "experiment": "701d2b0056e7e2bde59d81ec52db9dc0ba5703b0bec456342df17f4e9ae6c702",
+  "manifest": {
+    "model": "openai/gpt-4o",
+    "gateway": "https://api.meshapi.ai/v1",
+    "policy": "2",
+    "dataset_sha256": "49e8d92610a302afea8dddc1348ec617876285402ca82a3c2221dcb16d87708e",
+    "release": "84fd94e16ad2816edc32cc46b0f6d921b407eba5",
+    "files": {
+      "deepdive/__init__.py": "6b92c0206f5756e236e1c8f542b2dd341d885ec56b4fda9a299a3c4e5f6fbfbf",
+      "deepdive/api.py": "bd3000acc3e46f77fbce8bfbe33d8ed9c06857606855273baef7815b599acfe9",
+      "deepdive/artifacts.py": "dad707389162420d31e9fa14df02801e6ca97e149f32f849814110626ce5e7aa",
+      "deepdive/benchmark.py": "e58b5da92a4ea32dfe71940301bdfe91d28d0edaf256b7d6cefc3102bca9f5da",
+      "deepdive/cli.py": "009b0b45466af871a2b3831c64ec8e9dbb0978a145acb871000e1437f8a04493",
+      "deepdive/client.py": "18163573fd2f64e506b6ce7414f6db601989d556e0de4bda30c331c36311b89b",
+      "deepdive/config.py": "54b01420541a367167ce988e3eaf7b6b8a66c07d5850f976bab09c265e13912c",
+      "deepdive/document_parser.py": "69b86bde5e081dfdf55f1c32d171564be91889a82ccb4fc5f91644c2516bce7c",
+      "deepdive/documents.py": "9d3a8c7ad28c3f27ff47552d4434a3f15f1d039b6f11ebcf55ae3a4f8f877352",
+      "deepdive/evaluation.py": "b39afb3cb11038deee0477f9095667357f496976378f60a51aaad765f367624d",
+      "deepdive/gateway.py": "71aac4605f1577042e45adfe7825b1b9decc557cbce382b1f832a11d45c24f5e",
+      "deepdive/guardrails.py": "dbb4336f4f29327804519e6b689c6a2fd63914ac03030d49beabd322056c8dbd",
+      "deepdive/hosting.py": "52860f3b13f619506e7fec712082c93f5ee31ed0a1a91066c5a4d0fd99aecc13",
+      "deepdive/memory.py": "374c265dc1632e343d4c1579449df6a196fa491cbcb5f6e0f85eb013ab793ce2",
+      "deepdive/models.py": "90b85dd2ded28f8b865217b14956a82c31fd938a960fbb0d68e9e61bcca25dde",
+      "deepdive/monitoring_smoke.py": "475cdda1f9bdfb02084ce1f5566115b80d09ae607fa3abc84848237df4d8cd3c",
+      "deepdive/observability.py": "a7a7af7ce74105919880682e1eed0c85726f51bad3ad7d40e17853bcafd5ed3b",
+      "deepdive/ops.py": "6544cab2d159d37bf511edb59d84da8e8369be951713ecece7fcf4c1c3cbc55f",
+      "deepdive/presentation.py": "41400904bf9a623768dc0624f55e728ce1bb6d598b8b2f3e23141af4f5ed241d",
+      "deepdive/rag.py": "62fd30817020a03159f8b6bb55ce56fbf7d63d8fa15e44b4cdbc3f14e816d80e",
+      "deepdive/rag_evaluation.py": "6657f13ac47679a2f286a12914bab547de77c2dcb11c07040766de776c182fe2",
+      "deepdive/retrieval.py": "715c168f40a00e86b40d6b19b37302b655f01f8c96939408f8202167e50cf550",
+      "deepdive/review.py": "28c4dbff3b9486cc41a2b0934e0c3387e5e89bcc26d41911eb1e985c8159a6c5",
+      "deepdive/service.py": "9c2a4b03279d906ea5d3908b7af620f95c17243b081fb3288dda3fab3a2998f8",
+      "deepdive/smoke.py": "22745de38be9497cc14ee9e5c75874869904d1ab30cadf9e0664b0006dc5137e",
+      "deepdive/spending.py": "e9c938cfae094ba667f86affa06d9519608370f761fab9b345e886aef38a0996",
+      "deepdive/storage.py": "dfffae9f356d7871b36aca2dc6991e0911d0f35e59f69df0928678bc6d8fb217",
+      "deepdive/tools.py": "01d8cb28bd275a671086a496762c162e810a6cac25b883b436fa52732db71d86",
+      "deepdive/ui_access.py": "15815f3de902551d0cbab79d969dfe3646f10ef7fd839752fa8b2d23d5e86791",
+      "deepdive/ui_research.py": "c17719552a0cc6187d3bb765d7482758a554e12ee55f50c2ada0ecc4e4be54bc",
+      "deepdive/verification.py": "6102adeb9983c434df160267ec309edfb114ed9d34f76587eeac4834ed1d5ed3",
+      "deepdive/workflow.py": "2155d04d19c406302c0693abcd0c4c5346a5736b5a8437c2cdf62fc4dd70e5a0",
+      "uv.lock": "031e00c5019d45069d6e7fc668032351f8575c4e655e52daabd4b4f70fd3bf83"
+    },
+    "limits": {
+      "subquestions": 2,
+      "sources": 8,
+      "claims": 8,
+      "repair_rounds": 1,
+      "model_calls": 25,
+      "active_seconds": 300
+    },
+    "input_tokens": 12000,
+    "output_tokens": 2000,
+    "embedding_model": "openai/text-embedding-3-small",
+    "embedding_revision": "1"
+  },
+  "date": "2026-10-21T08:23:41.033865+00:00",
+  "pipeline": "200894687ff53628e5696a0b2759e2bfbe64f2670e75c737750ae20834155b53",
+  "cases": {
+    "mixed": {
+      "session_id": "session_4e6edee479004e75a203",
+      "document_ids": [
+        "document_379194a788663cca5f303762"
+      ],
+      "run_ids": [
+        "run_c42ffba950794eb0a7e1"
+      ],
+      "metrics": [
+        {
+          "run_id": "run_c42ffba950794eb0a7e1",
+          "status": "completed",
+          "model": "openai/gpt-4o",
+          "claims": 4,
+          "published": 2,
+          "verifier_acceptance_rate": 0.5,
+          "citation_validity": 1.0,
+          "facet_coverage": 0.4,
+          "rejected": 2,
+          "repair_rounds": 0,
+          "cache_hits": 18,
+          "calls": 20,
+          "tokens": 47336,
+          "active_seconds": 176.507348500003,
+          "independent_support_accuracy": null,
+          "reference_facet_completeness": null,
+          "round_coverage": [
+            {
+              "round": 0,
+              "version": 1,
+              "supported_facets": 2,
+              "missing_facets": 3
+            }
+          ],
+          "round_comparison_note": "Within-run planner-facet counts; not independent completeness or a randomized ablation",
+          "rubric_coverage_1_to_5": 2.6,
+          "rubric_traceability_1_to_5": 5.0
+        }
+      ],
+      "status": "completed",
+      "split": "heldout",
+      "reference_facets": [
+        "Proposed statements treated as unverified",
+        "Simultaneous writer assertion checked",
+        "Network-filesystem assertion checked",
+        "Both document and web citations"
+      ],
+      "review_status": "independent human review pending",
+      "source_snapshots_by_turn": {
+        "1": [
+          {
+            "id": "source_379194a788663cca5f303762",
+            "url": "",
+            "content_hash": "d551aee6d16cd5d281553d9932542d0b1efbd8ae0107758b3cad3fc49ffed63f",
+            "retrieved_at": 1792571022.55105
+          },
+          {
+            "id": "source_4e1a0b84c208e5fde84c8ea1",
+            "url": "https://www.sqlite.org/wal.html",
+            "content_hash": "f3467b530b883d4a00574fe1a898b3d121ed72764ae28cf66941080ac0badb9e",
+            "retrieved_at": 1792571045.8136942
+          },
+          {
+            "id": "source_54230424ae3b7f8164bdd2ca",
+            "url": "http://www3.sqlite.org/matrix/docs.html",
+            "content_hash": "faa2df421aaec0d5a66d673777539c82779f865b1f891c1ada9863bca79a44a1",
+            "retrieved_at": 1792571062.7838047
+          },
+          {
+            "id": "source_71f7fcc35bf4b8b0e9275e0b",
+            "url": "https://sqlite.org/wal.html",
+            "content_hash": "f3467b530b883d4a00574fe1a898b3d121ed72764ae28cf66941080ac0badb9e",
+            "retrieved_at": 1792571054.030196
+          },
+          {
+            "id": "source_a94f5480ecea604b30500291",
+            "url": "https://github.com/pythonhero1/clientportal/blob/main/docs/PROPOSED-POLICIES.md",
+            "content_hash": "922293e1addca62fdcde42ca48f65459b21a5ba731cfe6c05f2b51f8e2fbbabd",
+            "retrieved_at": 1792571077.3961198
+          },
+          {
+            "id": "source_be50d6072743f1349daa5f01",
+            "url": "https://sqlite.org/docs.html",
+            "content_hash": "f557941d6c34cd84ff547f298ea60572d7aad79674966e5acff0dafd37859cbf",
+            "retrieved_at": 1792571060.2406178
+          }
+        ]
+      }
+    }
+  },
+  "status": "partial",
+  "independent_support_accuracy": null,
+  "data_id": "benchmark_701d2b0056e7e2bde59d81ec",
+  "spending": {
+    "ceiling_usd": "0.67373855",
+    "demo_reserve_usd": "0.67373855",
+    "accounted_upper_estimate_usd": "0.5798933800",
+    "attempts": 59,
+    "unknown_attempts": 1,
+    "meaning": "Conservative request reservations/token estimates, not measured provider charges"
+  },
+  "not_run": [
+    "technical",
+    "comparative",
+    "scientific",
+    "temporal",
+    "numerical",
+    "conflicting",
+    "insufficient",
+    "community",
+    "follow_up"
+  ]
+}

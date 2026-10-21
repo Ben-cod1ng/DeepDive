@@ -1,0 +1,51 @@
+{
+  "mode": "offline-chunk-boundary-audit",
+  "dataset_sha256": "974e0669cf780281e8d8ca6bac6cacdb358c588cda47ad90d235623252365989",
+  "chunk_version": "structure-384-overlap64-v1",
+  "parser_version": "pdf-docx-text-v1",
+  "documents": {
+    "wal.md": {
+      "sections": 20,
+      "chunks": 27,
+      "characters": 30958
+    },
+    "lockingv3.md": {
+      "sections": 11,
+      "chunks": 20,
+      "characters": 23715
+    },
+    "unverified-draft.md": {
+      "sections": 3,
+      "chunks": 3,
+      "characters": 356
+    }
+  },
+  "reference_chunks": {
+    "single_writer": [
+      "wal.md:5",
+      "wal.md:6"
+    ],
+    "network": [
+      "wal.md:1"
+    ],
+    "checkpoint": [
+      "wal.md:4"
+    ],
+    "reserved": [
+      "lockingv3.md:3"
+    ],
+    "version": [
+      "wal.md:2"
+    ],
+    "conflicting": [
+      "unverified-draft.md:0",
+      "wal.md:5",
+      "wal.md:6"
+    ],
+    "absent": []
+  },
+  "ai_calls": 0,
+  "reference_quotes_fit_chunks": true,
+  "exact_offsets": true,
+  "note": "Authored quotation coverage and immutable offsets, not measured retrieval or answer quality"
+}

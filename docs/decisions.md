@@ -90,3 +90,36 @@ Source: [official workflow](https://careerapi-production.krishnaik.in/api/ci/hac
 **Why:** the existing SQLite owner and backup model can support a bounded local corpus without a separate vector service. Structure-aware windows preserve citation locations; hybrid retrieval supports exact identifiers and semantic matches. No single chunk size is universally best, so the implementation includes a versioned retrieval ablation rather than an unmeasured quality claim. See [RAG design and references](rag.md).
 
 **Boundaries:** document-only mode disables public network tools; mixed mode explicitly allows document-derived public queries. Uploads work without credentials; real hybrid retrieval requires Mesh. No local model bypass, OCR, approximate-neighbor index, or hosted document service is added. Removed library items retain historical citations until their owning research is deleted. Live accuracy and independent label review remain pending.
+
+## Competition quality extension — October 20, 2026
+
+**Authorization:** the user approved the full [competition plan](../tasks/competition-plan.md)
+subject to using only existing Mesh credit and retaining half its measured balance
+for demos. No additional credits or hosting upgrade are authorized.
+
+**Decisions:** allow bounded fresh-query repair after an empty first round, persist
+normalized attempts and round decisions, and present exact stored evidence through
+native Streamlit controls. Deduplicate only identical text and claim kind while
+preserving all claim IDs and passage references. Compare revisions using text,
+kind, and cited IDs; do not rewrite verified claims for presentation.
+
+Freeze research/reference cases before live evaluation. A persistent evaluation
+ledger guards every request/retry using conservative cost bounds and a current
+balance check. Benchmarks use an isolated store, per-case checkpoints, and strict
+configuration identity on resume. Human review remains separate from planner
+coverage and automated verifier output. The existing release gate is unchanged.
+
+Retain 384-token chunks with 64-token overlap: the larger public-document audit
+found complete labeled quotations in the existing chunks, so no measured boundary
+failure justified a tuning sweep. Passage-level metrics and fallback categories
+make remaining retrieval weaknesses observable. Real recorded examples retain
+their original provenance and make no API/model calls when inspected.
+
+The October 20 CI dependency audit reported nine advisories in Pillow 12.3.0 and
+certifi 2026.7.22. Patched targets are Pillow 13.0.0 and certifi 2026.10.19. Streamlit
+1.56.0 (and latest 1.66.0 when checked) still declares Pillow <13. A narrow uv
+dependency override selects Pillow 13 while keeping the tested Streamlit release;
+our UI, chart, image and PowerPoint export checks must pass before deployment.
+This does not claim upstream support for every Streamlit/Pillow combination.
+Remove the override when Streamlit permits the patched major version. The audit
+does not ignore or suppress the reported advisories.

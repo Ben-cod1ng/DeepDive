@@ -10,6 +10,7 @@ from .documents import CHUNK_VERSION
 from .gateway import BudgetExceeded, ContextExceeded
 from .models import PassageRanking
 from .storage import digest
+from .tools import query_fingerprint
 
 RETRIEVAL_VERSION = "bm25-cosine-rrf60-rerank16-v1"
 
@@ -90,7 +91,7 @@ class HybridRetriever:
             context.check()
             with self.s.store.lock:
                 current = self.s.get_run(run_id)
-                self.s.store.update("run", run_id, document_queries=sorted(set(current.get("document_queries", [])) | {digest(query)}))
+                self.s.store.update("run", run_id, document_queries=sorted(set(current.get("document_queries", [])) | {query_fingerprint(query)}))
             passages = self.passages(run)
             by_id = {p["id"]: p for p in passages}
             if not passages:
@@ -131,6 +132,7 @@ class HybridRetriever:
             fused = fuse(lexical, dense)
             candidates = fused[:16]
             reranked = False
+            fallback_reason = None
             try:
                 ranking = self.s.gateway.ask(context, "document reranker",
                     "Rank passage IDs by relevance to the question, best first. Preserve useful conflicting evidence. "
@@ -139,11 +141,14 @@ class HybridRetriever:
                     {"question": query, "passages": [{"id": pid, "section": by_id[pid]["section"], "text": by_id[pid]["text"]}
                                                        for pid in candidates]}, PassageRanking)
                 if len(ranking.passage_ids) != len(candidates) or set(ranking.passage_ids) != set(candidates):
+                    fallback_reason = "invalid_permutation"
                     raise ValueError("Reranker must return every candidate ID exactly once")
                 candidates, reranked = ranking.passage_ids, True
-            except (ValueError, BudgetExceeded, ContextExceeded):
+            except (ValueError, BudgetExceeded, ContextExceeded) as exc:
                 # Budget/schema failures retain measured hybrid order; never label this as reranked.
-                self.s.store.event(run_id, "document_rerank_fallback", outcome="error")
+                fallback_reason = fallback_reason or ("budget" if isinstance(exc, BudgetExceeded)
+                    else "context" if isinstance(exc, ContextExceeded) else "invalid_schema")
+                self.s.store.event(run_id, "document_rerank_fallback", outcome="error", reason=fallback_reason)
             # Suppress mostly overlapping windows, not distinct contradictory statements.
             selected = []
             for pid in candidates:
@@ -157,6 +162,7 @@ class HybridRetriever:
             self.s.store.event(run_id, "document_retrieval", lexical_count=len(lexical), dense_count=len(dense),
                                lexical_ids=lexical, dense_ids=dense, fused_ids=fused,
                                candidate_ids=candidates, selected_ids=selected, reranked=reranked,
+                               fallback_reason=fallback_reason,
                                profile=profile, seconds=round(time.monotonic() - started, 3))
             if reranked:
                 self.s.store.cache(run["scope"], key, selected, 3600)

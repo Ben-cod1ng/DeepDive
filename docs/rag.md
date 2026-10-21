@@ -114,3 +114,62 @@ The [live Mesh run on October 19, 2026](../evaluation/results/live-rag.json) com
 Labels are authored synthetic examples and await independent review. These ten small documents are useful for regression investigation, not a claim of production accuracy or a demonstrated advantage over dense retrieval on this dataset. Add independently reviewed examples from the intended corpus and a held-out set before tuning chunk sizes, candidate counts, or ranking prompts.
 
 Design references: [Mesh embeddings](https://developers.meshapi.ai/docs/capabilities/embeddings), [SQLite FTS5/BM25](https://www.sqlite.org/fts5.html#the_bm25_function), [reciprocal rank fusion paper](https://plg.uwaterloo.ca/~gvcormac/cormacksigir09-rrf.pdf), [LLM reranking research](https://arxiv.org/abs/2304.09542), and [pypdf extraction limits](https://pypdf.readthedocs.io/en/stable/user/extract-text.html).
+
+## Passage-level competition corpus
+
+`evaluation/documents.v2.json` freezes 55,029 characters from two public SQLite
+documentation pages plus an explicitly incorrect synthetic draft. Each public
+snapshot records its URL, retrieval time, original response hash, extracted-text
+hash, extraction method, and [public-domain permission](https://www.sqlite.org/copyright.html).
+The snapshot builder refuses to overwrite an existing freeze. Superseded source
+text remains marked as superseded. The draft includes a conflicting table.
+
+Seven questions cover single writers, network storage, an exact checkpoint macro,
+locking semantics, a dated version change, contradictory sources, and an answer
+absent from the corpus. Exact reference quotations identify eligible chunks;
+overlapping chunks containing the quotation count separately as relevant. Labels
+remain authored and unreviewed. Two development queries and five held-out queries
+are identified before inference.
+
+```powershell
+# No credentials or model calls:
+uv run python -m deepdive.rag_evaluation --dataset evaluation/documents.v2.json --offline --output evaluation/results/competition-chunk-audit.json
+# Paid comparison; use the SAME persistent ledger/allocation as the research benchmark:
+uv run python -m deepdive.rag_evaluation --dataset evaluation/documents.v2.json --ledger .secrets/evaluation-ledger.json --max-spend-usd $evaluationAllocation --reserve-usd $demoReserve --output evaluation/results/competition-rag.json
+```
+
+The offline audit found 50 chunks, exact source offsets, and all labeled quotations
+contained in complete chunks. This supports keeping the existing 384/64 defaults;
+it does **not** establish that this is an optimal chunk size. The live command
+records both document- and passage-level Recall@3/MRR@3/nDCG@3, actual rankings,
+latency, requests/tokens, and rerank fallback categories. Answer-absent ratios are
+null and excluded from means; returned passages are counted explicitly. Retrieval
+alone does not decide whether an answer is supported. Formatting retries provide
+sanitized schema field/type feedback; invalid permutations, schema failures,
+context limits, and budget limits are recorded separately.
+
+### Measured passage-level results
+
+The [October 20 comparison](../evaluation/results/competition-rag.json) used commit
+`84fd94e`, the frozen v2 corpus, and unchanged 384-token chunks with 64-token
+overlap. The six answerable queries produced these means; the seventh,
+answer-absent query has undefined relevance ratios and is excluded.
+
+| Ranking stage | Passage Recall@3 | Passage MRR@3 | Passage nDCG@3 |
+|---|---|---|---|
+| BM25 | 0.8889 | 0.9167 | 0.8827 |
+| Dense | 0.3333 | 0.2500 | 0.2718 |
+| Hybrid fusion | 0.8611 | 0.8333 | 0.7972 |
+| Final reranked | 0.9444 | 1.0000 | 0.9609 |
+
+All seven queries completed validated reranking without fallback. Indexing and
+retrieval used 16 model requests and 51,324 reported tokens. Full per-query
+rankings and elapsed times are retained. This is an uncached comparison;
+repeated-query cache behavior is covered separately by regression tests.
+
+Document-level Recall@3 was 1.0 for every stage despite the substantial
+passage-level differences. The answer-absent query still returned 16 passages:
+retrieval is not an abstention decision, and the downstream verifier must reject
+unsupported claims. Reranking improved over fusion on this frozen small set;
+independent relevance review and broader generalization remain unestablished.
+No chunk/ranking defaults were tuned on the held-out results.

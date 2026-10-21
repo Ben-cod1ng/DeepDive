@@ -1,4 +1,5 @@
 from fastapi.testclient import TestClient
+import json
 import pytest
 from streamlit.testing.v1 import AppTest
 from deepdive.api import create_app
@@ -38,6 +39,9 @@ def test_ui_review_and_artifacts_share_the_api(tmp_path, monkeypatch, with_docum
             app.session_state["active_run"] = run["id"]
             app.run()
             assert not app.exception
+            assert any("Inspect evidence" in e.label for e in app.expander)
+            assert any("Complete cited passage" in w.value for w in app.markdown)
+            assert not any('<a id="ref-' in w.value for w in app.markdown)
             assert next(w for w in app.selectbox if w.label == "Research sources").value == ("documents" if with_documents else "web")
             buttons = [b for b in app.button if b.label == "Approve and generate exports"]
             assert len(buttons) == 1
@@ -47,5 +51,22 @@ def test_ui_review_and_artifacts_share_the_api(tmp_path, monkeypatch, with_docum
             assert not app.exception
             assert s.get_run(run["id"])["status"] == "completed"
             assert s.export_run(run["id"])["artifacts"]
+            if not with_documents:
+                # A saved example remains inspectable even with the API unavailable.
+                folder = tmp_path / "evaluation" / "examples"
+                folder.mkdir(parents=True)
+                (folder / "index.json").write_text(json.dumps([{"file": "fixture.json", "title": "Recorded fixture"}]))
+                example = {**s.export_run(run["id"]), "title": "Recorded fixture", "recorded_at": "test",
+                           "summary": "Explicit synthetic regression fixture", "limitations": [], "report_markdown": "Report"}
+                (folder / "fixture.json").write_text(json.dumps(example))
+                monkeypatch.setattr("deepdive.config.ROOT", tmp_path)
+                def unavailable(*args, **kwargs):
+                    raise AssertionError("Recorded examples must not contact the API")
+                monkeypatch.setattr("deepdive.client.Client.request", unavailable)
+                gallery = AppTest.from_file("streamlit_app.py", default_timeout=30)
+                gallery.session_state["recorded_investigation"] = "fixture.json"
+                gallery.run()
+                assert not gallery.exception
+                assert any("Inspect evidence" in e.label for e in gallery.expander)
     finally:
         s.close()

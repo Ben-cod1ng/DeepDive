@@ -9,3 +9,7 @@
 !evaluation/claims.v1.json
 !evaluation/questions.v1.json
 !evaluation/documents.v1.json
+!evaluation/questions.v2.json
+!evaluation/documents.v2.json
+!evaluation/examples/
+!evaluation/examples/*.json

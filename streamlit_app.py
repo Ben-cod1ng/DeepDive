@@ -6,7 +6,9 @@ import httpx
 import pandas as pd
 import streamlit as st
 from deepdive.client import Client
+from deepdive.config import ROOT
 from deepdive.ui_access import require_demo_access
+from deepdive.ui_research import render_report, render_progress, render_rounds, render_examples
 
 st.set_page_config(page_title="DeepDive · Research Atelier", layout="wide")
 demo_access = require_demo_access()
@@ -22,6 +24,7 @@ h1,h2,h3{font-family:Georgia,serif;font-weight:400}
 </style>
 """, unsafe_allow_html=True)
 st.markdown('<div class="hero"><div class="eyebrow">Research Atelier / DeepDive</div><h1>Follow the evidence.</h1><p>Investigate a question. Inspect its sources. Review what holds up.</p></div>', unsafe_allow_html=True)
+render_examples(ROOT)
 client = Client(entry_point="streamlit")
 
 
@@ -152,6 +155,9 @@ if selected:
         @st.fragment(run_every="3s")
         def render_run():
             run = call("GET", f"/runs/{run_id}")
+            events = call("GET", f"/runs/{run_id}/events")["events"]
+            records = call("GET", f"/runs/{run_id}/claims")
+            evidence_records = call("GET", f"/runs/{run_id}/evidence")
             st.write(run["request"]["question"])
             a, b, c, d = st.columns(4)
             a.metric("Status", run["status"].replace("_", " "))
@@ -159,6 +165,9 @@ if selected:
             c.metric("Tokens", run["tokens"])
             d.metric("Active time", f"{run['active_seconds']:.0f}s")
             st.caption("Current activity: " + run["stage"])
+            render_progress(run, events)
+            if run["status"] in {"completed", "insufficient"}:
+                st.caption("Saved investigation · viewing these findings makes no new AI requests.")
             if run.get("error"):
                 st.error(run["error"])
             if run.get("cached_from"):
@@ -187,7 +196,7 @@ if selected:
             report, evidence, verification, timeline, artifacts = st.tabs(["Report", "Evidence", "Verification", "Timeline", "Artifacts"])
             with report:
                 if run.get("outline"):
-                    st.markdown(call("GET", f"/runs/{run_id}/report")["markdown"])
+                    render_report(run, records, evidence_records)
                 else:
                     st.caption("Research is gathering and checking evidence.")
                 st.caption("Automated source verification can be wrong. Coverage and correctness are separate.")
@@ -214,7 +223,7 @@ if selected:
                         st.write(decision.get("reason", "Not checked"))
                         st.json({"claim_id": claim["id"], "passages": claim["passage_ids"], "quotes": decision.get("quotes", {})})
             with timeline:
-                events = call("GET", f"/runs/{run_id}/events")["events"]
+                render_rounds(events)
                 if events:
                     # Event payloads have different schemas; encode nested values for Arrow.
                     st.dataframe(pd.DataFrame([{k: json.dumps(v, ensure_ascii=False) if isinstance(v, (dict, list)) else v

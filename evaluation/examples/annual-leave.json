@@ -1,0 +1,989 @@
+{
+  "title": "Document research: annual leave policy",
+  "summary": "A real Mesh investigation over a project-authored synthetic policy, approved in the hosted browser and preserved across a backend restart.",
+  "recorded_at": "2026-10-20T09:59:06.429847+00:00",
+  "tested_release": "71bad8d2cc21fc876e00abdd53d9b753be18bafa",
+  "original_audit_sha256": "47f88f3b0fde4b4a7b24409de7cd19b56c9b909e9790bbb889dfd5bf9242d5f3",
+  "limitations": [
+    "Synthetic source material; this is a workflow example, not independent accuracy evidence.",
+    "Recorded before the new per-round snapshots and exact-duplicate presentation; original output is preserved."
+  ],
+  "run": {
+    "id": "run_212e7bafc05d444db243",
+    "model": "openai/gpt-4o",
+    "calls": 15,
+    "tokens": 9744,
+    "status": "completed",
+    "created": 1792490346.4298465,
+    "completed_at": 1792490404.6742675,
+    "version": 1,
+    "plan": {
+      "resolved_question": "How many paid annual leave days do employees receive in 2026 according to the selected sample policy, and can unused days be carried forward?",
+      "time_sensitive": false,
+      "tasks": [
+        {
+          "id": "task_1",
+          "question": "Determine the number of paid annual leave days employees receive in 2026 and whether unused days can be carried forward according to the selected sample policy.",
+          "facets": [
+            "paid annual leave days in 2026",
+            "carry forward unused days"
+          ],
+          "queries": [
+            "paid annual leave days 2026 site:railway-demo-policy.md",
+            "carry forward unused leave site:railway-demo-policy.md"
+          ],
+          "role": "primary"
+        }
+      ]
+    },
+    "outline": {
+      "title": "According to the selected sample policy, how many paid annual leave days do employees receive in 2026, and can unused days be carried forward? Cite the document.",
+      "sections": [
+        {
+          "title": "Findings 1",
+          "claim_ids": [
+            "claim_bac4192d5b1699bcda47b08a"
+          ]
+        },
+        {
+          "title": "Findings 2",
+          "claim_ids": [
+            "claim_af9fd3010f0b83725581d78d"
+          ]
+        }
+      ],
+      "summary_claim_ids": [
+        "claim_bac4192d5b1699bcda47b08a",
+        "claim_af9fd3010f0b83725581d78d"
+      ]
+    },
+    "coverage": [
+      {
+        "task_id": "task_1",
+        "supported_facets": {
+          "paid annual leave days in 2026": [
+            "claim_bac4192d5b1699bcda47b08a"
+          ],
+          "carry forward unused days": [
+            "claim_af9fd3010f0b83725581d78d"
+          ]
+        },
+        "missing_facets": [],
+        "contradictions": [],
+        "next_queries": []
+      }
+    ],
+    "published_claim_ids": [
+      "claim_af9fd3010f0b83725581d78d",
+      "claim_bac4192d5b1699bcda47b08a"
+    ],
+    "request": {
+      "question": "According to the selected sample policy, how many paid annual leave days do employees receive in 2026, and can unused days be carried forward? Cite the document.",
+      "research_mode": "documents",
+      "review_mode": "manual",
+      "limits": {
+        "subquestions": 1,
+        "sources": 2,
+        "claims": 4,
+        "repair_rounds": 1,
+        "model_calls": 25,
+        "active_seconds": 300
+      },
+      "source_urls": []
+    }
+  },
+  "sources": [
+    {
+      "id": "source_e0c539501d52c1ea5ab17ffa",
+      "title": "railway-demo-policy.md",
+      "kind": "document",
+      "final_url": "",
+      "retrieved_at": 1792490270.278279,
+      "content_hash": "6bb30018bbaea7ec95a09b9f1d8dcc7b4c7cbdd1b0e3433398e00ae8556cbcec",
+      "quality": {
+        "rank": 2,
+        "label": "uploaded document",
+        "reason": "User-supplied evidence; authorship and claims require verification"
+      }
+    }
+  ],
+  "passages": [
+    {
+      "text": "# Sample leave policy\n\nThis is a synthetic document for the DeepDive hackathon demonstration.\n\n",
+      "page": null,
+      "section": "Sample leave policy",
+      "block": 0,
+      "start": 0,
+      "end": 95,
+      "tokens": 19,
+      "location": "section 1: Sample leave policy, characters 0–95",
+      "id": "source_e0c539501d52c1ea5ab17ffa_p0",
+      "source_id": "source_e0c539501d52c1ea5ab17ffa",
+      "kind": "text",
+      "created": 1792490270.278279
+    },
+    {
+      "text": "## Annual leave\nEmployees receive 25 days of paid annual leave in 2026. Unused annual leave cannot be carried forward into the next year.",
+      "page": null,
+      "section": "Annual leave",
+      "block": 1,
+      "start": 0,
+      "end": 137,
+      "tokens": 30,
+      "location": "section 2: Annual leave, characters 0–137",
+      "id": "source_e0c539501d52c1ea5ab17ffa_p1",
+      "source_id": "source_e0c539501d52c1ea5ab17ffa",
+      "kind": "text",
+      "created": 1792490270.278279
+    }
+  ],
+  "claims": [
+    {
+      "id": "claim_bac4192d5b1699bcda47b08a",
+      "task_id": "task_1",
+      "text": "Employees receive 25 days of paid annual leave in 2026.",
+      "passage_ids": [
+        "source_e0c539501d52c1ea5ab17ffa_p1"
+      ],
+      "kind": "fact",
+      "quotes": {
+        "source_e0c539501d52c1ea5ab17ffa_p1": "Employees receive 25 days of paid annual leave in 2026."
+      },
+      "run_id": "run_212e7bafc05d444db243",
+      "version": 1,
+      "created": 1792490363.2386384
+    },
+    {
+      "id": "claim_af9fd3010f0b83725581d78d",
+      "task_id": "task_1",
+      "text": "Unused annual leave cannot be carried forward into the next year.",
+      "passage_ids": [
+        "source_e0c539501d52c1ea5ab17ffa_p1"
+      ],
+      "kind": "fact",
+      "quotes": {
+        "source_e0c539501d52c1ea5ab17ffa_p1": "Unused annual leave cannot be carried forward into the next year."
+      },
+      "run_id": "run_212e7bafc05d444db243",
+      "version": 1,
+      "created": 1792490363.2434533
+    }
+  ],
+  "decisions": [
+    {
+      "id": "decision_6c76d5204e4e594c593f8f6c",
+      "run_id": "run_212e7bafc05d444db243",
+      "claim_id": "claim_bac4192d5b1699bcda47b08a",
+      "policy": "2",
+      "claim_hash": "eba94b0a69df972817dff5793669955efe9d41b48b97bdbc4db35217f4c00bfe",
+      "model": "openai/gpt-4o",
+      "status": "supported",
+      "reason": "The claim is directly supported by the passage, which states: 'Employees receive 25 days of paid annual leave in 2026.'",
+      "quotes": {
+        "source_e0c539501d52c1ea5ab17ffa_p1": "Employees receive 25 days of paid annual leave in 2026."
+      },
+      "created": 1792490365.5092077
+    },
+    {
+      "id": "decision_26ecc62d9997cc4026b5d8e5",
+      "run_id": "run_212e7bafc05d444db243",
+      "claim_id": "claim_af9fd3010f0b83725581d78d",
+      "policy": "2",
+      "claim_hash": "16ec869315cc189219bc6fb3196600cfe87114f06adbc28659d9f00e35a81ed1",
+      "model": "openai/gpt-4o",
+      "status": "supported",
+      "reason": "The claim is directly supported by the passage, which states: 'Unused annual leave cannot be carried forward into the next year.'",
+      "quotes": {
+        "source_e0c539501d52c1ea5ab17ffa_p1": "Unused annual leave cannot be carried forward into the next year."
+      },
+      "created": 1792490365.5191522
+    }
+  ],
+  "events": [
+    {
+      "seq": 1,
+      "created": 1792490346.443223,
+      "event": "run_created",
+      "limits": {
+        "subquestions": 1,
+        "sources": 2,
+        "claims": 4,
+        "repair_rounds": 1,
+        "model_calls": 25,
+        "active_seconds": 300
+      },
+      "review_mode": "manual"
+    },
+    {
+      "seq": 2,
+      "created": 1792490346.4777312,
+      "event": "stage",
+      "stage": "context and cache",
+      "round": 0
+    },
+    {
+      "seq": 3,
+      "created": 1792490346.4930544,
+      "event": "stage",
+      "stage": "indexing documents",
+      "round": 0
+    },
+    {
+      "seq": 4,
+      "created": 1792490346.5147777,
+      "event": "model_request",
+      "role": "embedding",
+      "transport_attempt": 0
+    },
+    {
+      "seq": 5,
+      "created": 1792490347.7516294,
+      "event": "model_response",
+      "role": "embedding",
+      "model": "openai/text-embedding-3-small",
+      "usage": {
+        "prompt_tokens": 56,
+        "total_tokens": 56
+      },
+      "seconds": 1.237
+    },
+    {
+      "seq": 6,
+      "created": 1792490347.764137,
+      "event": "document_index_batch",
+      "chunks": 2,
+      "profile": "8b8e82ef05163eedbdb78fb2bb6f96eadd56936082c04a4b26b6151c2895b041"
+    },
+    {
+      "seq": 7,
+      "created": 1792490347.7687342,
+      "event": "document_index_ready",
+      "chunks": 2,
+      "embedded": 2,
+      "profile": "8b8e82ef05163eedbdb78fb2bb6f96eadd56936082c04a4b26b6151c2895b041"
+    },
+    {
+      "seq": 8,
+      "created": 1792490347.7832344,
+      "event": "stage",
+      "stage": "planning",
+      "round": 0
+    },
+    {
+      "seq": 9,
+      "created": 1792490347.79985,
+      "event": "model_request",
+      "role": "planner",
+      "format_attempt": 0,
+      "transport_attempt": 0
+    },
+    {
+      "seq": 10,
+      "created": 1792490349.9452894,
+      "event": "model_response",
+      "role": "planner",
+      "model": "openai/gpt-4o",
+      "usage": {
+        "completion_tokens": 130,
+        "prompt_tokens": 534,
+        "total_tokens": 664,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": 0,
+          "audio_tokens": 0,
+          "reasoning_tokens": 0,
+          "rejected_prediction_tokens": 0
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": 0,
+          "cached_tokens": 0,
+          "cache_write_tokens": 0,
+          "cache_write_1h_tokens": 0
+        },
+        "byok_used": false,
+        "fallback_triggered": false
+      },
+      "seconds": 2.145
+    },
+    {
+      "seq": 11,
+      "created": 1792490349.9650583,
+      "event": "stage",
+      "stage": "researching",
+      "round": 0
+    },
+    {
+      "seq": 12,
+      "created": 1792490349.9859736,
+      "event": "model_request",
+      "role": "embedding",
+      "transport_attempt": 0
+    },
+    {
+      "seq": 13,
+      "created": 1792490350.5955067,
+      "event": "model_response",
+      "role": "embedding",
+      "model": "openai/text-embedding-3-small",
+      "usage": {
+        "prompt_tokens": 14,
+        "total_tokens": 14
+      },
+      "seconds": 0.609
+    },
+    {
+      "seq": 14,
+      "created": 1792490350.6184072,
+      "event": "model_request",
+      "role": "document reranker",
+      "format_attempt": 0,
+      "transport_attempt": 0
+    },
+    {
+      "seq": 15,
+      "created": 1792490352.3916018,
+      "event": "model_response",
+      "role": "document reranker",
+      "model": "openai/gpt-4o",
+      "usage": {
+        "completion_tokens": 42,
+        "prompt_tokens": 304,
+        "total_tokens": 346,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": 0,
+          "audio_tokens": 0,
+          "reasoning_tokens": 0,
+          "rejected_prediction_tokens": 0
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": 0,
+          "cached_tokens": 0,
+          "cache_write_tokens": 0,
+          "cache_write_1h_tokens": 0
+        },
+        "byok_used": false,
+        "fallback_triggered": false
+      },
+      "seconds": 1.773
+    },
+    {
+      "seq": 16,
+      "created": 1792490352.3967326,
+      "event": "document_retrieval",
+      "lexical_count": 2,
+      "dense_count": 2,
+      "lexical_ids": [
+        "source_e0c539501d52c1ea5ab17ffa_p1",
+        "source_e0c539501d52c1ea5ab17ffa_p0"
+      ],
+      "dense_ids": [
+        "source_e0c539501d52c1ea5ab17ffa_p1",
+        "source_e0c539501d52c1ea5ab17ffa_p0"
+      ],
+      "fused_ids": [
+        "source_e0c539501d52c1ea5ab17ffa_p1",
+        "source_e0c539501d52c1ea5ab17ffa_p0"
+      ],
+      "candidate_ids": [
+        "source_e0c539501d52c1ea5ab17ffa_p1",
+        "source_e0c539501d52c1ea5ab17ffa_p0"
+      ],
+      "selected_ids": [
+        "source_e0c539501d52c1ea5ab17ffa_p1",
+        "source_e0c539501d52c1ea5ab17ffa_p0"
+      ],
+      "reranked": true,
+      "profile": "8b8e82ef05163eedbdb78fb2bb6f96eadd56936082c04a4b26b6151c2895b041",
+      "seconds": 2.42
+    },
+    {
+      "seq": 17,
+      "created": 1792490352.4085457,
+      "event": "tool_result",
+      "role": "researcher",
+      "tool": "search_evidence",
+      "arguments": {
+        "query": "paid annual leave days 2026 site:railway-demo-policy.md"
+      },
+      "seconds": 2.437,
+      "outcome": "ok"
+    },
+    {
+      "seq": 18,
+      "created": 1792490352.514908,
+      "event": "model_request",
+      "role": "embedding",
+      "transport_attempt": 0
+    },
+    {
+      "seq": 19,
+      "created": 1792490353.474004,
+      "event": "model_response",
+      "role": "embedding",
+      "model": "openai/text-embedding-3-small",
+      "usage": {
+        "prompt_tokens": 11,
+        "total_tokens": 11
+      },
+      "seconds": 0.959
+    },
+    {
+      "seq": 20,
+      "created": 1792490353.5013032,
+      "event": "model_request",
+      "role": "document reranker",
+      "format_attempt": 0,
+      "transport_attempt": 0
+    },
+    {
+      "seq": 21,
+      "created": 1792490355.3228076,
+      "event": "model_response",
+      "role": "document reranker",
+      "model": "openai/gpt-4o",
+      "usage": {
+        "completion_tokens": 44,
+        "prompt_tokens": 301,
+        "total_tokens": 345,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": 0,
+          "audio_tokens": 0,
+          "reasoning_tokens": 0,
+          "rejected_prediction_tokens": 0
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": 0,
+          "cached_tokens": 0,
+          "cache_write_tokens": 0,
+          "cache_write_1h_tokens": 0
+        },
+        "byok_used": false,
+        "fallback_triggered": false
+      },
+      "seconds": 1.821
+    },
+    {
+      "seq": 22,
+      "created": 1792490355.3281035,
+      "event": "document_retrieval",
+      "lexical_count": 2,
+      "dense_count": 2,
+      "lexical_ids": [
+        "source_e0c539501d52c1ea5ab17ffa_p1",
+        "source_e0c539501d52c1ea5ab17ffa_p0"
+      ],
+      "dense_ids": [
+        "source_e0c539501d52c1ea5ab17ffa_p0",
+        "source_e0c539501d52c1ea5ab17ffa_p1"
+      ],
+      "fused_ids": [
+        "source_e0c539501d52c1ea5ab17ffa_p0",
+        "source_e0c539501d52c1ea5ab17ffa_p1"
+      ],
+      "candidate_ids": [
+        "source_e0c539501d52c1ea5ab17ffa_p1",
+        "source_e0c539501d52c1ea5ab17ffa_p0"
+      ],
+      "selected_ids": [
+        "source_e0c539501d52c1ea5ab17ffa_p1",
+        "source_e0c539501d52c1ea5ab17ffa_p0"
+      ],
+      "reranked": true,
+      "profile": "8b8e82ef05163eedbdb78fb2bb6f96eadd56936082c04a4b26b6151c2895b041",
+      "seconds": 2.908
+    },
+    {
+      "seq": 23,
+      "created": 1792490355.3398643,
+      "event": "tool_result",
+      "role": "researcher",
+      "tool": "search_evidence",
+      "arguments": {
+        "query": "carry forward unused leave site:railway-demo-policy.md"
+      },
+      "seconds": 2.926,
+      "outcome": "ok"
+    },
+    {
+      "seq": 24,
+      "created": 1792490355.3620775,
+      "event": "model_request",
+      "role": "embedding",
+      "transport_attempt": 0
+    },
+    {
+      "seq": 25,
+      "created": 1792490355.9773555,
+      "event": "model_response",
+      "role": "embedding",
+      "model": "openai/text-embedding-3-small",
+      "usage": {
+        "prompt_tokens": 55,
+        "total_tokens": 55
+      },
+      "seconds": 0.615
+    },
+    {
+      "seq": 26,
+      "created": 1792490356.005433,
+      "event": "model_request",
+      "role": "document reranker",
+      "format_attempt": 0,
+      "transport_attempt": 0
+    },
+    {
+      "seq": 27,
+      "created": 1792490357.6208954,
+      "event": "model_response",
+      "role": "document reranker",
+      "model": "openai/gpt-4o",
+      "usage": {
+        "completion_tokens": 42,
+        "prompt_tokens": 344,
+        "total_tokens": 386,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": 0,
+          "audio_tokens": 0,
+          "reasoning_tokens": 0,
+          "rejected_prediction_tokens": 0
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": 0,
+          "cached_tokens": 0,
+          "cache_write_tokens": 0,
+          "cache_write_1h_tokens": 0
+        },
+        "byok_used": false,
+        "fallback_triggered": false
+      },
+      "seconds": 1.616
+    },
+    {
+      "seq": 28,
+      "created": 1792490357.6297545,
+      "event": "document_retrieval",
+      "lexical_count": 2,
+      "dense_count": 2,
+      "lexical_ids": [
+        "source_e0c539501d52c1ea5ab17ffa_p1",
+        "source_e0c539501d52c1ea5ab17ffa_p0"
+      ],
+      "dense_ids": [
+        "source_e0c539501d52c1ea5ab17ffa_p1",
+        "source_e0c539501d52c1ea5ab17ffa_p0"
+      ],
+      "fused_ids": [
+        "source_e0c539501d52c1ea5ab17ffa_p1",
+        "source_e0c539501d52c1ea5ab17ffa_p0"
+      ],
+      "candidate_ids": [
+        "source_e0c539501d52c1ea5ab17ffa_p1",
+        "source_e0c539501d52c1ea5ab17ffa_p0"
+      ],
+      "selected_ids": [
+        "source_e0c539501d52c1ea5ab17ffa_p1",
+        "source_e0c539501d52c1ea5ab17ffa_p0"
+      ],
+      "reranked": true,
+      "profile": "8b8e82ef05163eedbdb78fb2bb6f96eadd56936082c04a4b26b6151c2895b041",
+      "seconds": 2.277
+    },
+    {
+      "seq": 29,
+      "created": 1792490357.6564357,
+      "event": "model_request",
+      "role": "researcher",
+      "format_attempt": 0,
+      "transport_attempt": 0
+    },
+    {
+      "seq": 30,
+      "created": 1792490358.944729,
+      "event": "model_response",
+      "role": "researcher",
+      "model": "openai/gpt-4o",
+      "usage": {
+        "completion_tokens": 40,
+        "prompt_tokens": 1672,
+        "total_tokens": 1712,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": 0,
+          "audio_tokens": 0,
+          "reasoning_tokens": 0,
+          "rejected_prediction_tokens": 0
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": 0,
+          "cached_tokens": 0,
+          "cache_write_tokens": 0,
+          "cache_write_1h_tokens": 0
+        },
+        "byok_used": false,
+        "fallback_triggered": false
+      },
+      "seconds": 1.288
+    },
+    {
+      "seq": 31,
+      "created": 1792490358.9519699,
+      "event": "tool_result",
+      "role": "researcher",
+      "tool": "read_passages",
+      "arguments": {
+        "passage_ids": [
+          "source_e0c539501d52c1ea5ab17ffa_p1"
+        ]
+      },
+      "seconds": 0.001,
+      "outcome": "ok"
+    },
+    {
+      "seq": 32,
+      "created": 1792490358.9598966,
+      "event": "cache_hit",
+      "cache": "document_retrieval"
+    },
+    {
+      "seq": 33,
+      "created": 1792490358.980855,
+      "event": "model_request",
+      "role": "researcher",
+      "format_attempt": 0,
+      "transport_attempt": 0
+    },
+    {
+      "seq": 34,
+      "created": 1792490361.063087,
+      "event": "model_response",
+      "role": "researcher",
+      "model": "openai/gpt-4o",
+      "usage": {
+        "completion_tokens": 81,
+        "prompt_tokens": 1825,
+        "total_tokens": 1906,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": 0,
+          "audio_tokens": 0,
+          "reasoning_tokens": 0,
+          "rejected_prediction_tokens": 0
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": 0,
+          "cached_tokens": 1536,
+          "cache_write_tokens": 0,
+          "cache_write_1h_tokens": 0
+        },
+        "byok_used": false,
+        "fallback_triggered": false
+      },
+      "seconds": 2.082
+    },
+    {
+      "seq": 35,
+      "created": 1792490361.0696862,
+      "event": "tool_result",
+      "role": "researcher",
+      "tool": "read_passages",
+      "arguments": {
+        "passage_ids": [
+          "source_e0c539501d52c1ea5ab17ffa_p1"
+        ]
+      },
+      "seconds": 0.001,
+      "outcome": "ok"
+    },
+    {
+      "seq": 36,
+      "created": 1792490361.0752683,
+      "event": "tool_result",
+      "role": "researcher",
+      "tool": "read_passages",
+      "arguments": {
+        "passage_ids": [
+          "source_e0c539501d52c1ea5ab17ffa_p1"
+        ]
+      },
+      "seconds": 0.001,
+      "outcome": "ok"
+    },
+    {
+      "seq": 37,
+      "created": 1792490361.0898705,
+      "event": "stage",
+      "stage": "analyzing",
+      "round": 0
+    },
+    {
+      "seq": 38,
+      "created": 1792490361.0964425,
+      "event": "cache_hit",
+      "cache": "document_retrieval"
+    },
+    {
+      "seq": 39,
+      "created": 1792490361.1182756,
+      "event": "model_request",
+      "role": "analyst",
+      "format_attempt": 0,
+      "transport_attempt": 0
+    },
+    {
+      "seq": 40,
+      "created": 1792490363.2336726,
+      "event": "model_response",
+      "role": "analyst",
+      "model": "openai/gpt-4o",
+      "usage": {
+        "completion_tokens": 184,
+        "prompt_tokens": 799,
+        "total_tokens": 983,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": 0,
+          "audio_tokens": 0,
+          "reasoning_tokens": 0,
+          "rejected_prediction_tokens": 0
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": 0,
+          "cached_tokens": 0,
+          "cache_write_tokens": 0,
+          "cache_write_1h_tokens": 0
+        },
+        "byok_used": false,
+        "fallback_triggered": false
+      },
+      "seconds": 2.115
+    },
+    {
+      "seq": 41,
+      "created": 1792490363.257658,
+      "event": "stage",
+      "stage": "verifying",
+      "round": 0
+    },
+    {
+      "seq": 42,
+      "created": 1792490363.275962,
+      "event": "model_request",
+      "role": "verifier",
+      "format_attempt": 0,
+      "transport_attempt": 0
+    },
+    {
+      "seq": 43,
+      "created": 1792490365.4955704,
+      "event": "model_response",
+      "role": "verifier",
+      "model": "openai/gpt-4o",
+      "usage": {
+        "completion_tokens": 180,
+        "prompt_tokens": 928,
+        "total_tokens": 1108,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": 0,
+          "audio_tokens": 0,
+          "reasoning_tokens": 0,
+          "rejected_prediction_tokens": 0
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": 0,
+          "cached_tokens": 0,
+          "cache_write_tokens": 0,
+          "cache_write_1h_tokens": 0
+        },
+        "byok_used": false,
+        "fallback_triggered": false
+      },
+      "seconds": 2.22
+    },
+    {
+      "seq": 44,
+      "created": 1792490365.5145922,
+      "event": "claim_decision",
+      "claim_id": "claim_bac4192d5b1699bcda47b08a",
+      "status": "supported",
+      "reason": "The claim is directly supported by the passage, which states: 'Employees receive 25 days of paid annual leave in 2026.'"
+    },
+    {
+      "seq": 45,
+      "created": 1792490365.5233753,
+      "event": "claim_decision",
+      "claim_id": "claim_af9fd3010f0b83725581d78d",
+      "status": "supported",
+      "reason": "The claim is directly supported by the passage, which states: 'Unused annual leave cannot be carried forward into the next year.'"
+    },
+    {
+      "seq": 46,
+      "created": 1792490365.5345922,
+      "event": "stage",
+      "stage": "checking coverage",
+      "round": 0
+    },
+    {
+      "seq": 47,
+      "created": 1792490365.5519674,
+      "event": "model_request",
+      "role": "coverage assessor",
+      "format_attempt": 0,
+      "transport_attempt": 0
+    },
+    {
+      "seq": 48,
+      "created": 1792490367.2135887,
+      "event": "model_response",
+      "role": "coverage assessor",
+      "model": "openai/gpt-4o",
+      "usage": {
+        "completion_tokens": 79,
+        "prompt_tokens": 775,
+        "total_tokens": 854,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": 0,
+          "audio_tokens": 0,
+          "reasoning_tokens": 0,
+          "rejected_prediction_tokens": 0
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": 0,
+          "cached_tokens": 0,
+          "cache_write_tokens": 0,
+          "cache_write_1h_tokens": 0
+        },
+        "byok_used": false,
+        "fallback_triggered": false
+      },
+      "seconds": 1.662
+    },
+    {
+      "seq": 49,
+      "created": 1792490367.2318466,
+      "event": "stage",
+      "stage": "synthesizing",
+      "round": 0
+    },
+    {
+      "seq": 50,
+      "created": 1792490367.2499435,
+      "event": "model_request",
+      "role": "synthesizer",
+      "format_attempt": 0,
+      "transport_attempt": 0
+    },
+    {
+      "seq": 51,
+      "created": 1792490369.5276785,
+      "event": "model_response",
+      "role": "synthesizer",
+      "model": "openai/gpt-4o",
+      "usage": {
+        "completion_tokens": 107,
+        "prompt_tokens": 718,
+        "total_tokens": 825,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": 0,
+          "audio_tokens": 0,
+          "reasoning_tokens": 0,
+          "rejected_prediction_tokens": 0
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": 0,
+          "cached_tokens": 0,
+          "cache_write_tokens": 0,
+          "cache_write_1h_tokens": 0
+        },
+        "byok_used": false,
+        "fallback_triggered": false
+      },
+      "seconds": 2.278
+    },
+    {
+      "seq": 52,
+      "created": 1792490369.5411973,
+      "event": "publication_gate_passed",
+      "claim_count": 2
+    },
+    {
+      "seq": 53,
+      "created": 1792490403.2507472,
+      "event": "checkpoint_resume",
+      "may_repeat_external_calls": true
+    },
+    {
+      "seq": 54,
+      "created": 1792490403.2587667,
+      "event": "review_decision",
+      "decision": "approve",
+      "feedback": ""
+    },
+    {
+      "seq": 55,
+      "created": 1792490403.276008,
+      "event": "stage",
+      "stage": "charts",
+      "round": 0
+    },
+    {
+      "seq": 56,
+      "created": 1792490403.2966645,
+      "event": "stage",
+      "stage": "summary",
+      "round": 0
+    },
+    {
+      "seq": 57,
+      "created": 1792490403.320685,
+      "event": "model_request",
+      "role": "summarizer",
+      "format_attempt": 0,
+      "transport_attempt": 0
+    },
+    {
+      "seq": 58,
+      "created": 1792490404.5561051,
+      "event": "model_response",
+      "role": "summarizer",
+      "model": "openai/gpt-4o",
+      "usage": {
+        "completion_tokens": 40,
+        "prompt_tokens": 439,
+        "total_tokens": 479,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": 0,
+          "audio_tokens": 0,
+          "reasoning_tokens": 0,
+          "rejected_prediction_tokens": 0
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": 0,
+          "cached_tokens": 0,
+          "cache_write_tokens": 0,
+          "cache_write_1h_tokens": 0
+        },
+        "byok_used": false,
+        "fallback_triggered": false
+      },
+      "seconds": 1.235
+    },
+    {
+      "seq": 59,
+      "created": 1792490404.5769875,
+      "event": "stage",
+      "stage": "publishing",
+      "round": 0
+    },
+    {
+      "seq": 60,
+      "created": 1792490404.586642,
+      "event": "publication_gate_passed",
+      "claim_count": 2
+    },
+    {
+      "seq": 61,
+      "created": 1792490404.6811159,
+      "event": "run_finished",
+      "status": "completed",
+      "supported": 2,
+      "completeness": "covered"
+    }
+  ],
+  "report_markdown": "# According to the selected sample policy, how many paid annual leave days do employees receive in 2026, and can unused days be carried forward? Cite the document.\n\nAutomated source-support checks are fallible; see coverage and evidence.\n\n## Findings 1\n\n- Employees receive 25 days of paid annual leave in 2026. [source_e0c539501d52c1ea5ab17ffa_p1](#ref-source_e0c539501d52c1ea5ab17ffa_p1)\n\n## Findings 2\n\n- Unused annual leave cannot be carried forward into the next year. [source_e0c539501d52c1ea5ab17ffa_p1](#ref-source_e0c539501d52c1ea5ab17ffa_p1)\n\n## Coverage gaps\n\n\n## References\n\n<a id=\"ref-source_e0c539501d52c1ea5ab17ffa_p1\"></a>\n- [source_e0c539501d52c1ea5ab17ffa_p1] railway-demo-policy.md: uploaded document\n  Location: section 2: Annual leave, characters 0–137\n  Retrieved: 2026-10-20 09:57 UTC\n  Passage: \\#\\# Annual leave\nEmployees receive 25 days of paid annual leave in 2026. Unused annual leave cannot be carried forward into the next year."
+}

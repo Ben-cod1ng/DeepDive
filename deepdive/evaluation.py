@@ -31,6 +31,10 @@ def run_metrics(service, run_id):
     events = service.store.events(run_id)
     acceptance = accepted / count if count else 0
     facet_coverage = covered / required if required else 0
+    rounds = [e for e in events if e["event"] == "round_assessed"]
+    round_coverage = [{"round": e["round"], "version": e.get("version"),
+                       "supported_facets": sum(len(c["supported_facets"]) for c in e["coverage"]),
+                       "missing_facets": sum(len(c["missing_facets"]) for c in e["coverage"])} for e in rounds]
     return {"run_id": run_id, "status": run["status"], "model": run["model"], "claims": count,
             "published": len(published), "verifier_acceptance_rate": acceptance,
             "citation_validity": valid / len(citations) if citations else None,
@@ -39,6 +43,9 @@ def run_metrics(service, run_id):
             "cache_hits": sum(e["event"] == "cache_hit" for e in events),
             "calls": run["calls"], "tokens": run["tokens"], "active_seconds": run["active_seconds"],
             "independent_support_accuracy": None,
+            "reference_facet_completeness": None,
+            "round_coverage": round_coverage,
+            "round_comparison_note": "Within-run planner-facet counts; not independent completeness or a randomized ablation",
             "rubric_coverage_1_to_5": round(1 + 4 * facet_coverage, 2),
             "rubric_traceability_1_to_5": round(1 + 4 * (valid / len(citations) if citations else 0), 2)}
 
@@ -194,8 +201,16 @@ def main():
     export = sub.add_parser("export-labels")
     export.add_argument("--output", required=True)
     benchmark = sub.add_parser("benchmark")
-    benchmark.add_argument("--dataset", default="evaluation/questions.v1.json")
+    benchmark.add_argument("--dataset", default="evaluation/questions.v2.json")
     benchmark.add_argument("--output", required=True)
+    benchmark.add_argument("--case", action="append", dest="cases")
+    benchmark.add_argument("--resume", action="store_true")
+    benchmark.add_argument("--model-calls", type=int, default=25)
+    benchmark.add_argument("--input-tokens", type=int, default=12000)
+    benchmark.add_argument("--output-tokens", type=int, default=2000)
+    benchmark.add_argument("--ledger", required=True, help="Persistent ledger shared across evaluation batches")
+    benchmark.add_argument("--max-spend-usd", required=True, help="Existing-credit allocation, never a top-up")
+    benchmark.add_argument("--reserve-usd", required=True, help="Existing credit to retain for demos")
     gate = sub.add_parser("gate")
     gate.add_argument("result")
     gate.add_argument("--dataset", default="evaluation/claims.v1.json")
@@ -225,30 +240,29 @@ def main():
                                  "system_score": row["rubric_coverage_1_to_5"]})
         return
     elif args.command == "benchmark":
-        from .client import Client
-        client = Client(entry_point="evaluation")
-        if not client.request("GET", "/health")["mesh_configured"]:
-            raise SystemExit("Configure Mesh before running the live benchmark")
+        from dataclasses import replace
+        from .benchmark import benchmark
+        from .spending import SpendLedger, metadata, available_balance
+        settings = replace(Settings.load(), input_tokens=args.input_tokens, output_tokens=args.output_tokens)
+        if not settings.mesh_key or not 1000 <= args.input_tokens <= 24000 or not 500 <= args.output_tokens <= 5000:
+            raise SystemExit("Configure Mesh and bounded input/output token allocations")
         dataset = json.loads(Path(args.dataset).read_text(encoding="utf-8"))
-        runs = []
-        for item in dataset["questions"]:
-            run = client.request("POST", "/runs", json={"question": item["question"], "review_mode": "auto",
-                                                       "source_urls": item.get("source_urls", [])})
-            while run["status"] in {"queued", "running"}:
-                time.sleep(2)
-                run = client.request("GET", "/runs/" + run["id"])
-            runs.append({"question_id": item["id"], "run": run})
-            # Save after each question so an interrupted benchmark retains measured results.
-            Path(args.output).parent.mkdir(parents=True, exist_ok=True)
-            Path(args.output).write_text(json.dumps({"mode": "live-benchmark", "runs": runs}, indent=2), encoding="utf-8")
-        result = {"mode": "live-benchmark", "date": datetime.now(timezone.utc).isoformat(), "runs": runs,
-                  "metrics": client.request("GET", "/evaluation")}
+        _, prices = metadata(settings)
+        ledger = SpendLedger(args.ledger, args.max_spend_usd, args.reserve_usd, prices,
+                             lambda: available_balance(settings))
+        try:
+            result = benchmark(dataset, settings, args.output,
+                               Limits(subquestions=2, sources=8, claims=8, repair_rounds=1,
+                                      model_calls=args.model_calls, active_seconds=300),
+                               args.cases, args.resume, ledger)
+        finally:
+            ledger.close()
     else:
         dataset = json.loads(Path(args.dataset).read_text(encoding="utf-8"))
         result = fixture_gates(dataset) if args.command == "fixtures" else live_verifier(dataset, Settings.load())
     path = Path(args.output); path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(json.dumps(result, indent=2, ensure_ascii=False), encoding="utf-8")
-    print(json.dumps({k: v for k, v in result.items() if k not in {"results", "decisions", "runs"}}, indent=2))
+    print(json.dumps({k: v for k, v in result.items() if k not in {"results", "decisions", "runs", "cases", "manifest"}}, indent=2))
 
 
 if __name__ == "__main__":

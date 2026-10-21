@@ -153,26 +153,28 @@ class Artifacts:
         return self.save(run, name, path.read_bytes(), "table", claim_ids, source_ids)
 
     def render(self, run_id):
+        from .presentation import report_sections, reference_numbers
         run = self.s.get_run(run_id)
         claims = {c: self.s.store.get("claim", c, run["scope"]) for c in run.get("published_claim_ids", [])}
         evidence = self.s.evidence(run_id)
         passages = {p["id"]: p for p in evidence["passages"]}
         sources = {s["id"]: s for s in evidence["sources"]}
-        def bullet(cid):
-            claim = claims[cid]
-            citations = " ".join(f'<a href="#{escape(pid)}">[{escape(pid[-8:])}]</a>' for pid in claim["passage_ids"])
-            return f'<li>{escape(claim["text"])} {citations}</li>'
-        sections = run.get("outline", {}).get("sections", [])
+        sections = report_sections(run, claims)
+        refs = reference_numbers(sections)
+        def bullet(finding):
+            citations = " ".join(f'<a href="#{escape(pid)}">[{refs[pid]}]</a>' for pid in finding["passage_ids"])
+            return f'<li>{escape(finding["text"])} {citations}</li>'
         title = run.get("outline", {}).get("title", run["request"]["question"])
         body = f'<h1>{escape(title)}</h1><p class="tag">DeepDive · evidence-backed research</p>'
         body += '<p>Claims passed automated source-support checks. This is not a guarantee of truth. Coverage gaps are shown below.</p>'
         summary = run.get("summary_ids") or run.get("outline", {}).get("summary_claim_ids", [])
         if summary:
-            body += '<section><h2>Executive findings</h2><ul>' + "".join(bullet(c) for c in summary if c in claims) + '</ul></section>'
+            body += '<section><h2>Executive findings</h2><ul>' + "".join(
+                bullet(f) for s in sections for f in s["findings"] if set(f["claim_ids"]) & set(summary)) + '</ul></section>'
         if not claims:
             body += '<p><strong>Insufficient evidence. No substantive claim passed the checks.</strong></p>'
         for section in sections:
-            body += f'<section><h2>{escape(section["title"])}</h2><ul>' + "".join(bullet(c) for c in section["claim_ids"] if c in claims) + '</ul></section>'
+            body += f'<section><h2>{escape(section["title"])}</h2><ul>' + "".join(bullet(f) for f in section["findings"]) + '</ul></section>'
         body += '<section><h2>Coverage and limitations</h2><ul>'
         for item in run.get("coverage", []):
             for gap in item["missing_facets"]:
@@ -185,17 +187,16 @@ class Artifacts:
         for pid in used:
             p = passages[pid]; source = sources[p["source_id"]]
             link = safe_link(source.get("final_url", ""))
-            body += f'<details id="{escape(pid)}"><summary>{escape(pid)} — {escape(source["title"])}</summary>'
+            body += f'<details id="{escape(pid)}"><summary>[{refs[pid]}] {escape(source["title"])}</summary>'
             original = f'<a href="{escape(link)}" rel="noreferrer">Original source</a>' if source.get("final_url") else "Uploaded document"
             body += f'<p>{escape(p.get("location", ""))}</p><blockquote>{escape(p["text"])}</blockquote><p>{original} · saved {utc_date(source["retrieved_at"])}</p></details>'
         body += '</section>'
         markdown = [f"# {md_text(title)}", "", "Automated source-support checks are fallible; see coverage and evidence.", ""]
         for section in sections:
             markdown += [f"## {md_text(section['title'])}", ""]
-            for cid in section["claim_ids"]:
-                if cid in claims:
-                    c = claims[cid]
-                    markdown.append("- " + md_text(c["text"]) + " " + " ".join(f"[{p}](#ref-{p})" for p in c["passage_ids"]))
+            for finding in section["findings"]:
+                markdown.append("- " + md_text(finding["text"]) + " " + " ".join(
+                    f"[{refs[p]}](#ref-{p})" for p in finding["passage_ids"]))
             markdown.append("")
         markdown += ["## Coverage gaps", ""]
         for item in run.get("coverage", []):
@@ -204,12 +205,14 @@ class Artifacts:
         for pid in used:
             source = sources[passages[pid]["source_id"]]
             original = safe_link(source["final_url"]) if source.get("final_url") else "uploaded document"
-            markdown += [f"<a id=\"ref-{pid}\"></a>", f"- [{pid}] {md_text(source['title'])}: {original}",
+            markdown += [f"<a id=\"ref-{pid}\"></a>", f"- [{refs[pid]}] {md_text(source['title'])}: {original}",
+                         "  Reference ID: " + pid,
                          "  Location: " + md_text(passages[pid].get("location", "")),
                          "  Retrieved: " + utc_date(source["retrieved_at"]), "  Passage: " + md_text(passages[pid]["text"])]
         return body, "\n".join(markdown), claims, evidence
 
     def publish(self, run_id, charts):
+        from .presentation import report_sections, reference_numbers
         run = self.s.get_run(run_id)
         body, markdown, claims, evidence = self.render(run_id)
         title = escape(run["request"]["question"])
@@ -234,11 +237,12 @@ class Artifacts:
                 paragraph.text = "\n".join(lines[start:start + 16])
                 paragraph.font.size = Pt(16)
         add_slide("DeepDive research", [run["request"]["question"], "Automated verification is fallible. Sources and coverage gaps accompany this report."])
-        for section in run.get("outline", {}).get("sections", []):
-            ids = [c for c in section["claim_ids"] if c in claims]
-            for start in range(0, len(ids), 3):
-                chunk = ids[start:start + 3]
-                texts = ["[" + c + "] " + claims[c]["text"] + " [" + ", ".join(claims[c]["passage_ids"]) + "]" for c in chunk]
+        sections = report_sections(run, claims)
+        refs = reference_numbers(sections)
+        for section in sections:
+            for start in range(0, len(section["findings"]), 3):
+                chunk = section["findings"][start:start + 3]
+                texts = [f["text"] + " [" + ", ".join(str(refs[p]) for p in f["passage_ids"]) + "]" for f in chunk]
                 slides.append('<section class="slide"><h2>' + escape(section["title"]) + '</h2><ul>' + "".join("<li>" + escape(t) + "</li>" for t in texts) + "</ul></section>")
                 add_slide(section["title"], texts)
         gaps = [g for item in run.get("coverage", []) for g in item["missing_facets"]]
@@ -255,11 +259,11 @@ class Artifacts:
             slide.shapes.add_picture(str(path), Inches(.5), Inches(1.2), width=Inches(width * scale), height=Inches(height * scale))
         sources_by_id = {s["id"]: s for s in evidence["sources"]}
         cited = {pid for claim in claims.values() for pid in claim["passage_ids"]}
-        refs = [p["id"] + " — " + sources_by_id[p["source_id"]]["title"] + " — " + p.get("location", "")
+        reference_lines = ["[" + str(refs[p["id"]]) + "] " + p["id"] + " — " + sources_by_id[p["source_id"]]["title"] + " — " + p.get("location", "")
                 + " — " + (sources_by_id[p["source_id"]].get("final_url") or "uploaded document")
                 for p in evidence["passages"] if p["id"] in cited]
-        for start in range(0, len(refs), 5):
-            add_slide("Sources", refs[start:start + 5])
+        for start in range(0, len(reference_lines), 5):
+            add_slide("Sources", reference_lines[start:start + 5])
         slides.append('<section class="slide"><h2>Evidence and limitations</h2>' + body[body.find('<section><h2>Coverage'): ] + '</section>')
         self.save(run, "slides.html", head + "".join(slides) + "</main></body></html>", "presentation", list(claims))
         path = self.directory(run_id) / "slides.pptx"
