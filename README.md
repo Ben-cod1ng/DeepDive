@@ -6,6 +6,12 @@
 
 Built for Agent Arena 2026 with Python, LangGraph, FastAPI, and Streamlit. Every model request goes through **Mesh**. Public web discovery and direct page retrieval need no additional paid API key.
 
+**Deployment note (October 21):** the competition improvements are merged and pass
+[main-branch CI](https://github.com/Ben-cod1ng/DeepDive/actions/runs/39570547946).
+Railway temporarily paused new builds, so the live demo still runs the earlier
+application. The recorded gallery and new citation panels can be tried locally
+with the setup below. [Deployment evidence and remaining checks](evaluation/results/competition-validation.json).
+
 ## What you can do
 
 - Investigate a question with parallel primary-source, reporting, and community researchers.

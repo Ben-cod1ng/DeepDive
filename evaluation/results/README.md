@@ -5,6 +5,7 @@ upgraded to measurements of the latest code.
 
 | Record | What it establishes | Limit |
 |---|---|---|
+| [Competition validation/deployment status](competition-validation.json) | Main CI, local recorded-example browser checks, old hosted demo availability | New deployment and backup blocked by Railway outage; independent review and organizer secrets pending |
 | [Initial competition web pilot](competition-benchmark.json) | Actual web retrieval, seven rejected quotations, incomplete answer | Failed development-quality result retained; one of ten cases run |
 | [Quotation-fix retest](competition-benchmark-v2.json) | Seven of eight candidates retained; four planner facets covered; exact source spans restored | Development retest with fresh retrieval, not a controlled ablation; independent review pending |
 | [Competition chunk audit](competition-chunk-audit.json) | 50 chunks; labeled quotes fit; exact source offsets | Offline structural check, zero AI calls |

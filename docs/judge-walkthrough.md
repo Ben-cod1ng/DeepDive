@@ -4,6 +4,12 @@ Open the [demo](https://deepdive-web-production.up.railway.app) and enter the
 owner-provided demo code. Use public or sample documents: this is a shared
 workspace. The demo code is separate from the private API and Mesh credentials.
 
+**October 21 deployment status:** Railway rejected the competition deployment
+during its build outage. The gallery and new panels below are available in the
+local application; hosted acceptance of them is pending. The existing hosted
+annual-leave investigation remains accessible. Check the
+[deployment record](../evaluation/results/competition-validation.json) before a demo.
+
 1. In the sidebar, choose **Open a recorded investigation**. These are actual
    saved runs with original dates, model usage, claims, decisions, and provenance.
    Reading them does not call Mesh or the backend. Each example states its limits.
@@ -19,6 +25,11 @@ workspace. The demo code is separate from the private API and Mesh credentials.
    rejection or successful repair when that example's records show one.
 5. Download the recorded Markdown report and evidence JSON. Return to **Live
    workspace** to try a new question using the owner's remaining credit.
+
+The screenshot below shows the local candidate's actual citation panel, with the
+API deliberately unavailable. It is a recorded web excerpt, not a new live run.
+
+![Local recorded investigation with an open source-evidence panel](images/citation-inspection.png)
 
 For a live demonstration, select a saved session or create a new one. Upload a
 small public document, select **Documents only**, and ask a specific question.
